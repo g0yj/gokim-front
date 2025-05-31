@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment: EC2_HOST   # 이 줄 추가해야 함!
 
     steps:
       - name: Checkout repository
