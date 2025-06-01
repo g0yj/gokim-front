@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import api from "../api/axiosInstance";
 import UserInput from "../components/Login/UserInput";
+import { useDispatch } from "react-redux";
+import AuthService from "@/services/authService";
 
-const Login = () => {
+const Login_yj = () => {
+
   const [formData, setFormData] = useState({
     id: "",
     password: "",
     loginType: "NORMAL",
   });
-  const [error, setError] = useState("");
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [error, setError] = useState("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,28 +26,13 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    console.log("로그인 시도됨!!!!!");
     try {
-      const response = await api.post(
-        "/login",
-        {...formData, 
-        loginType: "NORMAL",
-    });
-      console.log("응답하기:", response.data);
-      const { token } = response.data;
-
-      // 토큰 저장
-      localStorage.setItem("accessToken", token);
-      // 페이지 이동
-      navigate("/index");
-    } catch (err: unknown) {
-      console.error("로그인 실패", err);
-      if (axios.isAxiosError(err) && err.response) {
-        console.log("서버 응답:", err.response.data); // 여기에 서버에서 보내는 오류 메시지가 나올 거야
-      }
-      setError("이메일 또는 비밀번호가 잘못되었습니다.");
+      await AuthService.login(dispatch, formData);
+      navigate('/index');
+    } catch (e) {
+      console.log( '로그인 실패 이유 >> ', e)
     }
-  };
+  }
   
   const handleSignUp = () => {
     navigate("/signUp");
@@ -86,4 +75,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Login_yj;

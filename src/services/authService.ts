@@ -1,7 +1,16 @@
-import { LoginRequest, LoginResponse } from "@/types/auth";
-import axios from "axios"
+import AuthApi from "@/api/authApi";
+import { setLogin } from "@/store/authSlice";
+import { AppDispatch } from "@/store/store";
+import { LoginRequest } from "@/types/auth";
 
-export const login = async (payload: LoginRequest): Promise<LoginResponse> => {
-    const res = await axios.post('/login')
-    return res.data;
-}
+const TAG = 'service-authService';
+
+const AuthService = {
+  login: async (dispatch: AppDispatch,  data: LoginRequest) => {
+    console.log(TAG, 'data >> ', data);
+    const res = await AuthApi.postLogin(data);
+    dispatch(setLogin(res));
+  },
+};
+
+export default AuthService;

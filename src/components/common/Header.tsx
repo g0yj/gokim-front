@@ -37,9 +37,9 @@ const Header = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="lucide lucide-search-icon lucide-search"
           >
             <circle cx="11" cy="11" r="8" />
@@ -55,9 +55,9 @@ const Header = () => {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="lucide lucide-bell-icon lucide-bel"
         >
           <path d="M10.268 21a2 2 0 0 0 3.464 0" />
@@ -74,9 +74,9 @@ const Header = () => {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="lucide lucide-circle-user-round-icon lucide-circle-user-round"
           onClick={() => setIsProfileOpen(!isProfileOpen)}
         >
