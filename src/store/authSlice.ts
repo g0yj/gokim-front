@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { LoginResponse } from '@/types/auth'
 
+/**
+ * Redux Toolkit을 활용해서 사용자의 로그인 상태를 전역으로 관리하는 코드
+ */
 interface AuthState {
   isLoggedIn: boolean
   role: string | null
