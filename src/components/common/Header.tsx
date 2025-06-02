@@ -16,13 +16,13 @@ const Header = () => {
         <h1 className="text-2xl font-bold">TaskFlow</h1>
         <nav className="flex">
           <ul className="space-x-4">
-            <Link to="/" className="hover:underline text-sm">
-              내작업
+            <Link to="/index" className="hover:underline text-sm">
+              홈
             </Link>
             <Link to="/board" className="hover:underline text-sm">
-              프로젝트
+              내작업(지혜)
             </Link>
-            <span className="hover:underline text-sm">연진</span>
+            <span className="hover:underline text-sm">프로젝트(연진)</span>
           </ul>
         </nav>
       </div>

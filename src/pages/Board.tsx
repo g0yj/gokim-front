@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "../api/axiosInstance";
+import axios from "axios";
 // import Column from "../components/Board/Column";
 import IssueCard from "../components/Board/IssueCard";
 import { initialData } from "../data/mockBoardData";
@@ -11,6 +11,7 @@ import {
   Droppable,
   DropResult,
 } from "react-beautiful-dnd";
+
 
 const reorder = (list: Issue[], startIndex: number, endIndex: number): Issue[] => {
   const result = [...list];
