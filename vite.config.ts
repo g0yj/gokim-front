@@ -12,15 +12,18 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+    }
+  },
+  esbuild: {
+    drop: ['console', 'debugger'],  //  console.* 제거해줌
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://54.180.116.0',
+        changeOrigin: true,
+        secure: false,
+      },
     },
   },
-server: {
-  proxy: {
-    '/api': {
-      target: 'http://54.180.116.0',
-      changeOrigin: true,
-      secure: false,
-    },
-  },
-},
 })

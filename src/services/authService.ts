@@ -1,4 +1,5 @@
 import AuthApi from "@/api/authApi";
+import log from "@/lib/logger";
 import { setLogin } from "@/store/authSlice";
 import { AppDispatch } from "@/store/store";
 import { LoginRequest } from "@/types/auth";
@@ -6,8 +7,8 @@ import { LoginRequest } from "@/types/auth";
 const TAG = 'service-authService';
 
 const AuthService = {
-  login: async (dispatch: AppDispatch,  data: LoginRequest) => {
-    console.log(TAG, 'data >> ', data);
+  login: async (dispatch: AppDispatch, data: LoginRequest) => {
+    log.debug(TAG, 'data >> ', data)
     const res = await AuthApi.postLogin(data);
     // Redux 저장
     dispatch(setLogin(res));

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { ca } from "zod/v4/locales";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
