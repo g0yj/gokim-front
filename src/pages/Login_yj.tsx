@@ -6,7 +6,7 @@ import AuthService from "@/services/authService";
 
 const Login_yj = () => {
 
-  const [formData, setFormData] = useState({
+  const [loginData, setLoginData] = useState({
     id: "",
     password: "",
     loginType: "NORMAL",
@@ -19,7 +19,7 @@ const Login_yj = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setLoginData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -27,7 +27,7 @@ const Login_yj = () => {
 
   const handleLogin = async () => {
     try {
-      await AuthService.login(dispatch, formData);
+      await AuthService.login(dispatch, loginData);
       navigate('/index');
     } catch (e) {
       console.log( '로그인 실패 이유 >> ', e)
@@ -48,13 +48,13 @@ const Login_yj = () => {
           <UserInput
             placeholder="아이디 입력"
             name="id"
-            value={formData.id}
+            value={loginData.id}
             onChange={handleChange}
           />
           <UserInput
             placeholder="비밀번호 입력"
             name="password"
-            value={formData.password}
+            value={loginData.password}
             onChange={handleChange}
           />
           <button
