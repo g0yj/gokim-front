@@ -33,4 +33,4 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           source: "dist/**"  # ← 전체 폴더/파일 전송으로 변경
           target: "C:/app/frontend"  # ← dist 폴더 통째로 업로드하도록 상위 폴더로 설정
-          strip_components: 1  # ← dist 폴더 껍데기 제거하고 내부 파일만 복사
+          strip_components: 0  # ← dist 폴더 껍데기 제거하고 내부 파일만 복사
