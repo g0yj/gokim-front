@@ -22,7 +22,9 @@ const Header = () => {
             <Link to="/board" className="hover:underline text-sm">
               내작업(지혜)
             </Link>
-            <span className="hover:underline text-sm">프로젝트(연진)</span>
+            <Link to="/notice" className="hover:underline text-sm">
+              공지사항
+            </Link>
           </ul>
         </nav>
       </div>

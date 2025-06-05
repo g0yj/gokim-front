@@ -6,6 +6,7 @@ import "./App.css";
 import Index from "./pages/Index";
 import Project from "./pages/Project";
 import Login from "./pages/Login";
+import NoticeList from "./pages/NoticeList";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/board" element={<Board />} />
           <Route path="/index" element={<Index />} />
           <Route path="/project" element={<Project />} />
+          <Route path="/notice" element={<NoticeList />} />
         </Route>
       </Routes>
     </BrowserRouter>
