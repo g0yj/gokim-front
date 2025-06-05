@@ -6,8 +6,35 @@ import path from 'path'
  * Vite 전체 설정
  *  ex) 경로 alias 설정, 빌드 옵션 등
  */
+export default defineConfig(({ command }) => {
+  const isBuild = command === 'build';
 
-export default defineConfig({
+  return {
+    plugins: [react()],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src'),
+      },
+    },
+    esbuild: isBuild ? {
+      drop: ['console', 'debugger'],
+    } : {}, // 개발 모드에서는 제거하지 않음
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://54.180.116.0',
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
+  };
+});
+
+
+
+/**
+ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
@@ -27,3 +54,4 @@ export default defineConfig({
     },
   },
 })
+ */

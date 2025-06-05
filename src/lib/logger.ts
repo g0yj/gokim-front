@@ -1,4 +1,4 @@
-const isDev = import.meta.env.MODE !== "production";
+const isDev = import.meta.env.MODE === "development";
 
 const log = {
   debug: (...args: unknown[]) => {
