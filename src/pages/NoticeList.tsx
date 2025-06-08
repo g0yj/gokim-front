@@ -4,7 +4,7 @@ import log from '@/lib/logger';
 import NoticeService from '@/services/noticeService';
 import { TableColumn } from '@/types/common/board';
 import { SelectOption } from '@/types/common/option';
-import { ListNoticeItem, ListNoticeRequest, ListNoticeResponse } from '@/types/notice';
+import { ListNoticeItem, ListNoticeRequest, ListNoticeResponse, NoticeRow } from '@/types/notice';
 import React, { useCallback, useEffect, useState } from 'react';
 import PageNations from '@/components/common/PageNations';
 import usePagination from '@/hooks/usePagination';
@@ -13,7 +13,7 @@ const NoticeList = () => {
   const [data, setData] = useState<ListNoticeResponse | null>(null);
   const [list, setList] = useState<ListNoticeItem[]>([]);
   // usePagination 훅을 사용하여 페이지네이션 상태와 함수 관리
-  const { page, setPage, totalPages } = usePagination(1);
+  const { page, setPage } = usePagination(1);
 
   // 검색 상태
   const [limit, setLimit] = useState("10");
@@ -29,22 +29,19 @@ const NoticeList = () => {
 
   // 검색 기준 옵션
   const searchOptions: SelectOption[] = [
+    { label: "전체", value: "all" },
     { label: "제목", value: "title" },
     { label: "작성자", value: "writerId" },
-    { label: "전체", value: "all" }
   ];
 
-  // 컬럼 정보
-  const columns: TableColumn[] = [
-    { field: 'listNumber', headerName: 'No.', align: 'center', width: 60 },
-    { field: 'title', headerName: '제목', align: 'center' },
-    { field: 'writerName', headerName: '작성자', align: 'center', width: 100 },
-    { field: 'createDate', headerName: '작성일', align: 'center', width: 120 },
-    { field: 'view', headerName: '조회수', align: 'center', width: 80 },
-
+  const columns:  TableColumn<NoticeRow>[]= [
+    { key: 'listNumber', label: 'No.' , width: '10%' },
+    { key: 'title', label: '제목',  width: '50%'},
+    { key: 'writerName', label: '작성자',  width: '10%' },
+    { key: 'createDate', label: '작성일',  width: '20%' },
+    { key: 'view', label: '조회수' , width: '10%' },
   ];
 
-  
     //데이터 정보
   const rows = list.map((item) => ({
     ...item, // 기존 데이터 유지
@@ -54,36 +51,32 @@ const NoticeList = () => {
   }));
 
 
-  // 데이터 로드 함수
-  const loadNotices = async () => {
+  // 데이터 로드 함수 (검색 조건 포함)
+  const noticeList = useCallback(async () => {
     try {
-      const res = await NoticeService.listNotice({
+      const res: ListNoticeResponse = await NoticeService.listNotice({
         page: page,
-        limit: 10,
+        limit: limit,
+        search: search,
+        keyword: keyword
       });
       setList(res.content);
       setData(res);
-    } catch (error) {
-      console.error('공지사항 불러오기 실패', error);
+      log.debug("✅ API 호출 성공: ", res);
+    } catch (err) {
+      log.error(`공지사항 불러오기 실패 `, err);
     }
-  };
-  // 페이지가 변경될 때마다 데이터 로드
-  useEffect(() => {
-    loadNotices();
-  }, [page]); // page가 바뀔 때마다 데이터를 새로 불러옵니다.
+  }, [page, limit, search, keyword]);  // 페이지, 검색, 키워드가 변경될 때마다 호출
 
-  // data나 list 상태가 업데이트될 때마다 로그 출력 (이제 정상적으로 업데이트된 데이터를 로그로 출력)
+  // 최초 실행 시 한 번 호출
   useEffect(() => {
-      log.debug("✅ Data >> res : ", data); // data 상태가 업데이트될 때마다 실행
-  }, [data]); // data 상태가 변경될 때마다 실행
+    noticeList();
+  }, [noticeList]); // 검색 조건이나 페이지가 변경될 때마다 실행
 
-  useEffect(() => {
-      log.debug("✅ Notice >> res : ", list); // list 상태가 변경될 때마다 실행
-  }, [list]); // list 상태가 변경될 때마다 실행
-
-   // 검색 실행 핸들러
-   const handleSearch = () => {
-    // 검색 처리 로직 추가 예정
+  // 검색 실행 핸들러
+  const handleSearch = () => {
+    setPage(1);  // 검색 시 첫 페이지로 리셋
+    noticeList(); // 검색 조건에 맞춰 데이터 로드
   };
 
   // 페이지 변경 함수 (공통으로 사용)
@@ -110,7 +103,7 @@ const NoticeList = () => {
       />
 
       {/** 테이블 */}
-      <BoardTable columns={columns} rows={rows} />
+      <BoardTable<NoticeRow> columns={columns} rows={[]}  />
       
       {/* 페이지네이션 */}
       {data && (
