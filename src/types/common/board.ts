@@ -27,3 +27,15 @@ export interface BoardTableProps<T extends object> {
   getRowLink?: (row: T) => string;
 }
 
+export interface BoardFormProps {
+  mode: 'view' | 'edit' | 'create';
+  id?: string | number;
+  resourcePath: string;
+}
+
+export interface BoardFormData {
+  id?: string | number;
+  title: string;
+  content: string;
+  files?: File[];
+}

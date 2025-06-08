@@ -43,12 +43,16 @@ const NoticeList = () => {
   ];
 
     //데이터 정보
-  const rows = list.map((item) => ({
-    ...item, // 기존 데이터 유지
-    title: item.fileCount > 0
-      ? `${item.title} [${item.fileCount}]` // 템플릿 리터럴로 문자열로 결합
-      : item.title, // fileCount가 없으면 그냥 title만 표시
-  }));
+    const rows: NoticeRow[] = list.map((item, index) => ({
+      id: item.id,
+      listNumber: item.listNumber,
+      title: item.fileCount > 0
+        ? `${item.title} [${item.fileCount}]`
+        : item.title,
+      writerName: item.writerName,
+      createDate: item.createDate,
+      view: item.view,
+    }));
 
 
   // 데이터 로드 함수 (검색 조건 포함)
@@ -103,7 +107,11 @@ const NoticeList = () => {
       />
 
       {/** 테이블 */}
-      <BoardTable<NoticeRow> columns={columns} rows={[]}  />
+      <BoardTable<NoticeRow>
+        columns={columns}
+        rows={rows}
+        getRowKey={(row) => row.id}
+        getRowLink={(row) => `/notice/${row.id}`} />
       
       {/* 페이지네이션 */}
       {data && (

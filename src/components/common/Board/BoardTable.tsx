@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, tableCellClasses, TableContainer, TableHea
 import { styled } from '@mui/material/styles';
 
 
-import React, { cloneElement } from 'react';
+import { Link } from 'react-router-dom';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -43,6 +43,30 @@ const BoardTable = <T extends Record<string, unknown>>({
         </TableHead>
 
         <TableBody>
+          {
+            rows.map((row, index) => (
+              <TableRow
+                key={getRowKey(row)}
+                hover
+                component={getRowLink ? Link : 'tr'}
+                to={getRowLink ? getRowLink(row): undefined}
+                style={{
+                  cursor: getRowLink ? 'pointer' : undefined,
+                  textDecoration: 'none',
+                  color: 'inherit'
+                }}
+              >
+                {
+                  columns.map((col) => (
+                    <StyledTableCell key={String(col.key)} align={col.align ?? 'center'}>
+                    {col.render
+                      ? col.render(row[col.key as keyof T], row, index)
+                      : String(row[col.key as keyof T] ?? '')}
+                  </StyledTableCell>
+                ))}
+              </TableRow>
+            ))
+          }
 
         </TableBody>
       </Table>

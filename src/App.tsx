@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Project from "./pages/Project";
 import Login from "./pages/Login";
 import NoticeList from "./pages/NoticeList";
+import BoardForm from "./components/common/Board/BoardForm";
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
           <Route path="/index" element={<Index />} />
           <Route path="/project" element={<Project />} />
           <Route path="/notice" element={<NoticeList />} />
+          <Route path="/notice/:id" element={<BoardForm mode="view" resourcePath="notice" />}
+      />
         </Route>
       </Routes>
     </BrowserRouter>
