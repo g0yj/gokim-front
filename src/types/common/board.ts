@@ -37,5 +37,10 @@ export interface BoardFormData {
   id?: string | number;
   title: string;
   content: string;
-  files?: File[];
+  files?: BoardFile[];
+}
+
+export interface BoardFile {
+  originalFileName: string;
+  url: string;
 }
