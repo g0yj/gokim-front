@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Board from "../src/pages/Board";
 import Signup from "./pages/Signup";
-import Layout from "./components/common/Layout";
+import Layout from "./layout/Layout";
 import "./App.css";
 import Index from "./pages/Index";
 import Project from "./pages/Project";
@@ -13,12 +13,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 임시주석처리용용 */}
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup />} />
-          <Route path="/" element={<Login />} />
-        {/* 임시주석처리용용 */}
+          
         <Route element={<Layout />}>
+          <Route path="/" element={<Index />} />
           <Route path="/" element={<Login />} />
           <Route path="/board" element={<Board />} />
           <Route path="/index" element={<Index />} />
