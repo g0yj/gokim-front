@@ -3,7 +3,7 @@ import Layout from "./layout/Layout";
 import "./App.css";
 import Index from "./pages/Index";
 import Project from "./pages/Project";
-import BoardForm from "./components/common/Board/BoardForm";
+//import BoardForm from "./components/common/Board/BoardForm";
 import Notice from "./pages/Notice";
 import Community from "./pages/Community";
 import Login from "./pages/Login";
@@ -19,7 +19,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
           <Route path="/notice" element={<Notice />} />
-          <Route path="/notice/:id" element={<BoardForm mode="view" resourcePath="notice" /> }/>
+          
           <Route path="/board" element={<Board />} />
           <Route path="/project" element={<Project />} />
           <Route path="/community" element={<Community />} />
@@ -30,3 +30,5 @@ function App() {
 }
 
 export default App;
+
+//<Route path="/notice/:id" element={<BoardForm mode="view" resourcePath="notice" /> }/>
