@@ -19,7 +19,7 @@ const Index = () => {
           <div>
             <h3 className='md:flex-1 '
             
-            >글자를 입력하고 싶은데!!</h3>
+            >test</h3>
           </div>
         </div>
 
