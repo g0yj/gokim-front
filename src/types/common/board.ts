@@ -41,6 +41,7 @@ export interface BoardFormData {
 }
 
 export interface BoardFile {
+  noticeFileId: number;
   originalFileName: string;
   url: string;
 }

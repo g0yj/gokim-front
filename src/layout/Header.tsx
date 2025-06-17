@@ -1,55 +1,49 @@
 import { Tab, Tabs } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../assets/favicon.ico'; 
+import logo from '../assets/logo.png'; 
 
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  return (
-    <header className="flex items-end bg-slate-800 px-4 pt-3 pb-0 h-16">
-      {/* 로고 - 가운데 정렬 + 사이즈 조절 */}
-      <Link to="/" className='mr-4 flex items-center h-full'>
-        <img
-          src={logo}
-          alt="홈"
-          className="w-12 h-12 object-contain"
-        />
-      </Link>
 
-      {/* 탭 메뉴 */}
-      <div className="flex-1">
+  return (
+    <header className="bg-wight text-slate-800 py-3 shadow">
+      <div className="max-w-screen-xl mx-auto px-6 flex justify-between items-center">
+        {/* ✅ 왼쪽: 로고 */}
+        <Link to="/" className="flex items-center gap-2">
+          <img src={logo} alt="홈" className="w-10 h-10" />
+          <span className="font-bold text-3xl">GoFlow</span>
+        </Link>
+
+        {/* ✅ 가운데: 탭 메뉴 */}
         <Tabs
           value={location.pathname}
           onChange={(_, newValue) => navigate(newValue)}
           sx={{
+            position: 'relative',
             height: '100%',
-            alignItems: 'flex-end',
-            position:'relative',
+            '& .MuiTabs-indicator': {
+              bottom: 0,
+              height: 3,
+              backgroundColor: '#161C24', // 밑줄 색깔
+            },
             '& .MuiTab-root': {
-              color: '#ffffff',
+              color: '#161C24', // 탭 글자 색
               fontSize: '1rem',
-              minWidth: 80,
-              paddingBottom: '12px',
-              px: 2,
               textTransform: 'none',
               fontWeight: 500,
-              alignItems:'end',
+              px: 2,
+              minWidth: 80,
               '&.Mui-selected': {
-                color: '#ffffff',
                 fontWeight: 600,
+                color: '#161C24',
               },
               '&:hover': {
-                backgroundColor: '#334155',
+                backgroundColor: '#FFFFFF', //선택 시 나오는 배경 색
               },
-            },
-            // 밑줄
-            '& .MuiTabs-indicator': {
-              backgroundColor: '#ffffff',
-              position: 'absolute',
-              bottom: 0,
             },
           }}
         >
@@ -58,6 +52,19 @@ const Header = () => {
           <Tab label="커뮤니티" value="/community" />
           <Tab label="프로젝트" value="/project" />
         </Tabs>
+
+        {/* ✅ 오른쪽: 알림/프로필 자리 */}
+        <div className="flex items-center gap-4">
+          <button className="relative">
+            <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full px-1">1</span>
+            🔔
+          </button>
+          <img
+            src="/profile.png" // 추후 사용자 이미지로 교체
+            alt="프로필"
+            className="w-8 h-8 rounded-full"
+          />
+        </div>
       </div>
     </header>
   );

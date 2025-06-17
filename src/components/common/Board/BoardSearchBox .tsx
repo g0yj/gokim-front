@@ -9,13 +9,13 @@ const BoardSearchBox = ({
     limit, search, keyword, limitOptions, searchOptions, onChangeLimit, onChangeSearch, onChangeKeyword, onSearch
 }: BoardSearchBoxProps) => {
 
+  // Enter 키 눌렀을 때 검색 실행
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      onSearch();
+      onSearch();  // Enter 키로 검색 실행
     }
   };
   
-
   return (
     <Box
       sx={{
@@ -59,7 +59,6 @@ const BoardSearchBox = ({
 
           <TextField
             value={keyword}
-            onChange={(e) => onChangeKeyword(e.target.value)}
             placeholder="검색어 입력"
             size="small"
             sx={{
@@ -77,25 +76,9 @@ const BoardSearchBox = ({
                 color: '#888',         // placeholder 색상 설정
               },
             }}
+            onChange={(e) => onChangeKeyword(e.target.value)}  // 입력값을 상태에 반영
             onKeyDown={handleKeyDown}  // 엔터 감지 이벤트
           />
-
-          <Buttons
-                  onClick={onSearch} // 버튼 클릭 시 onSearch 함수 실행
-                  style={{
-                    backgroundColor: '#F3F4F6',
-                    color: '#000',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.12)',
-                    height: '25px',           // 버튼 높이 25px로 설정
-                    minWidth: 'auto',         // 최소 너비 설정
-                    padding: '0 12px',        // 좌우 패딩 설정
-                    fontSize: '0.800rem',     // 글씨 크기 설정
-                    lineHeight: '25px',       // 수직 중앙 정렬
-                    borderRadius: '10px',      // 버튼 모서리 둥글게
-                  }}
-                >
-                  검색
-          </Buttons>
 
         </Stack>
       </Box>

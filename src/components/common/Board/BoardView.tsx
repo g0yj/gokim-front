@@ -20,7 +20,8 @@ const BoardView = ({ id: propId, resourcePath }: BoardFormProps) => {
       if (id) {
         (async () => {
           try {
-            const data = await BoardService.detail({ id, resourcePath });
+              const data = await BoardService.detail({ id, resourcePath });
+              log.debug('데이터 확인 >> ', data);
             setForm(data);
           } catch (err) {
             log.error('상세 조회 실패', err);
@@ -30,7 +31,7 @@ const BoardView = ({ id: propId, resourcePath }: BoardFormProps) => {
     }, [id, resourcePath]);
   
     return (
-      <div style={{ padding: '2rem' }}>
+      <div style={{ width: "100%", maxWidth: 1200, margin: "0 auto" }}>
         <h2>{form.title}</h2>
         <div
           style={{ marginTop: '1rem', lineHeight: 1.6 }}

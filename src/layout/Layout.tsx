@@ -1,20 +1,16 @@
-
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Box } from "@mui/material";
 
 const Layout = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
      
-      <main className="flex-1">
-
-      <Box sx={{ backgroundColor: '#F3F4F6', minHeight: '100vh', px: 2, py: 3 }}>
-        <Outlet />
-      </Box>
-      
+      <main className="flex-1 bg-slate-200 ">
+        <div className="max-w-screen-xl mx-auto px-4"> {/*max-w-screen-xl mx-auto : 본문 최대 너비 제한 + 가운데 정렬*/}
+          <Outlet />
+        </div>
       </main>
       <Footer />
     </div>

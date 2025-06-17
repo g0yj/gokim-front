@@ -1,3 +1,5 @@
+import log from "@/lib/logger";
+
 export const downloadFileFromUrl = async (fileUrl: string, fileName: string) => {
     try {
       const response = await fetch(fileUrl);
@@ -11,6 +13,6 @@ export const downloadFileFromUrl = async (fileUrl: string, fileName: string) => 
   
       window.URL.revokeObjectURL(url);
     } catch (error) {
-      console.error('파일 다운로드 실패:', error);
+        log.error('파일 다운로드 실패:', error);
     }
   };
