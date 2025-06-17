@@ -60,7 +60,7 @@ const BoardTable = <T extends Record<string, unknown>>({
                   columns.map((col) => (
                     <StyledTableCell key={String(col.key)} align={col.align ?? 'center'}>
                     {col.render
-                      ? col.render(row[col.key as keyof T], row, index)
+                      ? col.render(row[col.key as keyof T], row)
                       : String(row[col.key as keyof T] ?? '')}
                   </StyledTableCell>
                 ))}
