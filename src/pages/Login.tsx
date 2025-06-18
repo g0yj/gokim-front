@@ -1,10 +1,36 @@
 import { Button } from '@/components/ui/button'; //npx shadcn@latest add button
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'; //npx shadcn@latest add card
+import useFormHandler from '@/hooks/useFormHandler';
+import log from '@/lib/logger';
+import AuthService from '@/services/authService';
+import { LoginRequest } from '@/types/auth';
 
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  log.debug('로그인 페이지 열림')
+    ;
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { form, handleFormChange } = useFormHandler<LoginRequest>({
+    id: "",
+    password: "",
+    loginType: "NORMAL"
+  });
+
+  const handleLogin = async () => {
+    try {
+      await AuthService.login(dispatch, form);
+      navigate("/");
+    } catch (err) {
+      log.debug('로그인 Axios 실패' , err)
+    }
+  }
+
+
   return (
     <div className='flex items-center justify-center min-h-screen bg-[#eaecf0]'>
       <Card className='w-full max-w-sm w-[500px] h-[450x] '>
@@ -35,18 +61,22 @@ const Login = () => {
                   placeholder='아이디를 입력하세요'
                   required
                   className='text-sm'
+                  value={form.id}
+                  onChange={(e) => handleFormChange("id", e.target.value)}
                 >
                 </input>
               </div>
             </div>
             <div className='grid gap-2 mt-5'>
-                <label htmlFor='pw' className='font-bold'>Password</label>
+                <label htmlFor='password' className='font-bold'>Password</label>
                 <input
-                  id='pw'
+                  id='password'
                   type='password'
                   placeholder='비밀번호를 입력하세요'
-                required
-                className='text-sm'
+                  required
+                  className='text-sm'
+                  value={form.password}
+                  onChange={(e) => handleFormChange("password", e.target.value)}
                 >
                 </input>
               </div>
@@ -54,8 +84,12 @@ const Login = () => {
         </CardContent>
 
         <CardFooter className='flex-col'>
-          <Button type='submit' className="bg-[#ffffff] hover:bg-[#eeeded]  bg-slate-800 font-bold w-full" >
-          Login
+          <Button
+            type='submit'
+            className="bg-[#ffffff] hover:bg-[#eeeded]  bg-slate-800 font-bold w-full"
+            onClick={handleLogin}
+          >
+            Login
           </Button>
           <Button
             className="bg-[#ffffff] hover:bg-[#77adf3] text-black  w-full flex items-center justify-center gap-2 border"
@@ -65,7 +99,7 @@ const Login = () => {
           <Button
             className="bg-[#ffffff] hover:bg-[#e4c800] text-black w-full flex items-center justify-center gap-2 border"
           >
-          Login with kakao
+            Login with kakao
           </Button>
         </CardFooter>
 
