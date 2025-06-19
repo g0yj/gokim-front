@@ -14,4 +14,9 @@
  *  useSelector : store에 있는 상태를 꺼내오는 hook
  *  useDispatch : 액션을 보내는 hook (-> 상태를 바꿈)
  * 
+ * ====================================================================================
+ *  dispatch() 란?
+ *  -> Redux 상태를 바꾸기 위해 반드시 거쳐야 하는 함수. 
+ *    Redux에서는 상태(state)를 직접 바꾸면 안되고, 액션이라는 걸 dispatch해서 간접적으로 바꿔야함!
+ *  예 ) dispatch(setLogin({ userId: 'tubi', accessToken: 'abc', ... }))
  */
