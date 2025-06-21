@@ -8,7 +8,6 @@ const TAG = 'service-authService';
 
 const AuthService = {
   login: async (dispatch: AppDispatch, data: LoginRequest) => {
-    log.debug(TAG, 'data >> ', data)
     const res = await AuthApi.postLogin(data);
     // Redux 저장
     dispatch(setLogin(res));

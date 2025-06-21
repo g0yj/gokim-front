@@ -7,7 +7,7 @@ import Project from "./pages/Project";
 import Notice from "./pages/Notice";
 import Community from "./pages/Community";
 import Login from "./pages/Login";
-import Board from "./pages/Board";
+import Board from "./pages/AnonBoard";
 import Signup from "./pages/Signup";
 
 function App() {

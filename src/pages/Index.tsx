@@ -1,10 +1,11 @@
+import ButtonPage from '@/mock/ButtonPage';
 import female from '../assets/female.png'; 
 
 const Index = () => {
 
 
   return (
-    <div className="bg-slate-200 min-h-screen">
+    <div className=" min-h-screen">
       
       {/* ✅ 완전히 바깥에서 w-full 처리 */}
       <div
@@ -28,6 +29,7 @@ const Index = () => {
       {/* ✅ 중앙정렬된 본문 콘텐츠 */}
       <div className="max-w-screen-xl mx-auto px-4 py-6">
         <h1 className="text-2xl font-bold mb-4">메인 페이지</h1>
+        <ButtonPage/>
       </div>
 
     </div>

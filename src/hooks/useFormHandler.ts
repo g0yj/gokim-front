@@ -1,5 +1,11 @@
 import { useState } from "react"
 
+/**
+ *  form 사용할 때, 실제로 보낼 데이터를 만들기 위해 사용.
+ * @param initialState 
+ * @returns 
+ */
+
 const useFormHandler = <T extends object>(initialState: T) => {
     const [form, setForm] = useState<T>(initialState);
 
