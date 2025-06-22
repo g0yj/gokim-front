@@ -23,8 +23,8 @@ const BasicBoardSearchBox = ({
     onSearch();
   };
 
-  const handleSearchKeyChange = (value: string | number) => {
-    setValue('searchKey', value);
+  const handleSearchChange = (value: string | number) => {
+    setValue('search', value);
   };
 
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,9 +58,9 @@ const BasicBoardSearchBox = ({
         <InputLabel id="search-label">Search</InputLabel>
         <Select
           labelId="search-label"
-          value={getValues('searchKey')}
+          value={getValues('search')}
           label="Search"
-          onChange={(e) => handleSearchKeyChange(e.target.value)}
+          onChange={(e) => handleSearchChange(e.target.value)}
         >
           {searches.map((search) => (
             <MenuItem key={search.label} value={search.value}>
