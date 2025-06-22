@@ -25,19 +25,29 @@ const BasicBoard = <Res,>({
     
   
     return (
-      <div className="space-y-6">
+      <div className="space-y-6 ">
+       
+        <div className="flex justify-between items-end w-full mb-4">
         <BasicBoardSearchBox
           paramQuery={paramQuery}
           limits={limitOptions}
           searches={searchOptions}
           onSearch={onSearch}
-        />
-        <CustomTable columns={columns} data={data.content} />
-        <CustomPagination
-          page={data.page}
-          totalPage={data.totalPage}
-          onChange={onPageChange}
-        />
+          />
+        </div>
+
+        <div>
+          <CustomTable columns={columns} data={data.content} />
+        </div>
+
+        <div className="w-fit mx-auto mb-4">
+         <CustomPagination
+            page={data.page}
+            totalPage={data.totalPage}
+            onChange={onPageChange}
+          />
+        </div>
+
       </div>
     );
   };

@@ -16,15 +16,19 @@ const BasicBoardSearchBox = ({
   onSearch,
 }: BasicBoardSearchBoxProps) => {
   log.debug('검색박스 실행')
-  const { getValues, setValue } = paramQuery;
+  const { getValues, setValue, watch } = paramQuery;
+  const keyword = watch('keyword'); // 실시간 감시 (글자 변경이 안 됐던 문제 해결)
 
   const handleLimitChange = (value: number) => {
     setValue('limit', value);
+    setValue('page', 1); // 새로 조회할 때는 1페이지부터
     onSearch();
   };
 
   const handleSearchChange = (value: string  ) => {
     setValue('search', value);
+    setValue('page', 1); // 새로 조회할 때는 1페이지부터
+    onSearch();
   };
 
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,7 +41,9 @@ const BasicBoardSearchBox = ({
   };
 
   return (
-    <div className="flex gap-4 items-end">
+
+  <div className="flex justify-between items-end w-full mb-4">
+    <div className="flex-shrink-0">
       <FormControl>
         <InputLabel id="limit-label">Limit</InputLabel>
         <Select
@@ -53,7 +59,9 @@ const BasicBoardSearchBox = ({
           ))}
         </Select>
       </FormControl>
-
+    </div>
+        
+    <div className="flex gap-4  w-fit">
       <FormControl>
         <InputLabel id="search-label">Search</InputLabel>
         <Select
@@ -72,7 +80,7 @@ const BasicBoardSearchBox = ({
 
       <TextField
         label="Keyword"
-        value={getValues('keyword')}
+        value={keyword}
         onChange={handleKeywordChange}
       />
 
@@ -80,6 +88,7 @@ const BasicBoardSearchBox = ({
         검색
       </CustomButton>
     </div>
+  </div>
   );
 };
 

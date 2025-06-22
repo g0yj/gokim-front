@@ -31,7 +31,7 @@ const CustomTable = <T,>({
                                     <td
                                         key={String(col.key)}
                                         className="border p-2"
-                                        style={{ width: col.width, textAlign: col.align || 'left' }} //  align 기본값 처리
+                                        style={{ width: col.width, textAlign: col.align || 'center' }} //  center 기본값 처리
                                         >
                                         {
                                             col.render

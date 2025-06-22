@@ -17,23 +17,26 @@ const AnonBoard = () => {
     defaultValues: defaultSearchValues,
   });
 
+
   const [data, setData] = useState<CommonListResponse<ListAnonBoardItem>>(getInitialRes());
 
   const onSearch = () => AnonBoardService.list(paramQuery, setData);
 
-  const onPageChange = (page: number) => {
-    paramQuery.setValue('page', page);
-    onSearch();
-  }
-
+    // ✅ 최초 mount 시 조회
   useEffect(() => {
     onSearch();
   }, []);
 
+    const onPageChange = (page: number) => {
+      paramQuery.setValue('page', page);
+      onSearch();
+  }
+  
   const columns: TableColumn<ListAnonBoardItem>[] = [
     { key: 'listNumber', label: 'no', width: '5%' },
-    { key: 'title', label: '제목' },
-    { key: 'view', label: '조회수' },
+    { key: 'title', label: '제목', width: '50%'},
+    { key: 'view', label: '조회수', width: '10%' },
+    { key: 'createDate', label: '작성일', width: '20%'  },
   ];
 
   const limitOptions: SelectOption[] = [
@@ -50,8 +53,7 @@ const AnonBoard = () => {
   ]
 
   return (
-    <div>
-      <h3>익명게시판</h3>
+    <div className='w-[800px] mt-8 mx-auto'>
       <BasicBoard
         columns={columns}
         data={{
