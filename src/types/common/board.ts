@@ -41,15 +41,6 @@ export interface BasicBoardSearchBoxProps {
 
 
 
-
-  
-export interface BoardTableProps<T extends object> {
-  columns: TableColumn<T>[];
-  rows: T[];
-  getRowKey: (row: T) => string | number;
-  getRowLink?: (row: T) => string;
-}
-
 export interface BoardFormProps {
   mode: 'view' | 'edit' | 'create';
   id?: string | number;
