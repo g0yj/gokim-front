@@ -23,7 +23,7 @@ const BasicBoardSearchBox = ({
     onSearch();
   };
 
-  const handleSearchChange = (value: string | number) => {
+  const handleSearchChange = (value: string  ) => {
     setValue('search', value);
   };
 
