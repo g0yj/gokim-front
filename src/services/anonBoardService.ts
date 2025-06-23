@@ -17,6 +17,7 @@ const AnonBoardService = {
                 const values = paramQuery.getValues();
                 const res = await AnonBoardApi.getList(values);
                 setData(res);
+                log.info(res);
             } catch (e) {
                 log.error('list 결과 조회 실패', e);
             }

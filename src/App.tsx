@@ -9,6 +9,7 @@ import Community from "./pages/Community";
 import Login from "./pages/Login";
 import Board from "./pages/AnonBoard";
 import Signup from "./pages/Signup";
+import BasicBoardView from "./components/board/BasicBoardView";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/notice" element={<Notice />} />
           
           <Route path="/board" element={<Board />} />
+          <Route path="/anon/:id" element={<BasicBoardView />} />
           <Route path="/project" element={<Project />} />
           <Route path="/community" element={<Community />} />
         </Route>

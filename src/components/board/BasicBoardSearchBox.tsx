@@ -15,7 +15,7 @@ const BasicBoardSearchBox = ({
   searches,
   onSearch,
 }: BasicBoardSearchBoxProps) => {
-  log.debug('검색박스 실행')
+
   const { getValues, setValue, watch } = paramQuery;
   const keyword = watch('keyword'); // 실시간 감시 (글자 변경이 안 됐던 문제 해결)
 

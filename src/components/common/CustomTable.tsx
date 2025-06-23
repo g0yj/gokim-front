@@ -2,13 +2,15 @@ import log from '@/lib/logger';
 import { CustomTableProps } from '@/types/common/common';
 
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const CustomTable = <T,>({
     columns,
     data,
+    getDetailLink,
 }: CustomTableProps<T>) => {
-    log.debug('테이블 컴포넌트 출력');
+    const navigate = useNavigate();
 
   return (
     <div>
@@ -23,29 +25,41 @@ const CustomTable = <T,>({
                   </tr>
               </thead>
               <tbody>
-                  {
-                      data.map((row, idx) => (
-                          <tr key={idx}>
-                              {
-                                  columns.map((col) => (
-                                    <td
-                                        key={String(col.key)}
-                                        className="border p-2"
-                                        style={{ width: col.width, textAlign: col.align || 'center' }} //  center 기본값 처리
-                                        >
-                                        {
-                                            col.render
-                                            ? col.render(row[col.key], row)                           //  render 함수가 있으면 사용
-                                            : String(row[col.key] ?? '')                              //  안전하게 fallback 처리
-                                        }
-                                        </td>
-                                  ))
-                              }
-                              
-                          </tr>
-                      ))
+          {data.map((row) => {
+            const canNavigate = !!getDetailLink;
+            return (
+              <tr
+                key={data.id}
+                onClick={() => {
+                  if (canNavigate && getDetailLink) {
+                    navigate(getDetailLink(row));
                   }
-              </tbody>
+                }}
+                className={canNavigate ? 'cursor-pointer hover:bg-gray-100 transition' : ''}
+              >
+                {columns.map((col) => {
+                  const rawValue = row[col.key];
+                  const cellContent = col.render
+                    ? col.render(rawValue, row)
+                    : String(rawValue ?? '');
+
+                  return (
+                    <td
+                      key={String(col.key)}
+                      className="border p-2"
+                      style={{
+                        width: col.width,
+                        textAlign: col.align || 'center',
+                      }}
+                    >
+                      {cellContent}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
         </table>
     </div>
   );

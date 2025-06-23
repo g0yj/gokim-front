@@ -18,10 +18,9 @@ const BasicBoard = <Res,>({
     onSearch,
     limitOptions,
     searchOptions,
-    onPageChange
+    onPageChange,
+    getDetailLink
 }: BasicBoardProps<Res>) => {
-    
-    log.debug('기본 게시판 컴포넌트 실행');
     
   
     return (
@@ -37,7 +36,7 @@ const BasicBoard = <Res,>({
         </div>
 
         <div>
-          <CustomTable columns={columns} data={data.content} />
+          <CustomTable columns={columns} data={data.content} getDetailLink={getDetailLink}  />
         </div>
 
         <div className="w-fit mx-auto mb-4">

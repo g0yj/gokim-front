@@ -27,6 +27,7 @@ export interface BasicBoardProps<Res> {
   onPageChange: (page: number) => void;
   limitOptions: SelectOption[];
   searchOptions: SelectOption[];
+  getDetailLink?: (item: Res) => string; // ✅ 함수 타입으로 변경 + optional
 }
 
 export interface BasicBoardSearchBoxProps {

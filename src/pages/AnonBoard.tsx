@@ -11,7 +11,6 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const AnonBoard = () => {
-  log.debug('익명 게시판 컴포넌트 실행')
 
   const paramQuery = useForm<BasicBoardSearchFields>({
     defaultValues: defaultSearchValues,
@@ -20,7 +19,9 @@ const AnonBoard = () => {
 
   const [data, setData] = useState<CommonListResponse<ListAnonBoardItem>>(getInitialRes());
 
-  const onSearch = () => AnonBoardService.list(paramQuery, setData);
+  const onSearch = () => {
+    AnonBoardService.list(paramQuery, setData);
+  }
 
     // ✅ 최초 mount 시 조회
   useEffect(() => {
@@ -52,6 +53,8 @@ const AnonBoard = () => {
     { label: '내용', value: 'content' },
   ]
 
+  const getDetailLink = (item: ListAnonBoardItem) => `/anon/${item.id}`;
+
   return (
     <div className='w-[800px] mt-8 mx-auto'>
       <BasicBoard
@@ -66,6 +69,7 @@ const AnonBoard = () => {
         limitOptions={limitOptions}
         searchOptions={searchOptions}
         onPageChange={onPageChange}
+        getDetailLink={getDetailLink}
       >
       </BasicBoard>
 
