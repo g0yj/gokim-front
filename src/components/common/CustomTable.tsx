@@ -9,6 +9,7 @@ const CustomTable = <T,>({
     columns,
     data,
     getDetailLink,
+    getRowKey
 }: CustomTableProps<T>) => {
     const navigate = useNavigate();
 
@@ -25,11 +26,11 @@ const CustomTable = <T,>({
                   </tr>
               </thead>
               <tbody>
-          {data.map((row) => {
+          {data.map((row,idx) => {
             const canNavigate = !!getDetailLink;
             return (
               <tr
-                key={data.id}
+                 key={getRowKey ? getRowKey(row, idx) : idx}
                 onClick={() => {
                   if (canNavigate && getDetailLink) {
                     navigate(getDetailLink(row));

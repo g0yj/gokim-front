@@ -26,7 +26,8 @@ export interface TableColumn<T> {
 export interface CustomTableProps<T> {
     columns: TableColumn<T>[];
     data: T[];
-    getDetailLink?: (item: T) => string; // ✅ 선택적으로 사용 가능하도록 설정
+    getDetailLink?: (item: T) => string; // 상세 조회로 들어갈때 api 호출을 위해
+    getRowKey?: (item: T, index: number | string) => string | number; // tr의 row의 key 보장을 위해 사용.
 }
   
 export interface SelectOption {

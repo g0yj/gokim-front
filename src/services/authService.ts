@@ -1,5 +1,4 @@
 import AuthApi from "@/api/authApi";
-import log from "@/lib/logger";
 import { setLogin } from "@/store/authSlice";
 import { AppDispatch } from "@/store/store";
 import { LoginRequest } from "@/types/auth";
