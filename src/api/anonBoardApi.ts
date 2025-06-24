@@ -1,18 +1,21 @@
 import api from "@/lib/axios";
 import log from "@/lib/logger";
-import { AnonBoardListRes } from "@/types/anonBoard";
+import { AnonBoardDetail } from "@/types/anonBoard";
 import { BasicBoardSearchFields } from "@/types/common/board";
 
 const TAG = '[api-anonBoardApi]';
 
 const AnonBoardApi = {
-    getList: async (
-        queryParams: Partial<BasicBoardSearchFields>
-    ): Promise<AnonBoardListRes> => {
-        log.debug(TAG, '요청 쿼리', queryParams);
-        const res = await api.get('/anon', { params: queryParams });
-        return res.data;
+    getList: (params: BasicBoardSearchFields) => {
+        return api.get('/anon', { params });
     },
+
+    getDetail: async (id: string): Promise<AnonBoardDetail> => {
+        log.debug(TAG, '익명 게시판 식별키 : ', id);
+        const res = await api.get(`/anon/${id}`);
+        log.info('익명 게시판 호출 데이터', res);
+        return res.data
+    }
 };
 
 export default AnonBoardApi;

@@ -34,6 +34,7 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
       ellipsis = false,
       loading = false,
       disabled,
+      type = 'button',
       ...rest
     },
     ref
@@ -53,6 +54,7 @@ const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
           onClick={onClick}
           className={composedClassName}
           disabled={disabled || loading}
+          type={type}
           {...rest}
         >
           {loading ? <span className="animate-pulse">...</span> : children}

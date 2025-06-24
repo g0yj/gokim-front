@@ -19,8 +19,15 @@ const AnonBoard = () => {
 
   const [data, setData] = useState<CommonListResponse<ListAnonBoardItem>>(getInitialRes());
 
-  const onSearch = () => {
-    AnonBoardService.list(paramQuery, setData);
+  const onSearch = async () => {
+    try {
+      const values = paramQuery.getValues();
+      const res = await AnonBoardService.list(values);
+      //res.list가 아닌 이유는 data 타입을 확인해보기! 
+      setData(res); 
+    } catch (err) {
+      log.error('axios 호출 실패', err);
+    }
   }
 
     // ✅ 최초 mount 시 조회

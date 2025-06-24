@@ -7,9 +7,10 @@ import Project from "./pages/Project";
 import Notice from "./pages/Notice";
 import Community from "./pages/Community";
 import Login from "./pages/Login";
-import Board from "./pages/AnonBoard";
+import Board from "./pages/anonBoard/AnonBoard";
 import Signup from "./pages/Signup";
-import BasicBoardView from "./components/board/BasicBoardView";
+import AnonBoardCreatePage from "./pages/anonBoard/AnonBoardCreatePage";
+import AnonBoardDetailPage from "./pages/anonBoard/AnonBoardDetailPage";
 
 function App() {
   return (
@@ -21,8 +22,11 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/notice" element={<Notice />} />
           
+          { /** 익명 게시판 */}
           <Route path="/board" element={<Board />} />
-          <Route path="/anon/:id" element={<BasicBoardView />} />
+          <Route path="/anon/create" element={<AnonBoardCreatePage />} />
+          <Route path="/anon/:id" element={<AnonBoardDetailPage />} />
+
           <Route path="/project" element={<Project />} />
           <Route path="/community" element={<Community />} />
         </Route>
