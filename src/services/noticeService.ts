@@ -1,13 +1,14 @@
 import NoticeApi from "@/api/noticeApi";
 import log from "@/lib/logger";
-import { ListNoticeRequest } from "@/types/notice";
+import { BasicBoardSearchFields } from "@/types/common/board";
+import { ListNoticeRes } from "@/types/notice";
 
 const TAG = 'service-noticeService';
 
 const NoticeService = {
-  listNotice: async (data: ListNoticeRequest) => {
-    log.debug(TAG, 'data >>', data);
-    return await NoticeApi.getList(data);
+  listNotice: async (params: BasicBoardSearchFields): Promise<ListNoticeRes> => {
+    const res = await NoticeApi.getList(params);
+    return res.data;
   },
 };
 

@@ -1,32 +1,16 @@
+import { BoardFile } from './common/board';
+import { CommonListResponse } from './common/common';
 import { PageResponse } from './common/pagination';
 
-export interface ListNoticeRequest {
-    page?: number | string | null;
-    limit?: number | string | null;
-    order?: string | null;
-    direction?: string | null;
-    search?: string | null;
-    keyword?: string | null;
-}
-  
 export interface ListNoticeItem {
-    listNumber: number;
-    id: string;
-    title: string;
-    createDate: string;
-    writerName: string;
-    writerId: string;
-    fileCount: number;
-    view: number;
+    listNumber?: number | null;
+    id?: string | null;
+    title?: string | null;
+    createDate?: string | null;
+    writerName?: string | null;
+    writerId?: string | null;
+    fileCount?: number| null;
+    view?: number| null;
   }
   
-export type ListNoticeResponse = PageResponse<ListNoticeItem>;
-
-export interface NoticeRow  {
-  id: string;
-  listNumber: string | number;
-  title: string;
-  writerName: string;
-  createDate: string;
-  view: number;
-}
+export type ListNoticeRes = CommonListResponse<ListNoticeItem>;

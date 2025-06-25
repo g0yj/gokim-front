@@ -8,7 +8,7 @@ import { UseFormReturn } from "react-hook-form";
 const TAG = 'service-anonBoardService';
 
 const AnonBoardService = {
-    list: async (params: BasicBoardSearchFields): Promise<AnonBoardListRes> => {
+    listAnonBoard: async (params: BasicBoardSearchFields): Promise<AnonBoardListRes> => {
         const res = await AnonBoardApi.getList(params);
         return res.data;
     },
