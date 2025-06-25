@@ -88,6 +88,10 @@ const BasicBoardSearchBox = ({
         검색
       </CustomButton>
     </div>
+
+    <div>
+      <CustomButton variant='ghost'> 등록 </CustomButton>
+    </div>
   </div>
   );
 };
