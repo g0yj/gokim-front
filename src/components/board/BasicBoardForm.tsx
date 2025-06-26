@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import CustomButton from '../common/CustomButton ';
 import 'react-quill/dist/quill.snow.css'; //에디터가 스타일 없이 깨져 보이는 문제 해결
@@ -43,6 +43,7 @@ const BasicBoardForm = ({
   // Vite는 CSR(Client Side Rendering)이라 대부분 문제 없지만, 
   // ReactQuill 내부에서 window 관련 오류가 발생할 수 있음 → useEffect로 렌더링 시점을 늦춰줌
   const [isClient, setIsClient] = useState(false);
+  const quilRef = useRef(null); // 사용 안했을때 경고 문구 나와서 추가.
   
   useEffect(() => {
     setIsClient(true); // 브라우저 환경에서만 렌더링
