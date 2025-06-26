@@ -6,19 +6,19 @@ import Project from "./pages/Project";
 //import BoardForm from "./components/common/Board/BoardForm";
 import Notice from "./pages/notice/Notice";
 import Community from "./pages/community/Community";
-import Login from "./pages/Login";
 
 import Board from "./pages/anonBoard/AnonBoard";
-import Signup from "./pages/Signup";
 import AnonBoardCreatePage from "./pages/anonBoard/AnonBoardCreatePage";
 import AnonBoardDetailPage from "./pages/anonBoard/AnonBoardDetailPage";
+import Login1 from "./pages/Login1";
+import SignUp from "./pages/SignUp";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login1 />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
 

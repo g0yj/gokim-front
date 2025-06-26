@@ -7,7 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -16,8 +16,10 @@ import { styled } from '@mui/material/styles';
 import ForgotPassword from '../components/ui/ForgotPassword';
 import AppTheme from '../components/ui/AppTheme';
 import ColorModeSelect from '../components/ui/ColorModeSelect';
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../components/ui/CustomIcons';
-import { GoogleIcon, FacebookIcon} from '../components/ui/customIcons';
+import { GoogleIcon, KakaoIcon} from '../components/ui/CustomIcons';
+
+
+
 
 
 
@@ -26,10 +28,11 @@ import log from '@/lib/logger';
 import AuthService from '@/services/authService';
 import { LoginRequest } from '@/types/auth';
 
+
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { Link, useNavigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -49,6 +52,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
       'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
   }),
 }));
+
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
@@ -75,11 +79,15 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 
 
 
-export default function SignIn(props: { disableCustomTheme?: boolean }) {
+
+
+
+export default function Login1(props: { disableCustomTheme?: boolean }) {
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { handleFormChange } = useFormHandler<LoginRequest>({
+  const { form, handleFormChange } = useFormHandler<LoginRequest>({
     id: "",
     password: "",
     loginType: "NORMAL"
@@ -91,13 +99,16 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+
   const handleClose = () => {
     setOpen(false);
   };
+
 
   const handleLogin = async () => {
     console.log('click');
@@ -109,44 +120,51 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
 
-  const validateInputs = () => {
-    const email = document.getElementById('email') as HTMLInputElement;
-    const password = document.getElementById('password') as HTMLInputElement;
+//   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+//     if (emailError || passwordError) {
+//       event.preventDefault();
+//       return;
+//     }
+//     const data = new FormData(event.currentTarget);
+//     console.log({
+//       email: data.get('email'),
+//       password: data.get('password'),
+//     });
+//   };
 
-    let isValid = true;
 
-    if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-      setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
-      isValid = false;
-    } else {
-      setEmailError(false);
-      setEmailErrorMessage('');
-    }
+//   const validateInputs = () => {
+//     const email = document.getElementById('email') as HTMLInputElement;
+//     const password = document.getElementById('password') as HTMLInputElement;
 
-    if (!password.value || password.value.length < 6) {
-      setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
-      isValid = false;
-    } else {
-      setPasswordError(false);
-      setPasswordErrorMessage('');
-    }
 
-    return isValid;
-  };
+//     let isValid = true;
+
+
+//     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+//       setEmailError(true);
+//       setEmailErrorMessage('Please enter a valid email address.');
+//       isValid = false;
+//     } else {
+//       setEmailError(false);
+//       setEmailErrorMessage('');
+//     }
+
+
+//     if (!password.value || password.value.length < 6) {
+//       setPasswordError(true);
+//       setPasswordErrorMessage('Password must be at least 6 characters long.');
+//       isValid = false;
+//     } else {
+//       setPasswordError(false);
+//       setPasswordErrorMessage('');
+//     }
+
+
+//     return isValid;
+//   };
+
 
   return (
     <AppTheme {...props}>
@@ -160,11 +178,14 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             variant="h4"
             sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign in
+            Login
           </Typography>
           <Box
             component="form"
-            // onSubmit={handleLogin}
+             onSubmit={(e) => {
+            e.preventDefault(); // 기본 동작 방지
+            handleLogin(); // 로그인 핸들러 호출
+            }}
             noValidate
             sx={{
               display: 'flex',
@@ -236,6 +257,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           </Box>
           <Divider>or</Divider>
           <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <a href="http://54.180.116.0/api/oauth2/authorization/google">
             <Button
               fullWidth
               variant="outlined"
@@ -244,20 +266,22 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             >
               Sign in with Google
             </Button>
+            </a>
+            <a href="http://54.180.116.0/api/oauth2/authorization/kakao">
             <Button
               fullWidth
               variant="outlined"
               onClick={() => alert('Sign in with Kakao')}
-              startIcon={<FacebookIcon />}
+              startIcon={<KakaoIcon />}
             >
               Sign in with Kakaotalk
             </Button>
+            </a>
             <Typography sx={{ textAlign: 'center' }}>
               Don&apos;t have an account?{' '}
-              <Link
-                href="/material-ui/getting-started/templates/sign-in/"
-                variant="body2"
-                sx={{ alignSelf: 'center' }}
+              <Link to='/signup'
+                // variant="body2"
+                // sx={{ alignSelf: 'center' }}
               >
                 Sign up
               </Link>
