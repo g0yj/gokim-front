@@ -7,6 +7,7 @@ import Project from "./pages/Project";
 import Notice from "./pages/notice/Notice";
 import Community from "./pages/community/Community";
 import Login from "./pages/Login";
+
 import Board from "./pages/anonBoard/AnonBoard";
 import Signup from "./pages/Signup";
 import AnonBoardCreatePage from "./pages/anonBoard/AnonBoardCreatePage";
