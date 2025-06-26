@@ -30,6 +30,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // import { Link, useNavigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import CustomButton from '@/components/common/CustomButton ';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -75,11 +76,11 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 
 
 
-export default function SignIn(props: { disableCustomTheme?: boolean }) {
+export default function Login1(props: { disableCustomTheme?: boolean }) {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { handleFormChange } = useFormHandler<LoginRequest>({
+  const { handleFormChange, form } = useFormHandler<LoginRequest>({
     id: "",
     password: "",
     loginType: "NORMAL"
@@ -100,26 +101,17 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   };
 
   const handleLogin = async () => {
-    console.log('click');
+    log.debug('로그인 버튼 클릭')
     try {
-      await AuthService.login(dispatch, form);
+      await AuthService.login(dispatch,form);
+      log.debug('navigate 작동 확인!!')
       navigate("/");
+      
     } catch (err) {
       log.debug('로그인 Axios 실패', err);
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (emailError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  };
 
   const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
@@ -164,7 +156,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
           </Typography>
           <Box
             component="form"
-            // onSubmit={handleLogin}
+            onSubmit={handleLogin}
             noValidate
             sx={{
               display: 'flex',
@@ -216,14 +208,12 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
               label="Remember me"
             />
             <ForgotPassword open={open} handleClose={handleClose} />
-            <Button
+            <CustomButton
               type="submit"
-              fullWidth
-              variant="contained"
               onClick={handleLogin}
             >
               Sign in
-            </Button>
+            </CustomButton>
             <Link
               component="button"
               type="button"
