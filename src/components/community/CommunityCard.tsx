@@ -2,6 +2,7 @@ import communtiyImg from '@/assets/communityImg.png'
 
 
 const CommunityCard = () => {
+    
   return (
     <div className="w-full md:w-1/2 lg:w-1/4 border-2 p-4 flex flex-col items-center mb-4">
       <div>
