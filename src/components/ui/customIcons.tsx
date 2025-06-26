@@ -1,45 +1,7 @@
 import * as React from 'react';
 import SvgIcon from '@mui/material/SvgIcon';
 
-// export function FacebookIcon() {
-//   return (
-//     <SvgIcon>
-//       <svg
-//         width="16"
-//         height="16"
-//         viewBox="0 0 16 16"
-//         fill="none"
-//         xmlns="http://www.w3.org/2000/svg"
-//       >
-//         <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 1     12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20ZM12 10C10.9 10 10 10.9 10 12C10 13.1 10.9 14 12 14C13.1 14 14 13.1 14 12C14 10.9 13.1 10 12 10ZM8.5 8C9.327 8 10 7.327 10 6.5C10 5.673 9.327 5 8.5 5C7.673 5 7 5.673 7 6.5C7 7.327 7.673 8 8.5 8ZM15.5 8C16.327 8 17 7.327 17 6.5C17 5.673 16.327 5 15.5 5C14.673 5 14 5.673 14 6.5C14 7.327 14.673 8 15.5 8Z"/>
-//         <path
-//           d="M6.68 15.92C2.88 15.24 0 11.96 0 8C0 3.6 3.6 0 8 0C12.4 0 16 3.6 16 8C16 11.96 13.12 15.24 9.32 15.92L8.88 15.56H7.12L6.68 15.92Z"
-//           fill="url(#paint0_linear_795_116)"
-//         />
-//         <path
-//           d="M11.12 10.2391L11.48 7.99914H9.36V6.43914C9.36 5.79914 9.6 5.31914 10.56 5.31914H11.6V3.27914C11.04 3.19914 10.4 3.11914 9.84 3.11914C8 3.11914 6.72 4.23914 6.72 6.23914V7.99914H4.72V10.2391H6.72V15.8791C7.16 15.9591 7.6 15.9991 8.04 15.9991C8.48 15.9991 8.92 15.9591 9.36 15.8791V10.2391H11.12Z"
-//           fill="white"
-//         />
-//         <defs>
-//           <linearGradient
-//             id="paint0_linear_795_116"
-//             x1="8"
-//             y1="0"
-//             x2="8"
-//             y2="15.9991"
-//             gradientUnits="userSpaceOnUse"
-//           >
-//             <stop stopColor="#1AAFFF" />
-//             <stop offset="1" stopColor="#0163E0" />
-//           </linearGradient>
-//         </defs>
-//       </svg>
-//     </SvgIcon>
-//   );
-// }
-
-
-export function FacebookIcon() {
+export function KakaoIcon() {
   return (
 <SvgIcon>
       <svg

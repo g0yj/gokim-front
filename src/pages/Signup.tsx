@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
+// import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -18,8 +18,9 @@ import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../components/ui/AppTheme';
 import ColorModeSelect from '../components/ui/ColorModeSelect';
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../components/ui/CustomIcons';
-import { GoogleIcon, FacebookIcon} from '../components/ui/customIcons';
+import { GoogleIcon, KakaoIcon} from '../components/ui/customIcons';
+import { Link, useNavigate } from 'react-router-dom';
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -215,18 +216,17 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               fullWidth
               variant="outlined"
               onClick={() => alert('Sign up with Facebook')}
-              startIcon={<FacebookIcon />}
+              startIcon={<KakaoIcon />}
             >
               Sign up with Facebook
             </Button>
             <Typography sx={{ textAlign: 'center' }}>
               Already have an account?{' '}
-              <Link
-                href="/material-ui/getting-started/templates/sign-in/"
-                variant="body2"
-                sx={{ alignSelf: 'center' }}
+              <Link to='/Log in'
+                // variant="body2"
+                // sx={{ alignSelf: 'center' }}
               >
-                Sign in
+                Login
               </Link>
             </Typography>
           </Box>
