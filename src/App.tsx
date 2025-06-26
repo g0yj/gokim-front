@@ -5,7 +5,7 @@ import Index from "./pages/Index";
 import Project from "./pages/Project";
 //import BoardForm from "./components/common/Board/BoardForm";
 import Notice from "./pages/notice/Notice";
-import Community from "./pages/Community";
+import Community from "./pages/community/Community";
 import Login from "./pages/Login";
 import Board from "./pages/anonBoard/AnonBoard";
 import Signup from "./pages/Signup";
