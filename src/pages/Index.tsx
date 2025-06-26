@@ -1,12 +1,18 @@
 import ButtonPage from '@/mock/ButtonPage';
 import female from '../assets/female.png'; 
+import { useState } from 'react';
+import CustomModal from '@/components/common/CustomModal';
+import CustomButton from '@/components/common/CustomButton ';
 
 const Index = () => {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
 
   return (
     <div className=" min-h-screen">
-      
+
       {/* ✅ 완전히 바깥에서 w-full 처리 */}
       <div
         className="relative left-1/2 w-screen -translate-x-1/2 py-40 text-center text-white"
@@ -29,6 +35,23 @@ const Index = () => {
       {/* ✅ 중앙정렬된 본문 콘텐츠 */}
       <div className="max-w-screen-xl mx-auto px-4 py-6">
         <h1 className="text-2xl font-bold mb-4">메인 페이지</h1>
+      
+      {/** 모달 테스트 */}
+      <div>
+
+        <CustomButton onClick={openModal}>Open Modal</CustomButton>
+
+        <CustomModal
+          isOpen={isModalOpen} // 반드시 넣어야 하는 prop
+          onRequestClose={closeModal}
+          size='md'
+          variant='basic'
+        >
+          children 확인
+        </CustomModal>
+
+    {/** 버튼 디자인 예시 */}    
+    </div>
         <ButtonPage/>
       </div>
 
