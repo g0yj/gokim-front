@@ -61,6 +61,7 @@ const AnonBoard = () => {
   ]
 
   const getDetailLink = (item: ListAnonBoardItem) => `/anon/${item.id}`;
+  const createLink = '/anon/create'
 
   return (
     <div className='w-[800px] mt-8 mx-auto'>
@@ -77,6 +78,7 @@ const AnonBoard = () => {
         searchOptions={searchOptions}
         onPageChange={onPageChange}
         getDetailLink={getDetailLink}
+        createLink={createLink}
       >
       </BasicBoard>
 
