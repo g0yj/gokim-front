@@ -4,7 +4,7 @@ import "./App.css";
 import Index from "./pages/Index";
 import Project from "./pages/Project";
 //import BoardForm from "./components/common/Board/BoardForm";
-import Notice from "./pages/Notice";
+import Notice from "./pages/notice/Notice";
 import Community from "./pages/Community";
 import Login from "./pages/Login";
 import Board from "./pages/anonBoard/AnonBoard";
@@ -20,7 +20,9 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
-          <Route path="/notice" element={<Notice />} />
+
+          {/** 공지사항 */}
+          <Route path="/admin/notice" element={<Notice />} />
           
           { /** 익명 게시판 */}
           <Route path="/board" element={<Board />} />

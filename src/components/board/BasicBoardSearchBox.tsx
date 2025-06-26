@@ -100,6 +100,10 @@ const BasicBoardSearchBox = ({
       )}
         
     </div>
+
+    <div>
+      <CustomButton variant='ghost'> 등록 </CustomButton>
+    </div>
   </div>
   );
 };

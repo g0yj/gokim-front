@@ -50,7 +50,7 @@ const Header = () => {
             },
           }}
         >
-          <Tab label="공지사항" value="/notice" />
+          <Tab label="공지사항" value="/admin/notice" />
           <Tab label="익명게시판" value="/board" />
           <Tab label="커뮤니티" value="/community" />
           <Tab label="프로젝트" value="/project" />

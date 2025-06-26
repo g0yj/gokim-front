@@ -20,7 +20,7 @@ const Index = () => {
           <div>
             <h3 className='md:flex-1 '
             
-            >test</h3>
+            ></h3>
           </div>
         </div>
 

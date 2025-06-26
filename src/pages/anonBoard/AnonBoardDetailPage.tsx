@@ -3,7 +3,6 @@ import AnonBoardService from '@/services/anonBoardService';
 import { AnonBoardDetail } from '@/types/anonBoard';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { downloadFileFromUrl } from '@/utils/file';
 import BasicBoardView from '@/components/board/BasicBoardView';
 
 const AnonBoardDetailPage = () => {
@@ -35,12 +34,6 @@ const AnonBoardDetailPage = () => {
     log.debug('삭제버튼 클릭');
   }
 
-  const handleDownload = () => {
-    log.debug('다운로드 버튼 클릭');
-    //downloadFileFromUrl(data?.files.url);
-  
-    
-  }
   return (
     <div className="w-[800px] mt-8 mx-auto">
     <BasicBoardView
@@ -50,7 +43,6 @@ const AnonBoardDetailPage = () => {
       isMine={data?.isMine}
       onEdit={handleEdit}
       onDelete={handleDelete}
-      onDownload={handleDownload}
       getFileKey={(file) => file.url} // URL이 항상 고유함을 가정
     />
   </div>

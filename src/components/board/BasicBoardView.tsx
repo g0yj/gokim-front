@@ -1,6 +1,7 @@
 import { BasicBoardViewProps } from '@/types/common/board';
 import React from 'react';
 import CustomButton from '../common/CustomButton ';
+import { downloadFileFromUrl } from '@/utils/file';
 
 
 // <T extends { url: string; originalFileName: string }> 
@@ -12,9 +13,9 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }> ({
   files = [],
   getFileKey,
   onEdit,
-  onDelete,
-  onDownload
+  onDelete
 }: BasicBoardViewProps<T>) => {
+
   return (
     <div className="w-[800px] mx-auto mt-8 space-y-6">
       {/* 제목 */}
@@ -36,7 +37,7 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }> ({
                 //getFileKey가 없다면, 기본적으로 file.url을 key로 사용
                 key={getFileKey ? getFileKey(file, idx) : file.url}
                 className="text-blue-600 hover:underline cursor-pointer"
-                onClick={() => onDownload?.(file)}
+                onClick={() => downloadFileFromUrl(file.url, file.originalFileName)}
               >
                 {file.originalFileName}
               </li>
