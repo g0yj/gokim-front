@@ -8,6 +8,9 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const validPaths = ["/notice", "/board", "/community", "/project"];
+  const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
+
 
   return (
     <header className="bg-wight text-slate-800 py-3 shadow">
@@ -20,7 +23,7 @@ const Header = () => {
 
         {/* ✅ 가운데: 탭 메뉴 */}
         <Tabs
-          value={location.pathname}
+          value={currentTabValue}
           onChange={(_, newValue) => navigate(newValue)}
           sx={{
             position: 'relative',
