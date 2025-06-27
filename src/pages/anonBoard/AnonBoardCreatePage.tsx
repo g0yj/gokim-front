@@ -7,6 +7,7 @@ const AnonBoardCreatePage = () => {
   const navigate = useNavigate();
 
   const handleCreate = async (formValues: BasicBoardFormValues) => {
+    
     log.debug('생성 버튼 클릭!!'); 
   }
   return (
