@@ -49,9 +49,9 @@ const Notice = () => {
   const columns: TableColumn<ListNoticeItem>[] = [
     {key:'listNumber', label: 'no', width: '5%'},
     {key:'title', label: '제목', width: '50%'},
-    {key:'writerId', label: '작성자', width: '15%'},
-    {key:'createDate', label: '등록일', width: '25%'},
-    {key:'view', label: '조회수', width: '5%'},
+    {key:'createdBy', label: '작성자', width: '15%'},
+    {key:'view', label: '조회수', width: '10%'},
+    {key:'createdOn', label: '등록일', width: '20%'},
   ]
 
   const limitOptions: SelectOption[] = [
@@ -71,8 +71,6 @@ const Notice = () => {
 
   return (
     <div className='w-[800px] mt-8 mx-auto'>
-
-      <h1>회원 공지사항 게시판</h1>
       <BasicBoard
         columns={columns}
         data={{

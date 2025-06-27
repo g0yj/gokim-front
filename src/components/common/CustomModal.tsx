@@ -1,5 +1,5 @@
 import React from "react";
-import ReactModal from "react-modal"; // npm 설치 필요
+import ReactModal from "react-modal"; // npm i react-modal / npm i @types/react-modal
 
 export interface CustomModalProps extends ReactModal.Props{
    size?: 'sm' | 'md' | 'lg';
