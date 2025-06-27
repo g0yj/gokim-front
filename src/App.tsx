@@ -29,8 +29,9 @@ function App() {
           <Route path="/board" element={<Board />} />
           <Route path="/anon/create" element={<AnonBoardCreatePage />} />
           <Route path="/anon/:id" element={<AnonBoardDetailPage />} />
-
+          { /** 프로젝트 */}
           <Route path="/project" element={<Project />} />
+          { /** 커뮤니티 */}
           <Route path="/community" element={<Community />} />
         </Route>
       </Routes>

@@ -17,12 +17,12 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../components/ui/AppTheme';
-import ColorModeSelect from '../components/ui/ColorModeSelect';
+import ColorModeSelect from '../components/ui/ColorModeSelect'; 
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../components/ui/CustomIcons';
 import { GoogleIcon, KakaoIcon} from '../components/ui/CustomIcons';
 
 const Card = styled(MuiCard)(({ theme }) => ({
-  display: 'flex',
+  display: 'flex', 
   flexDirection: 'column',
   alignSelf: 'center',
   width: '100%',
