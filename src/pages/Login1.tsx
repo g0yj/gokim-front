@@ -18,22 +18,13 @@ import AppTheme from '../components/ui/AppTheme';
 import ColorModeSelect from '../components/ui/ColorModeSelect';
 import { GoogleIcon, KakaoIcon} from '../components/ui/CCustomIcons';
 import { Link, useNavigate } from 'react-router-dom';
- 
-
-
-
-
-
-
 import useFormHandler from '@/hooks/useFormHandler';
 import log from '@/lib/logger';
 import AuthService from '@/services/authService';
 import { LoginRequest } from '@/types/auth';
-
-
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
