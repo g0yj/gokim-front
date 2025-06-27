@@ -9,7 +9,7 @@ import { getInitialRes } from '@/utils/board';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-const Notice = () => {
+const AdminNotice = () => {
   
   const paramQuery = useForm<BasicBoardSearchFields>({
     defaultValues: defaultSearchValues,
@@ -72,7 +72,7 @@ const Notice = () => {
   return (
     <div className='w-[800px] mt-8 mx-auto'>
 
-      <h1>회원 공지사항 게시판</h1>
+      <h1>관리자 공지사항 게시판</h1>
       <BasicBoard
         columns={columns}
         data={{
@@ -93,4 +93,4 @@ const Notice = () => {
   );
 };
 
-export default Notice;
+export default AdminNotice;

@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
 
 
-const Header = () => {
+const AdminHeader = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -50,10 +50,10 @@ const Header = () => {
             },
           }}
         >
-          <Tab label="공지사항" value="/notice" />
-          <Tab label="익명게시판" value="/board" />
-          <Tab label="커뮤니티" value="/community" />
-          <Tab label="프로젝트" value="/project" />
+          <Tab label="공지사항" value="/admin/notice" />
+          <Tab label="회원관리" value="/board" />
+          <Tab label="게시물관리" value="/community" />
+          <Tab label="통계" value="/project" />
         </Tabs>
 
         {/* ✅ 오른쪽: 알림/프로필 자리 */}
@@ -73,7 +73,7 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default AdminHeader;
 
 /**
  -> items-center : 세로 정렬 (가운데)
