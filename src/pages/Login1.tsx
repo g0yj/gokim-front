@@ -7,7 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
+import Link1 from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -17,6 +17,8 @@ import ForgotPassword from '../components/ui/ForgotPassword';
 import AppTheme from '../components/ui/AppTheme';
 import ColorModeSelect from '../components/ui/ColorModeSelect';
 import { GoogleIcon, KakaoIcon} from '../components/ui/CCustomIcons';
+import { Link, useNavigate } from 'react-router-dom';
+ 
 
 
 
@@ -245,12 +247,7 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
             >
               Sign in
             </Button>
-            <Link
-              component="button"
-              type="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
+            <Link to='/signup'
             >
               Forgot your password?
             </Link>
