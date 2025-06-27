@@ -11,7 +11,7 @@ import Board from "./pages/anonBoard/AnonBoard";
 import AnonBoardCreatePage from "./pages/anonBoard/AnonBoardCreatePage";
 import AnonBoardDetailPage from "./pages/anonBoard/AnonBoardDetailPage";
 import Login1 from "./pages/Login1";
-import SignUp from "./pages/SignUp";
+import SignUp from "./pages/SSignUp";
 
 function App() {
   return (

@@ -19,7 +19,7 @@ import { styled } from '@mui/material/styles';
 import AppTheme from '../components/ui/AppTheme';
 import ColorModeSelect from '../components/ui/ColorModeSelect'; 
 // import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../components/ui/CustomIcons';
-import { GoogleIcon, KakaoIcon} from '../components/ui/CustomIcons';
+import { GoogleIcon, KakaoIcon} from '../components/ui/CCustomIcons';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex', 
