@@ -1,15 +1,15 @@
 import api from "@/lib/axios";
 import log from "@/lib/logger";
-import { ListNoticeRequest, ListNoticeResponse } from "@/types/notice";
+import { BasicBoardSearchFields } from "@/types/common/board";
+
 
 const TAG = '[api-noticeApi]';
 
 const NoticeApi = {
-    getList: async (queryParams: ListNoticeRequest): Promise<ListNoticeResponse> => {
-    log.debug(TAG, 'queryParams >>', queryParams);
-    const res = await api.get<ListNoticeResponse>(`/notice/page`, { params: queryParams } );
-    return res.data;
-  },
+    getList: async (params: BasicBoardSearchFields) => {
+      log.debug(TAG, ' 공지사항 API 진입');
+      return api.get('/notice', {params});
+    },
 };
 
 export default NoticeApi;

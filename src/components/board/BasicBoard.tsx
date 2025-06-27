@@ -19,7 +19,8 @@ const BasicBoard = <Res,>({
     limitOptions,
     searchOptions,
     onPageChange,
-    getDetailLink
+    getDetailLink,
+    createLink,
 }: BasicBoardProps<Res>) => {
     
   
@@ -28,10 +29,11 @@ const BasicBoard = <Res,>({
        
         <div className="flex justify-between items-end w-full mb-4">
         <BasicBoardSearchBox
-          paramQuery={paramQuery}
-          limits={limitOptions}
-          searches={searchOptions}
-          onSearch={onSearch}
+            paramQuery={paramQuery}
+            limits={limitOptions}
+            searches={searchOptions}
+            onSearch={onSearch}
+            createLink={createLink}
           />
         </div>
 

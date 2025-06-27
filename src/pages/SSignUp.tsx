@@ -17,13 +17,13 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../components/ui/AppTheme';
-import ColorModeSelect from '../components/ui/ColorModeSelect';
-import { GoogleIcon, KakaoIcon} from '../components/ui/CustomIcons';
-import { Link, useNavigate } from 'react-router-dom';
+import ColorModeSelect from '../components/ui/ColorModeSelect'; 
+import { GoogleIcon, KakaoIcon} from '../components/ui/CCustomIcons';
+import { Link } from 'react-router-dom';
 
 
 const Card = styled(MuiCard)(({ theme }) => ({
-  display: 'flex',
+  display: 'flex', 
   flexDirection: 'column',
   alignSelf: 'center',
   width: '100%',
@@ -218,11 +218,11 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
               onClick={() => alert('Sign up with Facebook')}
               startIcon={<KakaoIcon />}
             >
-              Sign up with Facebook
+              Sign up with Kakao
             </Button>
             <Typography sx={{ textAlign: 'center' }}>
               Already have an account?{' '}
-              <Link to='/Log in'
+              <Link to='/login'
                 // variant="body2"
                 // sx={{ alignSelf: 'center' }}
               >

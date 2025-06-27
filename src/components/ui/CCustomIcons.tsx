@@ -30,13 +30,13 @@ export function KakaoIcon() {
     </SvgIcon>
   );
 }
-
-
+ 
+ 
 // export function FacebookIcon() {
 //   return (
 //   <SvgIcon>
-//      <svg 
-//       xmlns="http://www.w3.org/2000/svg" 
+//      <svg
+//       xmlns="http://www.w3.org/2000/svg"
 //       viewBox="0 0 208 191.94" width="208" height="191.94000244140625">
 //         <g>
 //           <polygon class="cls-1 svg-elem-1" points="76.01 89.49 87.99 89.49 87.99 89.49 82 72.47 76.01 89.49">
@@ -48,7 +48,7 @@ export function KakaoIcon() {
 //     </SvgIcon>
 //   );
 // }
-
+ 
 export function GoogleIcon() {
   return (
     <SvgIcon>

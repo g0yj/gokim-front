@@ -7,7 +7,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-// import Link from '@mui/material/Link';
+import Link1 from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -16,15 +16,12 @@ import { styled } from '@mui/material/styles';
 import ForgotPassword from '../components/ui/ForgotPassword';
 import AppTheme from '../components/ui/AppTheme';
 import ColorModeSelect from '../components/ui/ColorModeSelect';
-import { GoogleIcon, KakaoIcon} from '../components/ui/CustomIcons';
-
-
+import { GoogleIcon, KakaoIcon} from '../components/ui/CCustomIcons';
 
 import useFormHandler from '@/hooks/useFormHandler';
 import log from '@/lib/logger';
 import AuthService from '@/services/authService';
 import { LoginRequest } from '@/types/auth';
-
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
@@ -47,6 +44,7 @@ const Card = styled(MuiCard)(({ theme }) => ({
       'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
   }),
 }));
+
 
 const SignInContainer = styled(Stack)(({ theme }) => ({
   height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
@@ -73,7 +71,11 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 
 
 
-export default function SignIn(props: { disableCustomTheme?: boolean }) {
+
+
+
+export default function Login1(props: { disableCustomTheme?: boolean }) {
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -89,13 +91,16 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
+
   const handleClickOpen = () => {
     setOpen(true);
   };
 
+
   const handleClose = () => {
     setOpen(false);
   };
+
 
   const handleLogin = async () => {
     console.log('click');
@@ -106,6 +111,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
       log.debug('로그인 Axios 실패', err);
     }
   };
+
 
 //   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 //     if (emailError || passwordError) {
@@ -119,11 +125,14 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 //     });
 //   };
 
+
 //   const validateInputs = () => {
 //     const email = document.getElementById('email') as HTMLInputElement;
 //     const password = document.getElementById('password') as HTMLInputElement;
 
+
 //     let isValid = true;
+
 
 //     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
 //       setEmailError(true);
@@ -134,6 +143,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 //       setEmailErrorMessage('');
 //     }
 
+
 //     if (!password.value || password.value.length < 6) {
 //       setPasswordError(true);
 //       setPasswordErrorMessage('Password must be at least 6 characters long.');
@@ -143,8 +153,10 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
 //       setPasswordErrorMessage('');
 //     }
 
+
 //     return isValid;
 //   };
+
 
   return (
     <AppTheme {...props}>
@@ -225,12 +237,7 @@ export default function SignIn(props: { disableCustomTheme?: boolean }) {
             >
               Sign in
             </Button>
-            <Link
-              component="button"
-              type="button"
-              onClick={handleClickOpen}
-              variant="body2"
-              sx={{ alignSelf: 'center' }}
+            <Link to='/signup'
             >
               Forgot your password?
             </Link>
