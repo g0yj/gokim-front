@@ -36,7 +36,8 @@ export interface BasicBoardSearchBoxProps {
   limits: SelectOption[];
   searches: SelectOption[];
   onSearch: () => void; // 검색
-  createLink?: string;
+  onModal: () => void; //등록을 모달창으로 하고 싶을 때 사용
+  createLink?: string; // 등록을 페이지 전체로 하고 싶을 때 사용
 }
 
 export interface BasicBoardViewProps<T extends BoardFile = BoardFile> { // 왜 상속 받나? files의 T[]를 구체화 하기 위함.

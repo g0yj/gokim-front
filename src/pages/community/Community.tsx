@@ -1,4 +1,6 @@
 import BasicBoardSearchBox from '@/components/board/BasicBoardSearchBox';
+import CustomButton from '@/components/common/CustomButton ';
+import CustomModal from '@/components/common/CustomModal';
 import CustomPagination from '@/components/common/CustomPagination';
 import CommunityCard from '@/components/community/CommunityCard';
 import { defaultSearchValues } from '@/constants/board';
@@ -13,6 +15,11 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 const Community = () => {
+  // 모달창을 이용한 등록 
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   // 목록 api 호출
   const paramQuery = useForm<BasicBoardSearchFields>({
     defaultValues: defaultSearchValues,
@@ -55,20 +62,35 @@ const Community = () => {
 
 
 
+
+
   // 사이드 바 예정
   const items = [
     {id:'1', name:'카테고리1'},
     {id:'2', name:'카테고리2'},
   ]
   return (
-    <div>
-      <h3>커뮤니티 페이지</h3>
+    <div className='mt-10'>
       <BasicBoardSearchBox 
         paramQuery={paramQuery} 
         limits={limitOptions} 
         searches={searchOptions} 
         onSearch={onSearch}
+        onModal={openModal}
       ></BasicBoardSearchBox>
+
+      {isModalOpen && (
+        <CustomModal
+          isOpen={isModalOpen}
+          onRequestClose={() => setIsModalOpen(false)}
+          size="md"
+          variant="basic"
+        >
+          <CustomButton variant="primary" onClick={() => setIsModalOpen(false)}>
+            닫기
+          </CustomButton>
+        </CustomModal>
+      )}
 
       <div className="flex flex-wrap">
         {data.list.map((item , idx) => (

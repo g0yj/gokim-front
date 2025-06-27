@@ -1,9 +1,10 @@
 import log from '@/lib/logger';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import CustomButton from '../common/CustomButton ';
 import { BasicBoardSearchBoxProps } from '@/types/common/board';
 import { Link } from 'react-router-dom';
+import CustomModal from '../common/CustomModal';
 
 /**
  * 검색 조건에 따라 전체 컴포넌트가 영향을 받기 때문에 상위 컴포넌트에서 onClick , onChange등 정의 하는게 맞음.
@@ -15,7 +16,8 @@ const BasicBoardSearchBox = ({
   limits,
   searches,
   onSearch,
-  createLink,
+  createLink, // Link로 등록 페이지 이동
+  onModal, // Modal로 등록
 }: BasicBoardSearchBoxProps) => {
 
   const { getValues, setValue, watch } = paramQuery;
@@ -41,6 +43,8 @@ const BasicBoardSearchBox = ({
     setValue('page', 1);
     onSearch();
   };
+
+
 
   return (
 
@@ -92,14 +96,21 @@ const BasicBoardSearchBox = ({
       </div>
 
       <div>
+        {createLink && (
+          <Link to={createLink}>
+            <CustomButton variant="primary">등록</CustomButton>
+          </Link>
+        )}
 
-      {createLink && (
-        <Link to={createLink}>
-          <CustomButton variant="primary">등록</CustomButton>
-        </Link>
+        {onModal && (
+        <CustomButton variant="primary" onClick={onModal}>
+          등록
+        </CustomButton>
       )}
-        
+
     </div>
+
+
   </div>
   );
 };
