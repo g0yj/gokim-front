@@ -50,6 +50,7 @@ export interface BasicBoardViewProps<T extends BoardFile = BoardFile> { // 왜 �
   isMine?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
+  onCancel?: () => void;
 }
 
 // 서버에서 파일 정보 내려줄 때 식별키의 변수명을 일치하지 않음. 변수명이 동일한것만 정의해두고 상속 받아서 사용하기 위함

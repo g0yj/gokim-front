@@ -16,9 +16,22 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }>({
   getFileKey,
   onEdit,
   onDelete,
+  onCancel,
 }: BasicBoardViewProps<T>) => {
   return (
     <div className="w-[800px] mx-auto mt-8 space-y-6">
+      {/* 수정/삭제 버튼 (작성자 본인일 때만 표시) */}
+      <div className="flex justify-end gap-2 mt-6">
+        {isMine ? (
+          <>
+            <CustomButton onClick={onCancel} variant="secondary">목록</CustomButton>
+            <CustomButton onClick={onEdit}>수정</CustomButton>
+            <CustomButton onClick={onDelete} variant="danger">삭제</CustomButton>
+          </>
+        ) : (
+          <CustomButton onClick={onCancel}>목록</CustomButton>
+        )}
+      </div>
       {/* 제목 */}
       <div>
         <h1 className="text-2xl font-semibold break-words">{title}</h1>
@@ -50,23 +63,15 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }>({
 
       {/* 본문 */}
       <div>
-        {/* 본문 - content가 있을 때만 Viewer 렌더링 */}
+        {/* 본문 - content가 있을 때만 Viewer 렌더링 . 
+          이거 안 넣으면, 새로고침 시 본문 아예 안나옴!
+        */}
         {content ? (
           <Viewer initialValue={content} />
         ) : (
           <p className="text-gray-500">불러오는 중...</p>
         )}
       </div>
-
-      {/* 수정/삭제 버튼 (작성자 본인일 때만 표시) */}
-      {isMine && (
-        <div className="flex justify-end gap-2 mt-6">
-          <CustomButton onClick={onEdit}>수정</CustomButton>
-          <CustomButton onClick={onDelete} variant="danger">
-            삭제
-          </CustomButton>
-        </div>
-      )}
     </div>
   );
 };
