@@ -2,12 +2,13 @@ import { BasicBoardViewProps } from '@/types/common/board';
 import React from 'react';
 import CustomButton from '../common/CustomButton ';
 import { downloadFileFromUrl } from '@/utils/file';
-import { Download } from 'lucide-react';
+import { Download } from 'lucide-react'; // npm 설치 필요(디자인적 요소임)
+import { Viewer } from '@toast-ui/react-editor'; // ✅ Toast UI Viewer 컴포넌트 import
+// ✅ Toast UI 스타일 파일 반드시 import (Viewer 스타일 포함)
+import '@toast-ui/editor/dist/toastui-editor.css'; //  Editor용 
+import '@toast-ui/editor/dist/toastui-editor-viewer.css'; //  Viewer용 
 
-
-// <T extends { url: string; originalFileName: string }> 
-// 이 부분은 타입 안정성과 컴파일러 자동완성을 위한 제네릭 제약 조건 (자세한 내용은 하단에 정리)
-const BasicBoardView = <T extends { url: string; originalFileName: string }> ({
+const BasicBoardView = <T extends { url: string; originalFileName: string }>({
   title,
   content,
   isMine = false,
@@ -16,7 +17,6 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }> ({
   onEdit,
   onDelete,
 }: BasicBoardViewProps<T>) => {
-
   return (
     <div className="w-[800px] mx-auto mt-8 space-y-6">
       {/* 제목 */}
@@ -38,9 +38,7 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }> ({
                 <button
                   type="button"
                   className="text-blue-600 underline hover:text-blue-800"
-                  onClick={() =>
-                    downloadFileFromUrl(file.url, file.originalFileName)
-                  }
+                  onClick={() => downloadFileFromUrl(file.url, file.originalFileName)}
                 >
                   {file.originalFileName}
                 </button>
@@ -50,13 +48,17 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }> ({
         </div>
       )}
 
-      {/* 내용 */}
-      <div
-        className="prose max-w-none"
-        dangerouslySetInnerHTML={{ __html: content ?? '' }} //'' 사용하는 이유? __html 쓸 때 null 값이 나오면 안되기 때문에 기본값 추가해서 null 방지 
-      />
+      {/* 본문 */}
+      <div>
+        {/* 본문 - content가 있을 때만 Viewer 렌더링 */}
+        {content ? (
+          <Viewer initialValue={content} />
+        ) : (
+          <p className="text-gray-500">불러오는 중...</p>
+        )}
+      </div>
 
-      {/* 작성자일 때만 수정/삭제 버튼 */}
+      {/* 수정/삭제 버튼 (작성자 본인일 때만 표시) */}
       {isMine && (
         <div className="flex justify-end gap-2 mt-6">
           <CustomButton onClick={onEdit}>수정</CustomButton>

@@ -26,7 +26,7 @@ function App() {
           <Route path="/notice" element={<Notice />} />
           
           { /** 익명 게시판 */}
-          <Route path="/board" element={<Board />} />
+          <Route path="/anon" element={<Board />} />
           <Route path="/anon/create" element={<AnonBoardCreatePage />} />
           <Route path="/anon/:id" element={<AnonBoardDetailPage />} />
           { /** 프로젝트 */}
