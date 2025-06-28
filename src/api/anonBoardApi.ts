@@ -15,10 +15,16 @@ const AnonBoardApi = {
         const res = await api.get(`/anon/${id}`);
         log.info('익명 게시판 호출 데이터', res);
         return res.data
+    },
+
+    postAnonBoard: async (formData: FormData): Promise<void> => {
+        const res = await api.post('/anon', formData);
+        return res.data;
     }
 };
 
 export default AnonBoardApi;
+
 
 /**
  *  Partial<T> 이란?

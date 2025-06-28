@@ -14,6 +14,9 @@ const AnonBoardService = {
     },
     detail: async (id: string): Promise<AnonBoardDetail> => {
         return await AnonBoardApi.getDetail(id);
+    },
+    createAnonBoard: async (formData: FormData): Promise<void> => {
+        return await AnonBoardApi.postAnonBoard(formData);
     }
 };
 
