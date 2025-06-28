@@ -2,6 +2,7 @@ import { BasicBoardViewProps } from '@/types/common/board';
 import React from 'react';
 import CustomButton from '../common/CustomButton ';
 import { downloadFileFromUrl } from '@/utils/file';
+import { Download } from 'lucide-react';
 
 
 // <T extends { url: string; originalFileName: string }> 
@@ -13,46 +14,53 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }> ({
   files = [],
   getFileKey,
   onEdit,
-  onDelete
+  onDelete,
 }: BasicBoardViewProps<T>) => {
 
   return (
     <div className="w-[800px] mx-auto mt-8 space-y-6">
       {/* 제목 */}
-      <h2 className="text-2xl font-bold border-b pb-2">{title}</h2>
-
-      {/* 내용 */}
-      <div className="text-gray-800 whitespace-pre-line border-b pb-4">
-        {content}
+      <div>
+        <h1 className="text-2xl font-semibold break-words">{title}</h1>
       </div>
 
       {/* 첨부파일 */}
       {files.length > 0 && (
-        <div className="space-y-2">
-          <div className="text-sm font-semibold text-gray-600">첨부파일</div>
-          <ul className="space-y-1">
+        <div>
+          <h3 className="font-semibold mb-2">첨부파일</h3>
+          <ul className="space-y-2 list-none">
             {files.map((file, idx) => (
               <li
-                //props로 전달된 getFileKey 함수가 있다면, 그 함수를 실행해서 key로 사용
-                //getFileKey가 없다면, 기본적으로 file.url을 key로 사용
                 key={getFileKey ? getFileKey(file, idx) : file.url}
-                className="text-blue-600 hover:underline cursor-pointer"
-                onClick={() => downloadFileFromUrl(file.url, file.originalFileName)}
+                className="flex items-center gap-2"
               >
-                {file.originalFileName}
+                <Download size={16} className="text-gray-500" />
+                <button
+                  type="button"
+                  className="text-blue-600 underline hover:text-blue-800"
+                  onClick={() =>
+                    downloadFileFromUrl(file.url, file.originalFileName)
+                  }
+                >
+                  {file.originalFileName}
+                </button>
               </li>
             ))}
           </ul>
         </div>
       )}
 
-      {/* 작성자 전용 버튼 */}
+      {/* 내용 */}
+      <div
+        className="prose max-w-none"
+        dangerouslySetInnerHTML={{ __html: content ?? '' }} //'' 사용하는 이유? __html 쓸 때 null 값이 나오면 안되기 때문에 기본값 추가해서 null 방지 
+      />
+
+      {/* 작성자일 때만 수정/삭제 버튼 */}
       {isMine && (
-        <div className="flex gap-2 justify-end pt-4">
-          <CustomButton variant="ghost" onClick={onEdit}>
-            수정
-          </CustomButton>
-          <CustomButton variant="danger" onClick={onDelete}>
+        <div className="flex justify-end gap-2 mt-6">
+          <CustomButton onClick={onEdit}>수정</CustomButton>
+          <CustomButton onClick={onDelete} variant="danger">
             삭제
           </CustomButton>
         </div>
