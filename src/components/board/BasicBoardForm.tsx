@@ -1,45 +1,60 @@
-import React, {  useRef } from 'react';
+import React, {  useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import CustomButton from '../common/CustomButton ';
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { AnonBoardFile } from '@/types/anonBoard';
+import { getFileName } from '@/utils/file';
+import log from '@/lib/logger';
 
 
-// 폼 타입 정의
+// 폼 필드 기본 타입 (등록/수정 공통)
 export interface BasicBoardFormValues {
   title?: string | null;
   content?: string | null;
   pinned?: boolean | null;
-  files?: File[];
+  files?: File[] | AnonBoardFile[] | null;
 }
 
+// 수정 전용 타입: 삭제할 파일 id 목록 포함
 export interface EditBoardFormValues extends BasicBoardFormValues {
   deleteFileIds?: (string | number)[] | null;
 }
 
+// useForm과 submitHandler에서 사용될 통합 타입
 type FormValues = BasicBoardFormValues | EditBoardFormValues;
 
-interface BasicBoardFormProps {
+// 공통 게시글 폼 Props 제네릭 정의
+interface BasicBoardFormProps<T> {
   mode: 'create' | 'edit';
-  defaultValues?: FormValues;
+  defaultValues?: BasicBoardFormValues & { files?: (File | T)[] };
   onSubmit: (values: FormValues) => void;
   onCancel: () => void;
   isLoading?: boolean;
+  getFileId?: (file: T) => string | number;
 }
 
-const BasicBoardForm = ({
+//===============================================================================
+const BasicBoardForm = <T,> ({
   mode,
   defaultValues,
   onSubmit,
   onCancel,
   isLoading = false,
-}: BasicBoardFormProps) => {
+  getFileId,
+}: BasicBoardFormProps<T>) => {
+
   const editorRef = useRef<ToastEditor>(null);
+  
+  // 삭제할 서버 파일 id 저장용
+  const [deleteFileIds, setDeletedFileIds] = useState<(string | number)[]>([]);
+
 
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormValues>({
     defaultValues: defaultValues ?? {
       title: '',
@@ -50,15 +65,44 @@ const BasicBoardForm = ({
     },
   });
 
-  const submitHandler = (values: FormValues) => {
-    const editorInstance = editorRef.current;
-    const htmlContent = editorInstance?.getInstance().getHTML() || '';
+  useEffect(() => {
+    if (defaultValues) {
+      reset({
+        ...defaultValues,
+        ...(mode === 'edit' ? { deleteFileIds: [] } : {}),
+      });
+    }
+  }, [defaultValues, reset, mode]);
 
+
+  const submitHandler = (values: FormValues) => {
+    const htmlContent = editorRef.current?.getInstance().getHTML() || '';
     onSubmit({
       ...values,
       content: htmlContent,
+      deleteFileIds,
     });
   };
+  
+  // 전체 파일 중 서버에 저장된 파일만 추림 (File 인스턴스 제외)
+  const allFiles = defaultValues?.files ?? [];
+  const serverFiles = allFiles
+  .filter((f): f is T => !(f instanceof File))
+  .filter((file) => {
+    if (!getFileId) return true;
+    const id = getFileId(file);
+    return !deleteFileIds.includes(id); // 삭제 대상은 제외
+  });
+
+
+  // 삭제 버튼 클릭 시 삭제 ID 배열에 추가
+  const handleFileDelete = (file: T) => {
+    if (!getFileId) return;
+    const id = getFileId(file);
+    log.debug('파일 삭제', id);
+    setDeletedFileIds(prev => [...prev, id]);
+  };
+
 
 
   return (
@@ -94,7 +138,30 @@ const BasicBoardForm = ({
         />
       </div>
 
-      {/* 파일 업로드 */}
+      {/* 서버에 저장된 기존 파일 목록
+          렌더링 시 deleteFileIds에 포함되지 않은 것만 렌더
+      */}
+      {mode === 'edit' && getFileId &&
+        serverFiles
+          .filter(file => !deleteFileIds.includes(getFileId(file)))
+          .map(file => {
+            const fileId = getFileId(file);
+            return (
+              <div key={fileId} className="flex justify-between items-center">
+                <span>{getFileName(file)}</span>
+                <button
+                  type="button"
+                  onClick={() => handleFileDelete(file)}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  ❌
+                </button>
+              </div>
+            );
+          })}
+
+      
+      {/* 신규 파일 업로드 */}
       <div>
         <input
           type="file"

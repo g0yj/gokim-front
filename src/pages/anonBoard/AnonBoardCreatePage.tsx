@@ -14,8 +14,20 @@ const AnonBoardCreatePage = () => {
       formData.append('title', formValues.title ?? '');
       formData.append('content', formValues.content ?? '');
       
-      // ✅ FileList → File[] 로 변환 후 처리
-      const files = Array.from(formValues.files || []);
+      let files: File[] = [];
+
+      // formValues.files가 존재할 때만 처리
+      if (formValues.files) {
+        // FileList인 경우
+        if (formValues.files instanceof FileList) {
+          files = Array.from(formValues.files); // FileList → File[]
+        }
+        // File[]인 경우 (필터링으로 File만 추출)
+        else if (Array.isArray(formValues.files)) {
+          files = formValues.files.filter((file): file is File => file instanceof File);
+        }
+      }
+
       files.forEach(file => formData.append('files', file));
 
       await AnonBoardService.createAnonBoard(formData);

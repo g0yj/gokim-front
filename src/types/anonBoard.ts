@@ -25,7 +25,7 @@ export type AnonBoardListRes = CommonListResponse<ListAnonBoardItem>; // 페이�
 
 // originalFileName과 url은 BoardFile에서 정의
 export interface AnonBoardFile extends BoardFile {
-    anonBoardField: string;
+    anonBoardFileId: string;
 }
   
 export interface AnonBoardDetail {
