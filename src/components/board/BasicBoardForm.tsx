@@ -5,6 +5,7 @@ import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 
+// 폼 타입 정의
 export interface BasicBoardFormValues {
   title?: string | null;
   content?: string | null;
@@ -13,43 +14,52 @@ export interface BasicBoardFormValues {
 }
 
 export interface EditBoardFormValues extends BasicBoardFormValues {
-  deleteFileIds?: string[] | number[] | null;
+  deleteFileIds?: (string | number)[] | null;
 }
 
-interface BasicBoardFormProps<T extends BasicBoardFormValues> { 
+type FormValues = BasicBoardFormValues | EditBoardFormValues;
+
+interface BasicBoardFormProps {
   mode: 'create' | 'edit';
-  defaultValues?: T;
-  onSubmit: (values: T) => void;
+  defaultValues?: FormValues;
+  onSubmit: (values: FormValues) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
-const BasicBoardForm = <T extends BasicBoardFormValues> ({ // 타입에 <T>가 있다면 <T,> 반드시 써줘야함. 현재는 제네릭 쓴 곳이 없음.
+const BasicBoardForm = ({
   mode,
   defaultValues,
   onSubmit,
   onCancel,
   isLoading = false,
-}:  BasicBoardFormProps<T>) => {
-  const editorRef = useRef<ToastEditor>(null); //Toast UI Editor 조작을 위한 ref 생성
+}: BasicBoardFormProps) => {
+  const editorRef = useRef<ToastEditor>(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<BasicBoardFormValues>({
-    defaultValues: defaultValues || { title: '', content: '', pinned: false, files: [] },
+  } = useForm<FormValues>({
+    defaultValues: defaultValues ?? {
+      title: '',
+      content: '',
+      pinned: false,
+      files: [],
+      ...(mode === 'edit' ? { deleteFileIds: [] } : {}),
+    },
   });
 
-  const submitHandler = (values: BasicBoardFormValues) => {
-    // 에디터 인스턴스에서 HTML 형태로 본문 추출
+  const submitHandler = (values: FormValues) => {
     const editorInstance = editorRef.current;
-    if (editorInstance) {
-      const htmlContent = editorInstance.getInstance().getHTML();
-      values.content = htmlContent;
-    }
-    onSubmit(values);
+    const htmlContent = editorInstance?.getInstance().getHTML() || '';
+
+    onSubmit({
+      ...values,
+      content: htmlContent,
+    });
   };
+
 
   return (
     <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
