@@ -16,21 +16,21 @@ export interface EditBoardFormValues extends BasicBoardFormValues {
   deleteFileIds?: string[] | number[] | null;
 }
 
-interface BasicBoardFormProps { 
+interface BasicBoardFormProps<T extends BasicBoardFormValues> { 
   mode: 'create' | 'edit';
-  defaultValues?: BasicBoardFormValues;
-  onSubmit: (values: BasicBoardFormValues) => void;
+  defaultValues?: T;
+  onSubmit: (values: T) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
 
-const BasicBoardForm = ({ // 타입에 <T>가 있다면 <T,> 반드시 써줘야함. 현재는 제네릭 쓴 곳이 없음.
+const BasicBoardForm = <T extends BasicBoardFormValues> ({ // 타입에 <T>가 있다면 <T,> 반드시 써줘야함. 현재는 제네릭 쓴 곳이 없음.
   mode,
   defaultValues,
   onSubmit,
   onCancel,
   isLoading = false,
-}: BasicBoardFormProps) => {
+}:  BasicBoardFormProps<T>) => {
   const editorRef = useRef<ToastEditor>(null); //Toast UI Editor 조작을 위한 ref 생성
 
   const {
