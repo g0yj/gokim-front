@@ -86,7 +86,7 @@ const AnonBoardDetailPage = () => {
   {/* 데이터 로딩 완료 후 렌더링 */}
   {data ? (
     isEditMode ? (
-      <BasicBoardForm<EditBoardFormValues>
+      <BasicBoardForm
         mode="edit"
         defaultValues={{
           title: data.title,
