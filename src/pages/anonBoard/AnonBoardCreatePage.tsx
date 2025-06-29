@@ -28,7 +28,7 @@ const AnonBoardCreatePage = () => {
   return (
     <div className="w-[800px] mx-auto mt-10">
       <h2 className="text-xl font-bold mb-4">익명 게시판 글쓰기</h2>
-      <BasicBoardForm mode='create' onSubmit={handleCreate} onCancel={()=> {navigate('/board')}} />
+      <BasicBoardForm mode='create' onSubmit={handleCreate} onCancel={()=> {navigate('/anon')}} />
     </div>
   );
 };

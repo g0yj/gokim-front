@@ -51,7 +51,7 @@ const AdminHeader = () => {
           }}
         >
           <Tab label="공지사항" value="/admin/notice" />
-          <Tab label="회원관리" value="/board" />
+          <Tab label="회원관리" value="/anon" />
           <Tab label="게시물관리" value="/community" />
           <Tab label="통계" value="/project" />
         </Tabs>

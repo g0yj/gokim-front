@@ -20,6 +20,11 @@ const AnonBoardApi = {
     postAnonBoard: async (formData: FormData): Promise<void> => {
         const res = await api.post('/anon', formData);
         return res.data;
+    },
+
+    deleteAnonBoard: async (id: string): Promise<void> => {
+        log.debug('삭제 api 호출 id :', id);
+        return await api.delete(`/anon/${id}`);
     }
 };
 
