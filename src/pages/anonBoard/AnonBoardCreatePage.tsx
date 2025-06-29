@@ -11,7 +11,7 @@ const AnonBoardCreatePage = () => {
     try {
       // 전달 데이터 만들기
       const formData = new FormData();
-      formData.append('title', formValues.title);
+      formData.append('title', formValues.title ?? '');
       formData.append('content', formValues.content ?? '');
       
       // ✅ FileList → File[] 로 변환 후 처리

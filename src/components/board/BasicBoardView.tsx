@@ -67,7 +67,7 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }>({
           이거 안 넣으면, 새로고침 시 본문 아예 안나옴!
         */}
         {content ? (
-          <Viewer initialValue={content} />
+          <Viewer key={content} initialValue={content ?? ''} /> //key 속성을 활용해서 Viewer를 강제로 리렌더링 (아래설명)
         ) : (
           <p className="text-gray-500">불러오는 중...</p>
         )}
@@ -86,3 +86,11 @@ export default BasicBoardView;
  * 명시적으로 보장해줄 수 있음.
  * 즉, 공통 컴포넌트로 쓸 때도 BoardFile 또는 상속 구조를 따르기만 하면 문제 없이 사용 가능하다는 뜻
  */
+
+ /**
+  * 수정 후 새로고침하지 않으면 content가 반영되지 않는 이유??
+  * Toast UI Viewer가 업데이트된 content를 반영하지 않음
+    BasicBoardView 컴포넌트 내부의 <Viewer initialValue={content ?? ''} />는 initialValue만 초기 렌더에 사용되고 이후에는 변화해도 갱신되지 않아.
+
+    해결책은? key 속성을 활용해서 Viewer를 강제로 리렌더링해주는 방식이 실무에서 가장 간단
+  */

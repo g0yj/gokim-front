@@ -21,6 +21,9 @@ const AnonBoardService = {
     },
     deleteAnonBoard: async (id: string): Promise<void> =>  {
         return await AnonBoardApi.deleteAnonBoard(id);
+    },
+    updateAnonBoard: async (formData: FormData, id: string): Promise<void> => {
+        return await AnonBoardApi.putAnonBoard(formData, id);
     }
 };
 

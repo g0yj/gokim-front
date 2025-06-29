@@ -6,13 +6,17 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 
 
 export interface BasicBoardFormValues {
-  title: string;
-  content?: string;
+  title?: string | null;
+  content?: string | null;
   pinned?: boolean | null;
   files?: File[];
 }
 
-interface BasicBoardFormProps {
+export interface EditBoardFormValues extends BasicBoardFormValues {
+  deleteFileIds?: string[] | number[] | null;
+}
+
+interface BasicBoardFormProps { 
   mode: 'create' | 'edit';
   defaultValues?: BasicBoardFormValues;
   onSubmit: (values: BasicBoardFormValues) => void;
@@ -20,7 +24,7 @@ interface BasicBoardFormProps {
   isLoading?: boolean;
 }
 
-const BasicBoardForm = ({
+const BasicBoardForm = ({ // 타입에 <T>가 있다면 <T,> 반드시 써줘야함. 현재는 제네릭 쓴 곳이 없음.
   mode,
   defaultValues,
   onSubmit,
