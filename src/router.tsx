@@ -14,14 +14,13 @@ import ProjectLayout from "./pages/project/ProjectLayout";
 import FeatureRenderer from "./pages/project/FeatureRenderer";
 import NotFoundPage from "./pages/NotFoundPage";
 
+// 모든 라우트 정의
 export const router = createBrowserRouter([
     {
         path: '/',
         element: <Layout />,
         children:[
             { index: true, element: <Index /> },
-            { path: 'login', element: <Login1 /> },
-            { path: 'signup', element: <SignUp /> },
             { path: 'notice', element: <Notice /> },
             { path: 'admin/notice', element: <AdminNotice /> },
             { path: 'anon', element: <AnonBoard /> },
@@ -41,7 +40,8 @@ export const router = createBrowserRouter([
             },
         ],
     },
-    {
-        path:'*', element: <NotFoundPage/>
-    }
+
+    { path:'/login', element: <Login1/>},
+    { path:'/signup', element: <SignUp/>},
+    { path:'*', element: <NotFoundPage/>}
 ])
