@@ -10,16 +10,17 @@ import Divider from '@mui/material/Divider';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
+import Avatar from '@mui/material/Avatar';
+// import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../components/ui/AppTheme';
-import ColorModeSelect from '../components/ui/ColorModeSelect'; 
-// import { GoogleIcon, FacebookIcon, SitemarkIcon } from '../components/ui/CustomIcons';
-import { GoogleIcon, KakaoIcon} from '../components/ui/CCustomIcons';
+import { Link } from 'react-router-dom';
+
+
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex', 
@@ -72,17 +73,26 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [nameError, setNameError] = React.useState(false);
   const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+  const [idError, setIdError] = React.useState(false);
+  const [idErrorMessage, setIdErrorMessage] = React.useState('');
+  const [phoneError, setPhoneError] = React.useState(false);
+  const [phoneMessage, setPhoneErrorMessage] = React.useState(false);
+  const [image, setImage] = React.useState<File | null>(null);
+
+
 
   const validateInputs = () => {
     const email = document.getElementById('email') as HTMLInputElement;
     const password = document.getElementById('password') as HTMLInputElement;
     const name = document.getElementById('name') as HTMLInputElement;
+    const id = document.getElementById('id') as HTMLInputElement;
+    const phone = document.getElementById('phone') as HTMLInputElement;
 
     let isValid = true;
 
     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage('유효한 이메일을 입력 해주세요.');
       isValid = false;
     } else {
       setEmailError(false);
@@ -91,7 +101,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
     if (!password.value || password.value.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage('비밀번호는 6자리 이상 입력 해주세요.');
       isValid = false;
     } else {
       setPasswordError(false);
@@ -100,75 +110,126 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
     if (!name.value || name.value.length < 1) {
       setNameError(true);
-      setNameErrorMessage('Name is required.');
+      setNameErrorMessage('이름을 입력 하세요.');
       isValid = false;
     } else {
       setNameError(false);
       setNameErrorMessage('');
     }
 
+    if (!id.value || id.value.length < 1) {
+      setIdError(true);
+      setIdErrorMessage('ID를 입력 하세요.');
+      isValid = false;
+    } else {
+      setIdError(false);
+      setIdErrorMessage('');
+    }
+
+    if (!phone.value || phone.value < 11) {
+      setPhoneError(true);
+      setPhoneErrorMessage('핸드폰 번호를 입력하세요.');
+      isValid = false;
+    } else {
+      setPhoneError(false);
+      setPhoneErrorMessage('');
+    }
+
     return isValid;
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+    console.log('sss',event.target);
+    setImage(file);
+    console.log('s2',setImage(file));
+  }
+
+  const handleAvatarClick = () => {
+    const imgInput = document.getElementById('image') as HTMLInputElement;
+    imgInput.click();
+    console.log('이미지 클릭');
+  }
+
+  const getInitialFromName = (name: string) => {
+    if(!name) return '';
+    const parts = name.split(' ');
+    return parts[0].charAt(0).toUpperCase();
+  }
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    if (nameError || emailError || passwordError) {
+    if (nameError || emailError || passwordError || idError) {
       event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
+    
+    if (!image){
+      const fullName = data.get('name') as string;
+      data.append('avatarInitial', getInitialFromName(fullName));
+      console.log('이미지없을때: ',data.append('avatarInitial', getInitialFromName(fullName)));
+    }
+
+
     console.log({
       name: data.get('name'),
       lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
+      avatarInitial: data.get('avatarInitial'),
+      image: image ?  data.get('name') : 'No image upload',
     });
   };
 
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
-      <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
       <SignUpContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
           <Typography
-            component="h1"
+            component="h4"
             variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+            sx={{ width: '80%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
           >
-            Sign up
+            회원가입
           </Typography>
           <Box
             component="form"
             onSubmit={handleSubmit}
-            sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+            sx={{ display: 'flex', flexDirection: 'column', gap: 2, minHeight: '70vh', overflowY: 'auto', }}
           >
-            <FormControl>
-              <FormLabel htmlFor="name">Full name</FormLabel>
-              <TextField
-                autoComplete="name"
-                name="name"
-                required
-                fullWidth
-                id="name"
-                placeholder="Jon Snow"
-                error={nameError}
-                helperText={nameErrorMessage}
-                color={nameError ? 'error' : 'primary'}
+          <FormControl sx={{ alignItems: 'center', mb: 2 }}>
+              <Stack direction="column" alignItems="center" spacing={1}>
+                <Avatar onClick={handleAvatarClick} sx={{ width: 56, height: 56, mb: 2 }}>
+                  {image ? (
+                    <img src={URL.createObjectURL(image)} alt="Profile" style={{ width: '100%', height: '100%' }} />
+                  ) : (
+                    getInitialFromName((document.querySelector('input[name="name"]') as HTMLInputElement)?.value)
+                  )}
+                </Avatar>
+                <Typography variant="caption" color="textSecondary">
+                  이미지 선택
+                </Typography>
+              </Stack>
+              <input
+                accept="image/*"
+                type="file"
+                id="image"
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="email">Email</FormLabel>
+              <FormLabel htmlFor="id">ID</FormLabel>
               <TextField
+                autoComplete="id"
+                name="id"
                 required
                 fullWidth
-                id="email"
-                placeholder="your@email.com"
-                name="email"
-                autoComplete="email"
-                variant="outlined"
-                error={emailError}
-                helperText={emailErrorMessage}
-                color={passwordError ? 'error' : 'primary'}
+                id="id"
+                error={idError}
+                helperText={idErrorMessage}
+                color={idError ? 'error' : 'primary'}
               />
             </FormControl>
             <FormControl>
@@ -187,10 +248,47 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 color={passwordError ? 'error' : 'primary'}
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="allowExtraEmails" color="primary" />}
-              label="I want to receive updates via email."
-            />
+            <FormControl>
+              <FormLabel htmlFor="name">이름</FormLabel>
+              <TextField
+                autoComplete="name"
+                name="name"
+                required
+                fullWidth
+                id="name"
+                error={nameError}
+                helperText={nameErrorMessage}
+                color={nameError ? 'error' : 'primary'}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="phone">Phone</FormLabel>
+              <TextField
+                required
+                fullWidth
+                id="phone"
+                name="phone"
+                autoComplete="phone"
+                variant="outlined"
+                error={phoneError}
+                helperText={phoneMessage}
+                color={phoneError ? 'error' : 'primary'}
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="email">Email</FormLabel>
+              <TextField
+                required
+                fullWidth
+                id="email"
+                name="email"
+                autoComplete="email"
+                variant="outlined"
+                error={emailError}
+                helperText={emailErrorMessage}
+                color={passwordError ? 'error' : 'primary'}
+              />
+            </FormControl>
             <Button
               type="submit"
               fullWidth
@@ -203,31 +301,11 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
           <Divider>
             <Typography sx={{ color: 'text.secondary' }}>or</Typography>
           </Divider>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => alert('Sign up with Google')}
-              startIcon={<GoogleIcon />}
-            >
-              Sign up with Google
-            </Button>
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => alert('Sign up with Facebook')}
-              startIcon={<KakaoIcon />}
-            >
-              Sign up with Kakao
-            </Button>
+          <Box sx={{ display: 'flex', flexDirection: 'column'}}>
             <Typography sx={{ textAlign: 'center' }}>
               Already have an account?{' '}
-              <Link
-                href="/material-ui/getting-started/templates/sign-in/"
-                variant="body2"
-                sx={{ alignSelf: 'center' }}
-              >
-                Sign in
+              <Link to='/login'>
+                Log in
               </Link>
             </Typography>
           </Box>
@@ -236,50 +314,3 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     </AppTheme>
   );
 }
-
-// const Signup = () => {
-  // return (
-    // <div>
-    //   <h3>회원가입</h3>
-    // </div>
-
-      // <div className='flex items-center justify-center min-h-screen bg-[#eaecf0]'>
-      //   <Card className='w-full max-w-sm w-[500px] h-[450x] '>
-      //     <CardContent className='pt-3'>
-      //     <form>
-      //       <div className='flex flex-col gap-6'>
-      //         <div className='grid gap-2'>
-      //           <label htmlFor='id' className='font-bold'>Id</label>
-      //           <input
-      //             id='id'
-      //             type='text'
-      //             placeholder='아이디를 입력하세요'
-      //             required
-      //             className='text-sm'
-      //             // value={form.id}
-      //             // onChange={(e) => handleFormChange("id", e.target.value)}
-      //           >
-      //           </input>
-      //         </div>
-      //       </div>
-      //       <div className='grid gap-2 mt-5'>
-      //           <label htmlFor='password' className='font-bold'>Password</label>
-      //           <input
-      //             id='password'
-      //             type='password'
-      //             placeholder='비밀번호를 입력하세요'
-      //             required
-      //             className='text-sm'
-      //             // value={form.password}
-      //             // onChange={(e) => handleFormChange("password", e.target.value)}
-      //           >
-      //           </input>
-      //         </div>
-      //     </form>
-      //   </CardContent>
-      //   </Card>
-      // </div>
-  // );
-// };
-
-// export default Signup;
