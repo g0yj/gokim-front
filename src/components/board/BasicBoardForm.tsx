@@ -141,7 +141,7 @@ const BasicBoardForm = <T,> ({
       {/* 서버에 저장된 기존 파일 목록
           렌더링 시 deleteFileIds에 포함되지 않은 것만 렌더
       */}
-      {mode === 'edit' && getFileId &&
+      {mode === 'edit' && getFileId &&  
         serverFiles
           .filter(file => !deleteFileIds.includes(getFileId(file)))
           .map(file => {
