@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, RouterProvider } from "react-router-dom";
 import Layout from "./layout/Layout";
 import "./App.css";
 import Index from "./pages/Index";
-import Project from "./pages/Project";
+import Project from "./pages/project/Project";
 import Community from "./pages/community/Community";
 import Board from "./pages/anonBoard/AnonBoard";
 import AnonBoardCreatePage from "./pages/anonBoard/AnonBoardCreatePage";
@@ -11,7 +11,18 @@ import Login1 from "./pages/Login1";
 import SignUp from "./pages/SSignUp";
 import AdminNotice from "./pages/notice/AdminNotice";
 import Notice from "./pages/notice/Notice";
+import { router } from "./router";
 
+
+
+function App() {
+  return <RouterProvider router={router} />;
+}
+
+export default App;
+
+
+/*
 function App() {
   return (
     <BrowserRouter>
@@ -21,17 +32,17 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Index />} />
 
-          {/** 공지사항 */}
+          
           <Route path="/admin/notice" element={<AdminNotice />} />
           <Route path="/notice" element={<Notice />} />
           
-          { /** 익명 게시판 */}
+        
           <Route path="/anon" element={<Board />} />
           <Route path="/anon/create" element={<AnonBoardCreatePage />} />
           <Route path="/anon/:id" element={<AnonBoardDetailPage />} />
-          { /** 프로젝트 */}
+        
           <Route path="/project" element={<Project />} />
-          { /** 커뮤니티 */}
+     
           <Route path="/community" element={<Community />} />
         </Route>
       </Routes>
@@ -40,5 +51,4 @@ function App() {
 }
 
 export default App;
-
-//<Route path="/notice/:id" element={<BoardForm mode="view" resourcePath="notice" /> }/>
+*/

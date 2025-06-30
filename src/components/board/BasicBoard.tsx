@@ -1,6 +1,5 @@
 
 import CustomPagination from '../common/CustomPagination';
-import log from '@/lib/logger';
 import BasicBoardSearchBox from './BasicBoardSearchBox';
 
 import CustomTable from '../common/CustomTable';

@@ -1,6 +1,6 @@
 import log from '@/lib/logger';
 import AnonBoardService from '@/services/anonBoardService';
-import { AnonBoardDetail } from '@/types/anonBoard';
+import { AnonBoardDetail, AnonBoardFile } from '@/types/anonBoard';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BasicBoardView from '@/components/board/BasicBoardView';
@@ -52,34 +52,44 @@ const AnonBoardDetailPage = () => {
     }
   }
 
-  const handleUpdate = async (formValues : EditBoardFormValues) => {
+  const handleUpdate = async (formValues: EditBoardFormValues) => {
     log.debug('수정버튼 클릭');
     if (!id) return;
+  
     try {
       const formData = new FormData();
       formData.append('title', formValues.title ?? '');
       formData.append('content', formValues.content ?? '');
-      const files = Array.from(formValues.files || []);
-      files.forEach(file => formData.append('files', file));
-
+  
+      let files: File[] = [];
+  
+      if (formValues.files) {
+        if (formValues.files instanceof FileList) {
+          files = Array.from(formValues.files);
+        } else if (Array.isArray(formValues.files)) {
+          files = formValues.files.filter((file): file is File => file instanceof File);
+        }
+      }
+  
+      files.forEach((file) => formData.append('files', file));
+  
+      // ✅ 누락되었던 삭제 대상 파일 id 전송
       if (formValues.deleteFileIds && formValues.deleteFileIds.length > 0) {
         formValues.deleteFileIds.forEach((id) => {
-          formData.append('deleteFileIds', String(id)); // 👈 하나씩 문자열로 추가
+          formData.append('deleteFileIds', String(id));
         });
+        log.debug('삭제 대상 파일 IDs:', formValues.deleteFileIds);
       }
-
+  
       await AnonBoardService.updateAnonBoard(formData, id);
       setIsEditMode(false);
-
-      // 다시 상세 조회 호출
+  
       const updated = await AnonBoardService.detail(id);
       setData(updated);
-
     } catch (err) {
       log.error('익명 게시판 수정 axios 실패', err);
     }
-
-  }
+  };
 
   return (
     <div className="w-[800px] mt-8 mx-auto">
@@ -91,11 +101,13 @@ const AnonBoardDetailPage = () => {
         defaultValues={{
           title: data.title,
           content: data.content,
-          files: [], // 새로 추가된 파일만 전달
-          deleteFileIds: [], // 삭제 대상 파일 id
+          files: data.files, // 새로 추가된 파일만 전달
         }}
         onSubmit={handleUpdate}
-        onCancel={handleCancelEdit}
+            onCancel={handleCancelEdit}
+            getFileId={(file) => {
+              return (file as AnonBoardFile).anonBoardFileId;
+            }}
       />
     ) : (
       <BasicBoardView

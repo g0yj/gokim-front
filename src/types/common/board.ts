@@ -65,20 +65,6 @@ export interface BoardFile {
 
 
 
-export interface BoardFormProps {
-  mode: 'view' | 'edit' | 'create';
-  id?: string | number;
-  resourcePath: string;
-}
-
-export interface BoardFormData {
-  id?: string | number;
-  title: string;
-  content: string;
-  files?: BoardFile[];
-}
-
-
 /**
 url이 유일하다고 보장되더라도, 실제로는 url이 없거나 중복되는 잘못된 상황이 발생할 수도 있음
 그럴 경우 getFileKey로 보완해줄 수 있음
