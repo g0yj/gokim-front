@@ -35,8 +35,9 @@ export interface BasicBoardSearchBoxProps {
   paramQuery: UseFormReturn<BasicBoardSearchFields>;
   limits: SelectOption[];
   searches: SelectOption[];
-  onSearch: () => void; // 검색
-  createLink?: string;
+  onSearch: () => void; // 검색 (검색이니까 반드시 있어야하는 걸로 수정)
+  onModal?: () => void; //등록을 모달창으로 하고 싶을 때 사용 (?:)
+  createLink?: string; // 등록을 페이지 전체로 하고 싶을 때 사용(?:)
 }
 
 export interface BasicBoardViewProps<T extends BoardFile = BoardFile> { // 왜 상속 받나? files의 T[]를 구체화 하기 위함.
@@ -49,6 +50,7 @@ export interface BasicBoardViewProps<T extends BoardFile = BoardFile> { // 왜 �
   isMine?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
+  onCancel?: () => void;
 }
 
 // 서버에서 파일 정보 내려줄 때 식별키의 변수명을 일치하지 않음. 변수명이 동일한것만 정의해두고 상속 받아서 사용하기 위함

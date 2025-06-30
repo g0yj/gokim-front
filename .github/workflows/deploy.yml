@@ -20,7 +20,7 @@ jobs:
           node-version: '21'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps # merge하고 배포 시 다른 브랜치에서 사용한 라이브러리 자동 설치
 
       - name: Build frontend with Vite
         run: npm run build

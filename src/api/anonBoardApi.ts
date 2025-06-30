@@ -15,10 +15,26 @@ const AnonBoardApi = {
         const res = await api.get(`/anon/${id}`);
         log.info('익명 게시판 호출 데이터', res);
         return res.data
+    },
+
+    postAnonBoard: async (formData: FormData): Promise<void> => {
+        const res = await api.post('/anon', formData);
+        return res.data;
+    },
+
+    deleteAnonBoard: async (id: string): Promise<void> => {
+        log.debug('삭제 api 호출 id :', id);
+        return await api.delete(`/anon/${id}`);
+    },
+
+    putAnonBoard: async (formData: FormData, id: string): Promise<void> => {
+        log.debug('수정 api 호출: ', formData, id);
+        return await api.put(`/anon/${id}`, formData);
     }
 };
 
 export default AnonBoardApi;
+
 
 /**
  *  Partial<T> 이란?

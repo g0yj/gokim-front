@@ -1,4 +1,4 @@
-import log from '@/lib/logger';
+
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React from 'react';
 import CustomButton from '../common/CustomButton ';
@@ -15,7 +15,8 @@ const BasicBoardSearchBox = ({
   limits,
   searches,
   onSearch,
-  createLink,
+  createLink, // Link로 등록 페이지 이동
+  onModal, // Modal로 등록
 }: BasicBoardSearchBoxProps) => {
 
   const { getValues, setValue, watch } = paramQuery;
@@ -41,6 +42,8 @@ const BasicBoardSearchBox = ({
     setValue('page', 1);
     onSearch();
   };
+
+
 
   return (
 
@@ -92,14 +95,21 @@ const BasicBoardSearchBox = ({
       </div>
 
       <div>
+        {createLink && (
+          <Link to={createLink}>
+            <CustomButton variant="primary">등록</CustomButton>
+          </Link>
+        )}
 
-      {createLink && (
-        <Link to={createLink}>
-          <CustomButton variant="primary">등록</CustomButton>
-        </Link>
+        {onModal && (
+        <CustomButton variant="primary" onClick={onModal}>
+          등록
+        </CustomButton>
       )}
-        
+
     </div>
+
+
   </div>
   );
 };

@@ -3,15 +3,14 @@ import Layout from "./layout/Layout";
 import "./App.css";
 import Index from "./pages/Index";
 import Project from "./pages/Project";
-//import BoardForm from "./components/common/Board/BoardForm";
-import Notice from "./pages/notice/Notice";
 import Community from "./pages/community/Community";
-
 import Board from "./pages/anonBoard/AnonBoard";
 import AnonBoardCreatePage from "./pages/anonBoard/AnonBoardCreatePage";
 import AnonBoardDetailPage from "./pages/anonBoard/AnonBoardDetailPage";
 import Login1 from "./pages/Login1";
 import SignUp from "./pages/SSignUp";
+import AdminNotice from "./pages/notice/AdminNotice";
+import Notice from "./pages/notice/Notice";
 
 function App() {
   return (
@@ -23,10 +22,11 @@ function App() {
           <Route path="/" element={<Index />} />
 
           {/** 공지사항 */}
-          <Route path="/admin/notice" element={<Notice />} />
+          <Route path="/admin/notice" element={<AdminNotice />} />
+          <Route path="/notice" element={<Notice />} />
           
           { /** 익명 게시판 */}
-          <Route path="/board" element={<Board />} />
+          <Route path="/anon" element={<Board />} />
           <Route path="/anon/create" element={<AnonBoardCreatePage />} />
           <Route path="/anon/:id" element={<AnonBoardDetailPage />} />
           { /** 프로젝트 */}
