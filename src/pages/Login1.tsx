@@ -15,7 +15,6 @@ import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import ForgotPassword from '../components/ui/ForgotPassword';
 import AppTheme from '../components/ui/AppTheme';
-import ColorModeSelect from '../components/ui/ColorModeSelect';
 import { GoogleIcon, KakaoIcon} from '../components/ui/CCustomIcons';
 
 import useFormHandler from '@/hooks/useFormHandler';
@@ -162,7 +161,6 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
-        <ColorModeSelect sx={{ position: 'fixed', top: '1rem', right: '1rem' }} />
         <Card variant="outlined">
           
           <Typography
