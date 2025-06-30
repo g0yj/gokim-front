@@ -75,7 +75,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [idError, setIdError] = React.useState(false);
   const [idErrorMessage, setIdErrorMessage] = React.useState('');
   const [phoneError, setPhoneError] = React.useState(false);
-  const [phoneMessage, setPhoneErrorMessage] = React.useState(false);
+  const [phoneMessage, setPhoneErrorMessage] = React.useState('');
   const [image, setImage] = React.useState<File | null>(null);
 
 
@@ -125,7 +125,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
       setIdErrorMessage('');
     }
 
-    if (!phone.value || phone.value < 11) {
+    if (!phone.value || phone.value.length < 11) {
       setPhoneError(true);
       setPhoneErrorMessage('핸드폰 번호를 입력하세요.');
       isValid = false;
