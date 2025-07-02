@@ -13,6 +13,7 @@ import Community from "./pages/community/Community";
 import ProjectLayout from "./pages/project/ProjectLayout";
 import FeatureRenderer from "./pages/project/FeatureRenderer";
 import NotFoundPage from "./pages/NotFoundPage";
+import CommunityBoardPage from "./pages/community/CommunityBoardPage";
 
 // 모든 라우트 정의
 export const router = createBrowserRouter([
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
             { path: 'anon/create', element: <AnonBoardCreatePage /> },
             { path: 'anon/:id', element: <AnonBoardDetailPage /> },
             { path: 'community', element: <Community /> },
+            { path: 'community/:id', element: <CommunityBoardPage /> },
             { path: 'project', element: <Project /> },
             {
                 path: 'project/:projectId',

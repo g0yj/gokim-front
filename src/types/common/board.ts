@@ -17,16 +17,17 @@ export interface BasicBoardSearchFields {
   pageSize: number;                     // 하단 페이지네이션 바에 보여줄 버튼 수
   order: string | null;                 // 정렬 기준
   direction: 'asc' | 'desc' | null;     // 정렬 방식
+  paramId?: string | number;
 }
 
 export interface BasicBoardProps<Res> {
   columns: TableColumn<Res>[];
   data: BasicBoardData<Res>;
   paramQuery: UseFormReturn<BasicBoardSearchFields>;
-  onSearch: () => void;
-  onPageChange: (page: number) => void;
-  limitOptions: SelectOption[];
-  searchOptions: SelectOption[];
+  onSearch?: () => void;
+  onPageChange?: (page: number) => void;
+  limitOptions?: SelectOption[];
+  searchOptions?: SelectOption[];
   getDetailLink?: (item: Res) => string; // ✅ 함수 타입으로 변경 + optional
   createLink?: string;
 }

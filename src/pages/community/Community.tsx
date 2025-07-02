@@ -63,9 +63,9 @@ const Community = () => {
       { label: '내용', value: 'description' },
     ]
 
-    const handleCardClick = (boardId: string) => {
-      if(boardId){
-        navigate(`/community/${boardId}`);
+    const handleCardClick = (communityId: string) => {
+      if(communityId){
+        navigate(`/community/${communityId}`);
       } else {
         log.error('boardId가 없음. 생성된 게시판이 없는 커뮤니티');
       }
@@ -97,7 +97,7 @@ const Community = () => {
 
       <div className="flex flex-wrap">
         {data.list.map((item , idx) => (
-          <CommunityCard key={idx} data={item} onClick={()=> handleCardClick(item.boardId ?? '')}/>
+          <CommunityCard key={idx} data={item} onClick={()=> handleCardClick(item.id ?? '')}/>
         ))}
       </div>
 
