@@ -14,26 +14,7 @@ const CommunityBoardPage = () => {
   const {id} = useParams();
   const[data, setData] = useState<CommonListResponse<ListCommunityBoardItem>> (getInitialRes());
 
-  const columns: TableColumn<ListCommunityBoardItem>[] = [
-    {key:'listNumber', label: 'no'},
-    {key:'title', label: '제목'},
-    {key:'view', label: '조회수'},
-    {key:'createdBy', label: '작성자'},
-    {key:'createdOn', label: '작성일'},
-  ]
 
-  const limitOptions: SelectOption[] = [
-    { label: '5건', value: 5 },
-    { label: '10건', value: 10 },
-    { label: '20건', value: 20 },   
-  ]
-
-  const searchOptions: SelectOption[] = [
-    { label: '전체', value: 'all' },
-    { label: '제목', value: 'title' },
-    { label: '내용', value: 'content' },
-    { label: '작성자', value: 'createdBy'},
-  ]
 
   const paramQuery = useForm<BasicBoardSearchFields>({
     defaultValues: { 
@@ -64,6 +45,35 @@ const CommunityBoardPage = () => {
   useEffect(() => {
     onSearch();
   }, []);
+
+  const onPageChange = (page: number) => {
+    paramQuery.setValue('page', page);
+    onSearch();
+  }
+
+
+
+  const columns: TableColumn<ListCommunityBoardItem>[] = [
+    {key:'listNumber', label: 'no'},
+    {key:'title', label: '제목'},
+    {key:'view', label: '조회수'},
+    {key:'createdBy', label: '작성자'},
+    {key:'createdOn', label: '작성일'},
+  ]
+
+  const limitOptions: SelectOption[] = [
+    { label: '5건', value: 5 },
+    { label: '10건', value: 10 },
+    { label: '20건', value: 20 },   
+  ]
+
+  const searchOptions: SelectOption[] = [
+    { label: '전체', value: 'all' },
+    { label: '제목', value: 'title' },
+    { label: '내용', value: 'content' },
+    { label: '작성자', value: 'createdBy'},
+  ]
+
 
   return (
     <div className='w-[800px] mt-8 mx-auto'>
