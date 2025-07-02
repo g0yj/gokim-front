@@ -48,7 +48,7 @@ const CommunityBoardPage = () => {
     }
   });
 
-  const onSearch = async() => {
+  const handleSearch = async() => {
     log.debug('검색 버튼 클릭!!');
     try {
       const values = paramQuery.getValues();
@@ -62,24 +62,35 @@ const CommunityBoardPage = () => {
   }
 
   useEffect(() => {
-    onSearch();
+    handleSearch();
   }, []);
+
+  const handlePageChange = (page: number) => {
+    paramQuery.setValue('page', page);
+    handleSearch();
+  }
+
+  const getDetailLink = (item: ListCommunityBoardItem) => `/community/board/${item.id}`;
+  const createLink = '/community/board/create';
 
   return (
     <div className='w-[800px] mt-8 mx-auto'>
       <BasicBoard
-              columns={columns}
-              data={{
-                content: data?.list,
-                page: data.currentPage,
-                totalPage: data.totalPage
-              }}
-              paramQuery={paramQuery}
-              onSearch={onSearch}
-              limitOptions={limitOptions}
-              searchOptions={searchOptions}
-            >
-            </BasicBoard>
+        columns={columns}
+        data={{
+          content: data?.list,
+          page: data.currentPage,
+          totalPage: data.totalPage
+        }}
+        paramQuery={paramQuery}
+        onSearch={handleSearch}
+        limitOptions={limitOptions}
+        searchOptions={searchOptions}
+        onPageChange={handlePageChange}
+        getDetailLink={getDetailLink}
+        createLink={createLink}
+      >
+      </BasicBoard>
 
     </div>
   );

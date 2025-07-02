@@ -31,7 +31,7 @@ const BasicBoard = <Res,>({
             paramQuery={paramQuery}
             limits={limitOptions}
             searches={searchOptions}
-            onSearch={onSearch}
+            onSearch={onSearch!}
             createLink={createLink}
           />
         </div>
@@ -44,7 +44,7 @@ const BasicBoard = <Res,>({
          <CustomPagination
             page={data.page}
             totalPage={data.totalPage}
-            onChange={onPageChange}
+            onChange={onPageChange!}
           />
         </div>
 

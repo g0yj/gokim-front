@@ -34,8 +34,8 @@ export interface BasicBoardProps<Res> {
 
 export interface BasicBoardSearchBoxProps {
   paramQuery: UseFormReturn<BasicBoardSearchFields>;
-  limits: SelectOption[];
-  searches: SelectOption[];
+  limits?: SelectOption[];
+  searches?: SelectOption[];
   onSearch: () => void; // 검색 (검색이니까 반드시 있어야하는 걸로 수정)
   onModal?: () => void; //등록을 모달창으로 하고 싶을 때 사용 (?:)
   createLink?: string; // 등록을 페이지 전체로 하고 싶을 때 사용(?:)
