@@ -1,16 +1,12 @@
 import React from 'react';
-// import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'; //npx shadcn@latest add card
-
-// import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
-import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import Avatar from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
+import CustomAvatar from '../components/common/CustomAvatar'; //공통컴포넌트
 // import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -77,7 +73,12 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [idErrorMessage, setIdErrorMessage] = React.useState('');
   const [phoneError, setPhoneError] = React.useState(false);
   const [phoneMessage, setPhoneErrorMessage] = React.useState('');
-  const [image, setImage] = React.useState<File | null>(null);
+  // const [setPhone] = React.useState('');
+  const [file, setFile] = React.useState<File | null>(null);
+  // const [name, setName] = React.useState('');
+  const [name, setName] = React.useState<string | null>(null);
+  
+
 
 
 
@@ -87,6 +88,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     const name = document.getElementById('name') as HTMLInputElement;
     const id = document.getElementById('id') as HTMLInputElement;
     const phone = document.getElementById('phone') as HTMLInputElement;
+    // const file = document.getElementById('file') as HTMLInputElement;
+
 
     let isValid = true;
 
@@ -109,6 +112,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     }
 
     if (!name.value || name.value.length < 1) {
+      setName(name.value);
       setNameError(true);
       setNameErrorMessage('이름을 입력 하세요.');
       isValid = false;
@@ -138,46 +142,90 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     return isValid;
   };
 
+  //파일 입력 시 호출
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0] || null;
+    const selectFile = event.target.files?.[0] || null;
     console.log('sss',event.target);
-    setImage(file);
-    console.log('s2',setImage(file));
+    setFile(selectFile);
+    console.log('s2',setFile(selectFile));
   }
 
+  //아바타 클릭 시 호출
   const handleAvatarClick = () => {
-    const imgInput = document.getElementById('image') as HTMLInputElement;
+    const imgInput = document.getElementById('file') as HTMLInputElement;
     imgInput.click();
     console.log('이미지 클릭');
   }
 
+  //이름으로 첫 문자 가져오기
   const getInitialFromName = (name: string) => {
     if(!name) return '';
     const parts = name.split(' ');
+    console.log('parts', parts);
+    console.log('ppp',parts[0].charAt(0).toUpperCase());
     return parts[0].charAt(0).toUpperCase();
+    // return name.charAt(0).toUpperCase();
   }
 
+  // const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
+  //   const input = event.target;
+  //   // const fmtInput = formatPhoneNumber(input);
+  //   console.log('input', input);
+  //   // console.log('fmtInput', fmtInput);
+  // }
+
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const input = e.target.value;
+  //   // const input = e.currentTarget;
+  //   const formattedInput = formatPhoneNumber(input);
+  //   setPhone(formattedInput);
+  // };
+
+
+  // const formatPhoneNumber = (value) => {
+  //   const cleaned = value.replace(/\D/g, '');
+  //   const phonePattern = /^\d{3}-\d{3,4}-\d{4}$/
+
+  //   const match = cleaned.match(phonePattern);
+  //   if (match) {
+  //     return `${match[1]}-${match[2]}${match[3] ? '-' + match[3] : ''}`;
+  //   }
+  //   return cleaned;
+    
+
+  // };
+
+  //가입 버튼 클릭 시 호출
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     if (nameError || emailError || passwordError || idError) {
       event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
+    console.log('data',data);
     
-    if (!image){
+    if (!file){
       const fullName = data.get('name') as string;
-      data.append('avatarInitial', getInitialFromName(fullName));
-      console.log('이미지없을때: ',data.append('avatarInitial', getInitialFromName(fullName)));
+      // data.append('file', getInitialFromName(fullName));
+      data.append('avatarInitial', getInitialFromName(fullName)); 
+      console.log('이미지없을때: ',data.append('file', getInitialFromName(fullName)));
+    } else {
+      data.append('file', file);
+      console.log('이미지 있음', file);
     }
+
+    for (const [key, value] of data.entries()) {
+    console.log(`${key}:`, value);
+  }
 
 
     console.log({
       name: data.get('name'),
-      lastName: data.get('lastName'),
       email: data.get('email'),
       password: data.get('password'),
       avatarInitial: data.get('avatarInitial'),
-      image: image ?  data.get('name') : 'No image upload',
+      file: file ?  data.get('file') :'아바타 초기 문자가 설정됨',
+      phone: data.get('phone'),
     });
   };
 
@@ -199,26 +247,47 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
             sx={{ display: 'flex', flexDirection: 'column', gap: 2, minHeight: '70vh', overflowY: 'auto', }}
           >
           <FormControl sx={{ alignItems: 'center', mb: 2 }}>
-              <Stack direction="column" alignItems="center" spacing={1}>
-                <Avatar onClick={handleAvatarClick} sx={{ width: 56, height: 56, mb: 2 }}>
+              {/* <Stack direction="column" alignItems="center" spacing={1}> */}
+                {/* <Avatar onClick={handleAvatarClick} sx={{ width: 56, height: 56, mb: 2 }}>
                   {image ? (
                     <img src={URL.createObjectURL(image)} alt="Profile" style={{ width: '100%', height: '100%' }} />
                   ) : (
                     getInitialFromName((document.querySelector('input[name="name"]') as HTMLInputElement)?.value)
                   )}
-                </Avatar>
+                </Avatar> */}
+                <CustomAvatar
+                  imageSrc={file ? URL.createObjectURL(file) : ''}
+                  name={name}
+                  onAvatarClick={handleAvatarClick}
+              />
+              <input
+                  accept="image/*"
+                  type="file"
+                  id="file"
+                  name="file"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+              />
                 <Typography variant="caption" color="textSecondary">
                   이미지 선택
                 </Typography>
-              </Stack>
-              <input
-                accept="image/*"
-                type="file"
-                id="image"
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-              />
-            </FormControl>
+              {/* </Stack> */}
+              {/* <FormControl sx={{ alignItems: 'center', mb: 2 }}>
+                <Stack direction="column" alignItems="center" spacing={1}>
+                  <Avatar imageSrc={image ? URL.createObjectURL(image) : null} name={name} />
+                  <Typography variant="caption" color="textSecondary">
+                    {image ? '이미지 선택됨' : '이미지 선택'}
+                  </Typography>
+                </Stack>
+                <input
+                  accept="image/*"
+                  type="file"
+                  id="image"
+                  onChange={handleFileChange}
+                  style={{ display: 'none' }}
+                />
+            </FormControl> */}
+          </FormControl>  
             <FormControl>
               <FormLabel htmlFor="id">ID</FormLabel>
               <TextField
@@ -270,6 +339,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                 name="phone"
                 autoComplete="phone"
                 variant="outlined"
+                placeholder="010-1234-5678"
+                // onChange={handleInputChange}
                 error={phoneError}
                 helperText={phoneMessage}
                 color={phoneError ? 'error' : 'primary'}
