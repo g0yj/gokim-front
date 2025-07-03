@@ -30,7 +30,7 @@ const AnonBoard = () => {
     }
   }
 
-    // ✅ 최초 mount 시 조회
+    //  최초 mount 시 조회
   useEffect(() => {
     handleSearch();
   }, []);
