@@ -12,3 +12,16 @@ export interface ListCommunityItem {
 }
 
 export type CommunityListRes = CommonListResponse<ListCommunityItem>;
+
+export interface ListCommunityBoardItem {
+    id: string;
+    title?: string| null;
+    view?: number| null;
+    createdOn: string| null;
+    createdBy: string | null;
+    commentCount?: number| null;
+    listNumber: number| null;
+    boardId: string;
+}
+
+export type CommunityBoardList = CommonListResponse<ListCommunityBoardItem>;

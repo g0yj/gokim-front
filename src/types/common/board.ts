@@ -17,24 +17,25 @@ export interface BasicBoardSearchFields {
   pageSize: number;                     // 하단 페이지네이션 바에 보여줄 버튼 수
   order: string | null;                 // 정렬 기준
   direction: 'asc' | 'desc' | null;     // 정렬 방식
+  paramId?: string | number;
 }
 
 export interface BasicBoardProps<Res> {
   columns: TableColumn<Res>[];
   data: BasicBoardData<Res>;
   paramQuery: UseFormReturn<BasicBoardSearchFields>;
-  onSearch: () => void;
-  onPageChange: (page: number) => void;
-  limitOptions: SelectOption[];
-  searchOptions: SelectOption[];
+  onSearch?: () => void;
+  onPageChange?: (page: number) => void;
+  limitOptions?: SelectOption[];
+  searchOptions?: SelectOption[];
   getDetailLink?: (item: Res) => string; // ✅ 함수 타입으로 변경 + optional
   createLink?: string;
 }
 
 export interface BasicBoardSearchBoxProps {
   paramQuery: UseFormReturn<BasicBoardSearchFields>;
-  limits: SelectOption[];
-  searches: SelectOption[];
+  limits?: SelectOption[];
+  searches?: SelectOption[];
   onSearch: () => void; // 검색 (검색이니까 반드시 있어야하는 걸로 수정)
   onModal?: () => void; //등록을 모달창으로 하고 싶을 때 사용 (?:)
   createLink?: string; // 등록을 페이지 전체로 하고 싶을 때 사용(?:)

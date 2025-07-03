@@ -2,16 +2,20 @@ import communtiyImg from '@/assets/communityImg.png'
 import { ListCommunityItem } from '@/types/community';
 import scrappedIcon from "@/assets/trueScrapped.png"
 import notScrappedIcon from "@/assets/falseScrapped.png";
+import log from '@/lib/logger';
 
 interface CommunityCardProps {
-  data: ListCommunityItem
-
+  data: ListCommunityItem;
+  onClick ?: () => void;
 }
 
-const CommunityCard = ({data}:CommunityCardProps) => {
-    
+const CommunityCard = ({data ,onClick}:CommunityCardProps) => {
+
   return (
-    <div className="w-full md:w-1/2 lg:w-1/4 border-2 p-4 flex flex-col items-center mb-4">
+    <div
+      className="w-full md:w-1/2 lg:w-1/4 border-2 p-4 flex flex-col items-center mb-4 cursor-pointer"
+      onClick={onClick ? onClick : () => {log.warn('props에 onclick 없음')} } // 안전한 기본값 설정
+    >
       <div>
         <img src={communtiyImg} className="w-20 h-20" alt="Community" />
       </div>

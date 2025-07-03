@@ -13,35 +13,51 @@ import Community from "./pages/community/Community";
 import ProjectLayout from "./pages/project/ProjectLayout";
 import FeatureRenderer from "./pages/project/FeatureRenderer";
 import NotFoundPage from "./pages/NotFoundPage";
+import CommunityBoardPage from "./pages/community/CommunityBoardPage";
+import CommunityBoardDetailPage from "./pages/community/CommunityBoardDetailPage";
+import CommunityBoardCreatePage from "./pages/community/CommunityBoardCreatePage";
 
 // 모든 라우트 정의
 export const router = createBrowserRouter([
     {
-        path: '/',
-        element: <Layout />,
-        children:[
-            { index: true, element: <Index /> },
-            { path: 'notice', element: <Notice /> },
-            { path: 'admin/notice', element: <AdminNotice /> },
-            { path: 'anon', element: <AnonBoard /> },
-            { path: 'anon/create', element: <AnonBoardCreatePage /> },
-            { path: 'anon/:id', element: <AnonBoardDetailPage /> },
-            { path: 'community', element: <Community /> },
-            { path: 'project', element: <Project /> },
-            {
-                path: 'project/:projectId',
-                element: <ProjectLayout />,
-                children:[
-                    {
-                        path: 'feature/:featureType',
-                        element: <FeatureRenderer/>,
-                    },
-                ],
-            },
-        ],
-    },
+      path: "/",
+      element: <Layout />,
+      children: [
+        { index: true, element: <Index /> },
+  
+        // 공지사항
+        { path: "notice", element: <Notice /> },
+        { path: "admin/notice", element: <AdminNotice /> },
+  
+        // 익명 게시판
+        { path: "anon", element: <AnonBoard /> },
+        { path: "anon/create", element: <AnonBoardCreatePage /> },
+        { path: "anon/:id", element: <AnonBoardDetailPage /> },
+  
+        // 커뮤니티 게시판 
+        { path: "community", element: <Community /> },
+        { path: "community/:id", element: <CommunityBoardPage /> },
+        { path: "community/board/create", element: <CommunityBoardCreatePage /> },
+        { path: "community/board/:boardId", element: <CommunityBoardDetailPage /> },
 
-    { path:'/login', element: <Login1/>},
-    { path:'/signup', element: <SignUp/>},
-    { path:'*', element: <NotFoundPage/>}
-])
+  
+        // 프로젝트 (중첩 쓰는 경우는 Outlet 사용시에 가능)
+        { path: "project", element: <Project /> },
+        {
+          path: "project/:projectId",
+          element: <ProjectLayout />,
+          children: [
+            {
+              path: "feature/:featureType",
+              element: <FeatureRenderer />,
+            },
+          ],
+        },
+      ],
+    },
+  
+    // 레이아웃 제외한 경로
+    { path: "/login", element: <Login1 /> },
+    { path: "/signup", element: <SignUp /> },
+    { path: "*", element: <NotFoundPage /> },
+  ]);

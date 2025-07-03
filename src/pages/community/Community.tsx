@@ -13,12 +13,15 @@ import { getInitialRes } from '@/utils/board';
 import { useForkRef } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const Community = () => {
   // 모달창을 이용한 등록 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const navigate = useNavigate();
 
   // 목록 api 호출
   const paramQuery = useForm<BasicBoardSearchFields>({
@@ -60,15 +63,15 @@ const Community = () => {
       { label: '내용', value: 'description' },
     ]
 
+    const handleCardClick = (communityId: string) => {
+      if(communityId){
+        navigate(`/community/${communityId}`);
+      } else {
+        log.error('boardId가 없음. 생성된 게시판이 없는 커뮤니티');
+      }
+    }
 
 
-
-
-  // 사이드 바 예정
-  const items = [
-    {id:'1', name:'카테고리1'},
-    {id:'2', name:'카테고리2'},
-  ]
   return (
     <div className='mt-10'>
       <BasicBoardSearchBox 
@@ -94,7 +97,7 @@ const Community = () => {
 
       <div className="flex flex-wrap">
         {data.list.map((item , idx) => (
-          <CommunityCard key={idx} data={item} />
+          <CommunityCard key={idx} data={item} onClick={()=> handleCardClick(item.id ?? '')}/>
         ))}
       </div>
 

@@ -25,13 +25,13 @@ const BasicBoardSearchBox = ({
   const handleLimitChange = (value: number) => {
     setValue('limit', value);
     setValue('page', 1); // 새로 조회할 때는 1페이지부터
-    onSearch();
+    onSearch!(); // ! : Non-null assertion operator : 널이 아님을 단언하는 연산자.
   };
 
   const handleSearchChange = (value: string  ) => {
     setValue('search', value);
     setValue('page', 1); // 새로 조회할 때는 1페이지부터
-    onSearch();
+    onSearch!();
   };
 
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +40,7 @@ const BasicBoardSearchBox = ({
 
   const handleSearchClick = () => {
     setValue('page', 1);
-    onSearch();
+    onSearch!();
   };
 
 
@@ -57,7 +57,7 @@ const BasicBoardSearchBox = ({
           label="Limit"
           onChange={(e) => handleLimitChange(Number(e.target.value))}
         >
-          {limits.map((limit) => (
+          {limits!.map((limit) => (
             <MenuItem key={limit.label} value={limit.value}>
               {limit.label}
             </MenuItem>
@@ -75,7 +75,7 @@ const BasicBoardSearchBox = ({
           label="Search"
           onChange={(e) => handleSearchChange(e.target.value)}
         >
-          {searches.map((search) => (
+          {searches!.map((search) => (
             <MenuItem key={search.label} value={search.value}>
               {search.label}
             </MenuItem>

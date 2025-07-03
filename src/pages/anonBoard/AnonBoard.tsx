@@ -19,7 +19,7 @@ const AnonBoard = () => {
 
   const [data, setData] = useState<CommonListResponse<ListAnonBoardItem>>(getInitialRes());
 
-  const onSearch = async () => {
+  const handleSearch = async () => {
     try {
       const values = paramQuery.getValues();
       const res = await AnonBoardService.listAnonBoard(values);
@@ -32,12 +32,12 @@ const AnonBoard = () => {
 
     // ✅ 최초 mount 시 조회
   useEffect(() => {
-    onSearch();
+    handleSearch();
   }, []);
 
-    const onPageChange = (page: number) => {
+    const handlePageChange = (page: number) => {
       paramQuery.setValue('page', page);
-      onSearch();
+      handleSearch();
   }
   
   const columns: TableColumn<ListAnonBoardItem>[] = [
@@ -73,10 +73,10 @@ const AnonBoard = () => {
           totalPage: data.totalPage
         }}
         paramQuery={paramQuery}
-        onSearch={onSearch}
+        onSearch={handleSearch}
         limitOptions={limitOptions}
         searchOptions={searchOptions}
-        onPageChange={onPageChange}
+        onPageChange={handlePageChange}
         getDetailLink={getDetailLink}
         createLink={createLink}
       >

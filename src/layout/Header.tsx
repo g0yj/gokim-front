@@ -8,7 +8,7 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const validPaths = ["/notice", "/board", "/community", "/project"];
+  const validPaths = ["/notice", "/anon", "/community", "/project"];
   const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
 
 
