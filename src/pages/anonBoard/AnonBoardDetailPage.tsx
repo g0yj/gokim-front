@@ -104,10 +104,10 @@ const AnonBoardDetailPage = () => {
           files: data.files, // 새로 추가된 파일만 전달
         }}
         onSubmit={handleUpdate}
-            onCancel={handleCancelEdit}
-            getFileId={(file) => {
-              return (file as AnonBoardFile).anonBoardFileId;
-            }}
+        onCancel={handleCancelEdit}
+        getFileId={(file) => {
+          return file.anonBoardFileId;
+        }}
       />
     ) : (
       <BasicBoardView

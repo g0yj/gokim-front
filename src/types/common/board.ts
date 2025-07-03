@@ -58,6 +58,8 @@ export interface BasicBoardViewProps<T extends BoardFile = BoardFile> { // ì™œ ì
 export interface BoardFile {
   url: string;
   originalFileName: string;
+  boardFileId?: string | null;
+  anonBoardFileId?: string;
 }
 
 

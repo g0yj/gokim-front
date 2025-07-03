@@ -6,14 +6,15 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { AnonBoardFile } from '@/types/anonBoard';
 import { getFileName } from '@/utils/file';
 import log from '@/lib/logger';
+import { BoardFile } from '@/types/common/board';
 
 
 // 폼 필드 기본 타입 (등록/수정 공통)
 export interface BasicBoardFormValues {
   title?: string | null;
-  content?: string | null;
+  content?: string | null | undefined;
   pinned?: boolean | null;
-  files?: File[] | AnonBoardFile[] | null;
+  files?: File[] | AnonBoardFile[] | null | BoardFile[];
 }
 
 // 수정 전용 타입: 삭제할 파일 id 목록 포함
@@ -27,11 +28,11 @@ type FormValues = BasicBoardFormValues | EditBoardFormValues;
 // 공통 게시글 폼 Props 제네릭 정의
 interface BasicBoardFormProps<T> {
   mode: 'create' | 'edit';
-  defaultValues?: BasicBoardFormValues & { files?: (File | T)[] };
+  defaultValues?: BasicBoardFormValues & { files?: (BoardFile[] | T)[] };
   onSubmit: (values: FormValues) => void;
   onCancel: () => void;
   isLoading?: boolean;
-  getFileId?: (file: T) => string | number;
+  getFileId?: (file: BoardFile) => void;
 }
 
 //===============================================================================
