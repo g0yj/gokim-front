@@ -14,7 +14,11 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../components/ui/AppTheme';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate} from 'react-router-dom';
+import useFormHandler from '@/hooks/useFormHandler';
+import { UserRequest } from '@/types/user';
+import UserService from '@/services/userService';
+import log from '@/lib/logger';
 
 
 
@@ -63,6 +67,16 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
+
+ const { form, handleFormChange } = useFormHandler<UserRequest>({
+      id: "",
+      password: "",
+      name: "",
+      phone: "",
+      email: "",
+      file: ""
+     });
+
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
   const [passwordError, setPasswordError] = React.useState(false);
@@ -77,6 +91,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [file, setFile] = React.useState<File | null>(null);
   // const [name, setName] = React.useState('');
   const [name, setName] = React.useState<string | null>(null);
+
+  const navigate = useNavigate();
   
 
 
@@ -167,6 +183,13 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     // return name.charAt(0).toUpperCase();
   }
 
+  // const nameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   console.log('nameChange: ',event.target.value);
+  //   setName(event.target.value);
+  // };
+
+
+
   // const handleInputChange = (event: React.FormEvent<HTMLFormElement>) => {
   //   const input = event.target;
   //   // const fmtInput = formatPhoneNumber(input);
@@ -196,7 +219,7 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   // };
 
   //가입 버튼 클릭 시 호출
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     if (nameError || emailError || passwordError || idError) {
       event.preventDefault();
       return;
@@ -216,17 +239,30 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
     for (const [key, value] of data.entries()) {
     console.log(`${key}:`, value);
-  }
+    }
 
 
-    console.log({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
-      avatarInitial: data.get('avatarInitial'),
-      file: file ?  data.get('file') :'아바타 초기 문자가 설정됨',
-      phone: data.get('phone'),
-    });
+    try {
+      await UserService.sign(data);
+       navigate("/");
+    } catch (err) {
+      log.debug('회원가입 Axios 실패', err);
+    }
+
+
+    // console.log({
+    //   name: data.get('name'),
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    //   avatarInitial: data.get('avatarInitial'),
+    //   file: file ?  data.get('file') :'아바타 초기 문자가 설정됨',
+    //   phone: data.get('phone'),
+    // });
+
+
+
+
+
   };
 
   return (
@@ -243,7 +279,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
           </Typography>
           <Box
             component="form"
-            onSubmit={handleSubmit}
+            onSubmit={(e) => handleSubmit(e)} 
+            // onSubmit={handleSubmit}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2, minHeight: '70vh', overflowY: 'auto', }}
           >
           <FormControl sx={{ alignItems: 'center', mb: 2 }}>
@@ -268,6 +305,12 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
                   onChange={handleFileChange}
                   style={{ display: 'none' }}
               />
+              {/* <input
+                  type="text"
+                  value={name ?? ''}
+                  onChange={nameChange}
+                  placeholder="Enter your name"
+              /> */}
                 <Typography variant="caption" color="textSecondary">
                   이미지 선택
                 </Typography>
