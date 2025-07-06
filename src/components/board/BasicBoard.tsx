@@ -20,6 +20,7 @@ const BasicBoard = <Res,>({
     onPageChange,
     getDetailLink,
     createLink,
+    propId
 }: BasicBoardProps<Res>) => {
     
   
@@ -37,7 +38,7 @@ const BasicBoard = <Res,>({
         </div>
 
         <div>
-          <CustomTable columns={columns} data={data.content} getDetailLink={getDetailLink}  />
+          <CustomTable columns={columns} data={data.content} getDetailLink={getDetailLink} propId={propId!} />
         </div>
 
         <div className="w-fit mx-auto mb-4">

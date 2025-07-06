@@ -6,11 +6,14 @@ import { BoardFile } from '@/types/common/board';
 import { CommunityBoardDetail, CommunityBoardFile } from '@/types/community';
 import { Content } from '@radix-ui/react-tabs';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
 
 const CommunityBoardDetailPage = () => {
   const {boardId} = useParams();
   const navigate = useNavigate();
+  const {state} = useLocation(); // navigate로 전달할때 조건 추가하는 방법 있었는데 그거 사용하기 위해 필요
+  const communityId = state?.propId; // navigate로 전달된 propId 
 
   const [data, setData] = useState<CommunityBoardDetail | null> (null);
 
@@ -19,6 +22,7 @@ const CommunityBoardDetailPage = () => {
   useEffect(()=> {
     log.debug('useEffect 실행');
     log.debug('param으로 가져온 게시판 식별키', boardId);
+    log.debug('navigate에서 전달받은 propId 확인 ', communityId);
 
     const fetchData = async () => {
       try {
@@ -47,6 +51,12 @@ const CommunityBoardDetailPage = () => {
     log.debug('삭제 버튼 클릭');
     if(!boardId) return;
     const confirmDelete = window.confirm('정말 삭제하시겠습니까?');
+    try{
+      log.debug('삭제 시도 api 연결 직전')
+
+    } catch (err) {
+      log.error('커뮤니티 게시판 삭제 axios 실패', err);
+    }
 
   }
 

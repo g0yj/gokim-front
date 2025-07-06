@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
 const CommunityBoardPage = () => {
-  const {id} = useParams();
+  const {id} = useParams(); // 커뮤니티 식별키
   const[data, setData] = useState<CommonListResponse<ListCommunityBoardItem>> (getInitialRes());
 
   const columns: TableColumn<ListCommunityBoardItem>[] = [
@@ -89,6 +89,7 @@ const CommunityBoardPage = () => {
         onPageChange={handlePageChange}
         getDetailLink={getDetailLink}
         createLink={createLink}
+        propId ={id}
       >
       </BasicBoard>
 
