@@ -39,11 +39,11 @@ const Header = () => {
     setIsModalOpen(true);
   }
 
-  const handleSendEmail = (e) => {
+  const handleSendEmail = (e: React.FormEvent<HTMLFormElement>) => {
     log.debug('전송버튼 클릭!!')
     e.preventDefault() // 폼의 기본 동작 방지
     
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget); // ✅ e.target을 e.currentTarget으로 변경하여 타입 일치
     
     // localStorage에서 loginId 값을 가져와 'userId'로 설정, null 방지
     const loginId = localStorage.getItem('loginId') || '임시사용자'; // 없으면 기본값 설정
