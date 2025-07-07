@@ -1,12 +1,13 @@
 export interface LoginRequest {
-    "id": string
-    "password": string
-    "loginType": string
+    id: string;
+    password: string;
+    loginType: string;
 }
   
 export interface LoginResponse {
-    "role": string
-    "loginType": string
-    "accessToken": string
-    "refreshToken": string
+    loginId: string | null;
+    role: string;
+    loginType: string;
+    accessToken: string;
+    refreshToken: string;
   }

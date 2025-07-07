@@ -2,14 +2,58 @@ import { Tab, Tabs } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
+import mail from '../assets/mail.png'; 
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import log from '@/lib/logger';
+import CustomButton from '@/components/common/CustomButton ';
+import CustomModal from '@/components/common/CustomModal';
 
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch  = useDispatch();
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  // 개발자 문의 관련
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [emailSubject, setEmailSubject] = useState('');
+  const [emailContent, setEmailContent] = useState('');
+
+  // localStorage에서 loginId를 가져옵니다.
+  const storedLoginId = localStorage.getItem('loginId');
+
 
   const validPaths = ["/notice", "/anon", "/community", "/project"];
   const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
+
+  const handleLogout = () => {
+    log.debug('로그아웃 버튼 클릭');
+  }
+
+  const handleMailClick = () => {
+    log.debug('이미지 클릭');
+    setIsModalOpen(true);
+  }
+
+  const handleSendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    log.debug('전송버튼 클릭!!')
+    e.preventDefault() // 폼의 기본 동작 방지
+    
+    const formData = new FormData(e.currentTarget); // ✅ e.target을 e.currentTarget으로 변경하여 타입 일치
+    
+    // localStorage에서 loginId 값을 가져와 'userId'로 설정, null 방지
+    const loginId = localStorage.getItem('loginId') || '임시사용자'; // 없으면 기본값 설정
+    formData.append('userId', loginId);
+    formData.append('email', 'jinyjgo@gmail.com');
+    
+    // 이메일 전송 처리 로직
+
+    closeModal();
+  };
 
 
   return (
@@ -58,15 +102,60 @@ const Header = () => {
 
         {/* ✅ 오른쪽: 알림/프로필 자리 */}
         <div className="flex items-center gap-4">
-          <button className="relative">
-            <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full px-1">1</span>
-            🔔
-          </button>
-          <img
-            src="/profile.png" // 추후 사용자 이미지로 교체
-            alt="프로필"
-            className="w-8 h-8 rounded-full"
+          <p>{storedLoginId}</p>
+          
+          {/** 이미지 클릭 시 모달 열기 */}
+          <img 
+            src={mail} 
+            onClick={handleMailClick}
+            className="w-9 h-9 cursor-pointer"  
+            alt="개발자 문의"
           />
+
+            {/** 모달 컴포넌트 */}
+            <CustomModal 
+              isOpen={isModalOpen} 
+              onRequestClose={closeModal} 
+              size="mail" 
+              variant="basic">
+                <form onSubmit={handleSendEmail}>
+                  <div>
+                    <h2 className="text-lg font-bold mb-4">📧 개발자 문의</h2>
+                    <div className="space-y-4">
+                      <div>
+                        <label htmlFor="emailSubject" className="block text-sm font-medium text-gray-700">제목</label>
+                        <input
+                          id="emailSubject"
+                          name="subject" // 폼 데이터로 전송될 이름 설정
+                          type="text"
+                          value={emailSubject}
+                          onChange={(e) => setEmailSubject(e.target.value)}
+                          className="mt-1 block w-full p-2 border border-gray-300 rounded"
+                          placeholder="제목을 입력하세요"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="emailContent" className="block text-sm font-medium text-gray-700">내용</label>
+                        <textarea
+                          id="emailContent"
+                          name="body" // 폼 데이터로 전송될 이름 설정
+                          value={emailContent}
+                          onChange={(e) => setEmailContent(e.target.value)}
+                          className="mt-1 block w-full p-2 border border-gray-300 rounded h-40"
+                          placeholder="자세하게 적어주시면 빠른 개발에 도움이 됩니다"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-end space-x-2 mt-4">
+                      <CustomButton onClick={closeModal} >취소</CustomButton>
+                      <CustomButton type="submit">전송</CustomButton>
+                    </div>
+                  </div>
+                </form>
+            </CustomModal>
+          
+          <CustomButton onClick ={handleLogout}> Logout </CustomButton>
+          
         </div>
       </div>
     </header>
