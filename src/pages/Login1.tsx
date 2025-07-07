@@ -24,6 +24,8 @@ import { LoginRequest } from '@/types/auth';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import CustomModal from '@/components/common/CustomModal';
+import CustomButton from '@/components/common/CustomButton ';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -69,12 +71,8 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
 }));
 
 
-
-
-
-
+// page 시작
 export default function Login1(props: { disableCustomTheme?: boolean }) {
-
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -90,6 +88,14 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
   const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
   const [open, setOpen] = React.useState(false);
 
+  // 로그인 시 모달 컴포넌트를 띄우기 위해 사용
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const closeModal = () => setIsModalOpen(false);
+
+  React.useEffect (() => {
+    setIsModalOpen(true);
+  }, [])
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -102,14 +108,20 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
 
 
   const handleLogin = async () => {
-    console.log('click');
+    log.debug('로그인 실행');
     try {
       await AuthService.login(dispatch, form);
+      setIsModalOpen(true);
       navigate("/");
     } catch (err) {
       log.debug('로그인 Axios 실패', err);
     }
   };
+
+  const closeModalAndNavigate = () => {
+    setIsModalOpen(false);
+    navigate('/');
+  }
 
 
 //   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -274,6 +286,26 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
           </Box>
         </Card>
       </SignInContainer>
+
+      {/** 모달 컴포넌트 */}
+      <CustomModal
+        isOpen ={isModalOpen}
+        onRequestClose = {closeModal}
+        size='mail'
+        variant='basic'
+      >
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">🎉 환영합니다!</h1>
+          <p className="mb-2"> 필요한 기능이 있다면, 개발자에게 문의하세요</p>
+          <p className="mb-2">🔍 테스트 아이디를 사용해 기능을 확인하세요!</p>
+          <p className="mt-4">
+            <strong>아이디</strong>: <span className="font-mono bg-gray-200 p-1 rounded">SampleMember1</span> / 
+            <strong> 비밀번호</strong>: <span className="font-mono bg-gray-200 p-1 rounded">1234</span>
+          </p>
+        </div>
+
+
+      </CustomModal>
     </AppTheme>
   );
 }
