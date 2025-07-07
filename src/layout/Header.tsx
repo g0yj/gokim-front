@@ -2,11 +2,18 @@ import { Tab, Tabs } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
+import log from '@/lib/logger';
 
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch  = useDispatch();
+  // localStorage에서 loginId를 가져옵니다.
+  const storedLoginId = localStorage.getItem('loginId');
 
   const validPaths = ["/notice", "/anon", "/community", "/project"];
   const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
@@ -58,15 +65,11 @@ const Header = () => {
 
         {/* ✅ 오른쪽: 알림/프로필 자리 */}
         <div className="flex items-center gap-4">
+          <p>{storedLoginId}</p>
           <button className="relative">
-            <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full px-1">1</span>
-            🔔
+            <span>로그아웃</span>
           </button>
-          <img
-            src="/profile.png" // 추후 사용자 이미지로 교체
-            alt="프로필"
-            className="w-8 h-8 rounded-full"
-          />
+          
         </div>
       </div>
     </header>
