@@ -36,4 +36,5 @@ export interface CommunityBoardDetail {
     files?: BoardFile[];
     view: number | null;
     isMine: boolean | null;
+    communityId: string | null;
 }
