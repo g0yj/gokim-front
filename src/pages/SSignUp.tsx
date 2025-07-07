@@ -5,9 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-// import Avatar from '@mui/material/Avatar';
 import CustomAvatar from '../components/common/CustomAvatar'; //공통컴포넌트
-// import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -15,8 +13,6 @@ import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../components/ui/AppTheme';
 import { Link , useNavigate} from 'react-router-dom';
-import useFormHandler from '@/hooks/useFormHandler';
-import { UserRequest } from '@/types/user';
 import UserService from '@/services/userService';
 import log from '@/lib/logger';
 
@@ -68,14 +64,6 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
 
 export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
- const { form, handleFormChange } = useFormHandler<UserRequest>({
-      id: "",
-      password: "",
-      name: "",
-      phone: "",
-      email: "",
-      file: ""
-     });
 
   const [emailError, setEmailError] = React.useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
@@ -89,7 +77,6 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
   const [phoneMessage, setPhoneErrorMessage] = React.useState('');
   // const [setPhone] = React.useState('');
   const [file, setFile] = React.useState<File | null>(null);
-  // const [name, setName] = React.useState('');
   const [name, setName] = React.useState<string | null>(null);
 
   const navigate = useNavigate();
@@ -220,31 +207,32 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
 
   //가입 버튼 클릭 시 호출
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+   
+    event.preventDefault();
+   
     if (nameError || emailError || passwordError || idError) {
-      event.preventDefault();
+      // event.preventDefault();
       return;
     }
     const data = new FormData(event.currentTarget);
-    console.log('data',data);
-    
-    if (!file){
-      const fullName = data.get('name') as string;
-      // data.append('file', getInitialFromName(fullName));
-      data.append('avatarInitial', getInitialFromName(fullName)); 
-      console.log('이미지없을때: ',data.append('file', getInitialFromName(fullName)));
+  
+
+    if (!file) {
+        data.delete('file'); // file 필드를 아예 제거
     } else {
-      data.append('file', file);
-      console.log('이미지 있음', file);
+        data.append('file', file); // 파일이 존재하는 경우에만 추가
     }
 
-    for (const [key, value] of data.entries()) {
-    console.log(`${key}:`, value);
-    }
+
+    //확인용 콘솔
+    // for (const [key, value] of data.entries()) {
+    // console.log(`${key}:`, value);
+    // }
 
 
     try {
       await UserService.sign(data);
-       navigate("/");
+       navigate("/login");
     } catch (err) {
       log.debug('회원가입 Axios 실패', err);
     }
@@ -279,8 +267,8 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
           </Typography>
           <Box
             component="form"
-            onSubmit={(e) => handleSubmit(e)} 
-            // onSubmit={handleSubmit}
+            // onSubmit={(e) => handleSubmit(e)} 
+            onSubmit={handleSubmit}
             sx={{ display: 'flex', flexDirection: 'column', gap: 2, minHeight: '70vh', overflowY: 'auto', }}
           >
           <FormControl sx={{ alignItems: 'center', mb: 2 }}>

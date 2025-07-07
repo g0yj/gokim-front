@@ -22,6 +22,9 @@ const Index = () => {
           {/* ✅ 왼쪽 캐릭터 박스 */}
           <div className="w-[200px] h-[260px] md:flex-1 flex items-center justify-center">
             <img src={female} alt="캐릭터" className="w-[150px] h-[150px]" />
+             <p className="text-white text-center mt-2 ml-9 text-lg">
+              현재 개발중인 사이트 입니다. 문의사항은 개발자에게 연락해주세요
+             </p>
           </div>
           <div>
             <h3 className='md:flex-1 '
