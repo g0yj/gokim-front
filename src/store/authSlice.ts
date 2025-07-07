@@ -43,7 +43,7 @@ const authSlice = createSlice({
       // 토큰을 localstorage에 저장하여 브라우저 세션 내내 유지
       localStorage.setItem('accessToken', accessToken)
       localStorage.setItem('refreshToken', refreshToken)
-      localStorage.setItem('loginType', loginType) // 로그아웃 분기 처리를 위함
+      localStorage.setItem('loginType', loginType) // 로그아웃 분기 처리를 위함2
       localStorage.setItem('loginId', safeLoginId) // loginId가 아닌 safeLoginId 사용했음을 확인!!
     },
 
