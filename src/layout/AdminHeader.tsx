@@ -2,14 +2,36 @@ import { Tab, Tabs } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
+import CustomButton from '@/components/common/CustomButton ';
+import log from '@/lib/logger';
+import AuthService from '@/services/authService';
+import { useDispatch } from 'react-redux';
+import { logout as logoutAction } from '@/store/authSlice'; 
 
 
 const AdminHeader = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch  = useDispatch();
 
   const validPaths = ["/notice", "/board", "/community", "/project"];
   const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
+
+  const handleLogout = async () => {
+    try {
+      // 1. 서버에 로그아웃 요청
+      await AuthService.logout();
+  
+      // 2. Redux 상태 초기화
+      dispatch(logoutAction()); // 이름 충돌 시 alias로 사용
+  
+      // 3. 페이지 이동
+      navigate('/login');
+    } catch (err) {
+      log.error('로그아웃 axios 호출 실패', err);
+    }
+  };
+
 
 
   return (
@@ -58,15 +80,8 @@ const AdminHeader = () => {
 
         {/* ✅ 오른쪽: 알림/프로필 자리 */}
         <div className="flex items-center gap-4">
-          <button className="relative">
-            <span className="absolute -top-1 -right-1 bg-red-500 text-xs rounded-full px-1">1</span>
-            🔔
-          </button>
-          <img
-            src="/profile.png" // 추후 사용자 이미지로 교체
-            alt="프로필"
-            className="w-8 h-8 rounded-full"
-          />
+          <CustomButton onClick ={handleLogout}> Logout </CustomButton>
+  
         </div>
       </div>
     </header>

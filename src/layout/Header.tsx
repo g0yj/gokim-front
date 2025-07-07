@@ -1,14 +1,15 @@
 import { Tab, Tabs } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
 import mail from '../assets/mail.png'; 
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
+import { logout as logoutAction } from '@/store/authSlice'; // 이름 충돌 방지 위해 rename
+
 import log from '@/lib/logger';
 import CustomButton from '@/components/common/CustomButton ';
 import CustomModal from '@/components/common/CustomModal';
+import AuthService from '@/services/authService';
 
 
 const Header = () => {
@@ -30,9 +31,21 @@ const Header = () => {
   const validPaths = ["/notice", "/anon", "/community", "/project"];
   const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
 
-  const handleLogout = () => {
-    log.debug('로그아웃 버튼 클릭');
-  }
+  const handleLogout = async () => {
+
+    try {
+      // 1. 서버에 로그아웃 요청
+      await AuthService.logout();
+  
+      // 2. Redux 상태 초기화
+      dispatch(logoutAction()); // 이름 충돌 시 alias로 사용
+  
+      // 3. 페이지 이동
+      navigate('/login');
+    } catch (err) {
+      log.error('로그아웃 axios 호출 실패', err);
+    }
+  };
 
   const handleMailClick = () => {
     log.debug('이미지 클릭');

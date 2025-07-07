@@ -12,6 +12,11 @@ const AuthApi = {
     const res = await api.post<LoginResponse>('/login', data);
     return res.data;
   },
+
+  postLogout: async () => {
+    log.debug('로그아웃 api 파일 확인');
+    return await api.post<void>('/logout');
+  }
 };
 
 export default AuthApi;

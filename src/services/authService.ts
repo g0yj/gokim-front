@@ -3,16 +3,16 @@ import { setLogin } from "@/store/authSlice";
 import { AppDispatch } from "@/store/store";
 import { LoginRequest } from "@/types/auth";
 
-const TAG = 'service-authService';
 
 const AuthService = {
   login: async (dispatch: AppDispatch, data: LoginRequest) => {
     const res = await AuthApi.postLogin(data);
     // Redux 저장
     dispatch(setLogin(res));
-    // LocalStorage 저장
-    localStorage.setItem('accessToken', res.accessToken);
   },
+  logout: async () => {
+    return AuthApi.postLogout();
+  }
 };
 
 export default AuthService;

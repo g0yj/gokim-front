@@ -5,7 +5,7 @@ export interface LoginRequest {
 }
   
 export interface LoginResponse {
-    loginId: string | null;
+    id: string | null;
     role: string;
     loginType: string;
     accessToken: string;

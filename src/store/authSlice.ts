@@ -29,10 +29,10 @@ const authSlice = createSlice({
   reducers: {
     // 로그인 상태를 설정하는 리듀서
     setLogin: (state, action: PayloadAction<LoginResponse>) => {
-      const { loginId, role, loginType, accessToken, refreshToken } = action.payload
+      const { id, role, loginType, accessToken, refreshToken } = action.payload
 
       // loginId가 undefined이거나 null이거나 빈 문자열인 경우 '임시사용자'로 설정
-      const safeLoginId = loginId || '임시사용자';
+      const safeLoginId = id || '임시사용자';
       state.loginId = safeLoginId; // 상태에도 적용
       state.isLoggedIn = true
       state.role = role
@@ -59,7 +59,9 @@ const authSlice = createSlice({
       // 저장된 토큰을 제거하여 인증 상태를 로그아웃으로 전환
       localStorage.removeItem('accessToken')
       localStorage.removeItem('refreshToken')
+      localStorage.removeItem('loginType') 
       localStorage.removeItem('loginId')
+
     },
   },
 })
