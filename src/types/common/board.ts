@@ -30,6 +30,7 @@ export interface BasicBoardProps<Res> {
   searchOptions?: SelectOption[];
   getDetailLink?: (item: Res) => string; // ✅ 함수 타입으로 변경 + optional
   createLink?: string;
+  propId?: string | null; // 상세 페이지 접근 시 아이템 식별키 말고 다른 컬럼의 식별키가 필요한 경우
 }
 
 export interface BasicBoardSearchBoxProps {

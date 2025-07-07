@@ -13,7 +13,11 @@ const Layout = () => {
     <div className="flex flex-col min-h-screen">
 
       {/** 역할에 따라 다른 헤더 출력 */}
-      {isLoggedIn && role === 'ADMIN' ? <AdminHeader /> : <Header />}
+      {isLoggedIn ? (
+        role === 'ADMIN' ? <AdminHeader /> : <Header />
+      ) : (
+        <Header />
+      )}
      
       <main className="flex-1">{/** 이 className에 색깔 (bg-slate-200)을 넣으면 전체 배경이 되는거임 */}
         <div className="max-w-screen-xl mx-auto px-4"> {/*max-w-screen-xl mx-auto : 본문 최대 너비 제한 + 가운데 정렬*/}

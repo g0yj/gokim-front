@@ -28,6 +28,7 @@ export interface CustomTableProps<T> {
     data: T[];
     getDetailLink?: (item: T) => string; // 상세 조회로 들어갈때 api 호출을 위해
     getRowKey?: (item: T, index: number | string) => string | number; // tr의 row의 key 보장을 위해 사용.
+    propId?: string | number ;
 }
   
 export interface SelectOption {
