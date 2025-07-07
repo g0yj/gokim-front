@@ -3,7 +3,7 @@ import React from "react";
 import ReactModal from "react-modal"; // npm i react-modal / npm i @types/react-modal
 
 export interface CustomModalProps extends ReactModal.Props{
-   size?: 'sm' | 'md' | 'lg' | 'mail';
+   size?: 'sm' | 'md' | 'lg' | 'alert' | 'mail';
    variant?: 'basic' | 'info' | 'warning';
 }
 
@@ -11,7 +11,8 @@ const sizeMap = {
   sm: 'max-w-md',
   md: 'max-w-lg',
   lg: 'max-w-xl',
-  mail: 'w-[500px] h-[300px]'
+  alert: 'w-[500px] h-[300px]',
+  mail: 'w-[700px] h-[500px]',
 };
 
 const variantMap = {

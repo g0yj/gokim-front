@@ -291,7 +291,7 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
       <CustomModal
         isOpen ={isModalOpen}
         onRequestClose = {closeModal}
-        size='mail'
+        size='alert'
         variant='basic'
       >
         <div className="text-center">
