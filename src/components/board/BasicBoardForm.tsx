@@ -6,6 +6,7 @@ import '@toast-ui/editor/dist/toastui-editor.css';
 import { AnonBoardFile } from '@/types/anonBoard';
 import { getFileName } from '@/utils/file';
 import log from '@/lib/logger';
+import { BoardFile } from '@/types/common/board';
 
 
 // 폼 필드 기본 타입 (등록/수정 공통)
@@ -27,7 +28,7 @@ type FormValues = BasicBoardFormValues | EditBoardFormValues;
 // 공통 게시글 폼 Props 제네릭 정의
 interface BasicBoardFormProps<T> {
   mode: 'create' | 'edit';
-  defaultValues?: BasicBoardFormValues & { files?: (File | T)[] };
+  defaultValues?: BasicBoardFormValues & { files?: (File | T | BoardFile )[] };
   onSubmit: (values: FormValues) => void;
   onCancel: () => void;
   isLoading?: boolean;

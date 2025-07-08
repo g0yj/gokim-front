@@ -16,6 +16,7 @@ import NotFoundPage from "./pages/NotFoundPage";
 import CommunityBoardPage from "./pages/community/CommunityBoardPage";
 import CommunityBoardDetailPage from "./pages/community/CommunityBoardDetailPage";
 import CommunityBoardCreatePage from "./pages/community/CommunityBoardCreatePage";
+import NoticeDetailPage from "./pages/notice/NoticeDetailPage";
 
 // 모든 라우트 정의
 export const router = createBrowserRouter([
@@ -27,6 +28,7 @@ export const router = createBrowserRouter([
   
         // 공지사항
         { path: "notice", element: <Notice /> },
+        { path: "notice/:id", element: <NoticeDetailPage /> },
         { path: "admin/notice", element: <AdminNotice /> },
   
         // 익명 게시판
