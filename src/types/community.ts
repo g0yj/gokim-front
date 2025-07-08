@@ -21,7 +21,7 @@ export interface ListCommunityBoardItem {
     createdBy: string | null;
     commentCount?: number| null;
     listNumber: number| null;
-    boardId: string;
+    communityId: string;
 }
 
 export type CommunityBoardList = CommonListResponse<ListCommunityBoardItem>;

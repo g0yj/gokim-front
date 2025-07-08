@@ -15,7 +15,6 @@ const CommunityBoardPage = () => {
   const[data, setData] = useState<CommonListResponse<ListCommunityBoardItem>> (getInitialRes());
 
   const columns: TableColumn<ListCommunityBoardItem>[] = [
-    {key:'listNumber', label: 'no'},
     {key:'title', label: '제목'},
     {key:'view', label: '조회수'},
     {key:'createdBy', label: '작성자'},
@@ -54,7 +53,7 @@ const CommunityBoardPage = () => {
       const values = paramQuery.getValues();
       log.debug(values);
       const res = await CommunityService.listBoard(values);
-      log.info(res.list);
+      log.info('커뮤니티 게시물 목록 데이터 확인', res.list);
       setData(res);
     } catch (err) {
       log.error('커뮤니티 게시판 목록 axios 실패', err)
