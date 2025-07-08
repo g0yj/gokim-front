@@ -76,10 +76,10 @@ useEffect(() => {
                     files: data.files, // 새로 추가된 파일만 전달
                     }}
                     onSubmit={handleUpdate}
-                        onCancel={handleCancelEdit}
+                    onCancel={handleCancelEdit}
                         getFileId={(file) => {
                             return file.noticeFileId ?? '';
-                        }}
+                    }}
                 />
                 ) : (
                 <BasicBoardView
