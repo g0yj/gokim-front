@@ -24,15 +24,16 @@ export interface ListAnonBoardItem {
 export type AnonBoardListRes = CommonListResponse<ListAnonBoardItem>; // 페이징 관련 데이터는 공통으로 뺐음.
 
 // originalFileName과 url은 BoardFile에서 정의
+/*
 export interface AnonBoardFile extends BoardFile {
     anonBoardFileId: string;
 }
-  
+    */
 export interface AnonBoardDetail {
     id: string;
     title: string;
     content: string;
-    files: AnonBoardFile[];
+    files?: BoardFile[];
     isMine: boolean;
   }
 

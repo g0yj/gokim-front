@@ -17,9 +17,6 @@ const NoticeDetailPage = () => {
 
 
     useEffect(() => {
-
-        
-        
         const fetchData = async () => {
             try{
                 if( !id) return;
@@ -27,7 +24,15 @@ const NoticeDetailPage = () => {
                 if(res.userRole === 'ADMIN'){
                     setIsMine(true);
                 }
-                setData(res);
+                // 파일 데이터 변형. 파일의 식별키가 id로 동일하지 않음..  undefined를 한 이유는 파일이 없을 경우에 대비해서임.
+                const modifiedFiles = res.files ? res.files.map((file: BoardFile) => ({
+                ...file,
+                id: file.noticeFileId,
+            })) : undefined;
+
+                setData({
+                    ...res,
+                    files: modifiedFiles});
 
             } catch (err) {
                 log.error('공지사항 상세 조회 axios 실패', err);
@@ -77,9 +82,6 @@ useEffect(() => {
                     }}
                     onSubmit={handleUpdate}
                     onCancel={handleCancelEdit}
-                        getFileId={(file) => {
-                            return file.noticeFileId ?? '';
-                    }}
                 />
                 ) : (
                 <BasicBoardView
@@ -90,7 +92,7 @@ useEffect(() => {
                     onEdit={handleEdit}
                     onDelete={handleDelete}
                     onCancel={() => navigate('/notice')}
-                    getFileKey={(file) => file.url}
+                    getFileKey={(file) => file.id ?? ''}
                 />
                 )
             ) : (

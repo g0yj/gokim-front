@@ -22,5 +22,5 @@ export interface NoticeDetailItem {
     view?: number| null;
     userRole?: string | null;
     pinned?: boolean | null;
-    files?: BoardFile[];
+    files?: BoardFile[] ;
   }

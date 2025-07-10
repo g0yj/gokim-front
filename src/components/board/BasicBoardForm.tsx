@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import CustomButton from '../common/CustomButton ';
 import { Editor as ToastEditor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { AnonBoardFile } from '@/types/anonBoard';
+//import { AnonBoardFile } from '@/types/anonBoard';
 import { getFileName } from '@/utils/file';
 import log from '@/lib/logger';
 import { BoardFile } from '@/types/common/board';
@@ -14,7 +14,8 @@ export interface BasicBoardFormValues {
   title?: string | null;
   content?: string | null;
   pinned?: boolean | null;
-  files?: File[] | AnonBoardFile[] | null;
+  // File은 폼 데이터로 파일 보낼 때 필수인거임. BoardFile은 상세 조회시 필요한 필드 모아둔 객체
+  files?: File[] | BoardFile[] | null;
 }
 
 // 수정 전용 타입: 삭제할 파일 id 목록 포함
@@ -28,11 +29,10 @@ type FormValues = BasicBoardFormValues | EditBoardFormValues;
 // 공통 게시글 폼 Props 제네릭 정의
 interface BasicBoardFormProps<T> {
   mode: 'create' | 'edit';
-  defaultValues?: BasicBoardFormValues & { files?: (File | T | BoardFile )[] };
+  defaultValues?: BasicBoardFormValues & { files?: BoardFile [] };
   onSubmit: (values: FormValues) => void;
   onCancel: () => void;
   isLoading?: boolean;
-  getFileId?: (file: T) => string | number;
 }
 
 //===============================================================================
@@ -42,7 +42,6 @@ const BasicBoardForm = <T,> ({
   onSubmit,
   onCancel,
   isLoading = false,
-  getFileId,
 }: BasicBoardFormProps<T>) => {
 
   const editorRef = useRef<ToastEditor>(null);
@@ -86,6 +85,7 @@ const BasicBoardForm = <T,> ({
   };
   
   // 전체 파일 중 서버에 저장된 파일만 추림 (File 인스턴스 제외)
+  /*
   const allFiles = defaultValues?.files ?? [];
   const serverFiles = allFiles
   .filter((f): f is T => !(f instanceof File))
@@ -95,14 +95,14 @@ const BasicBoardForm = <T,> ({
     return !deleteFileIds.includes(id); // 삭제 대상은 제외
   });
 
+  */
 
   // 삭제 버튼 클릭 시 삭제 ID 배열에 추가
-  const handleFileDelete = (file: T) => {
-    if (!getFileId) return;
-    const id = getFileId(file);
-    log.debug('파일 삭제', id);
-    setDeletedFileIds(prev => [...prev, id]);
-  };
+  const handleFileDelete = (id: string | number) => {
+  log.debug('파일 삭제 호출됨, ID:', id);
+  console.log('파일 삭제 호출됨, ID:', id);
+  setDeletedFileIds(prev => [...prev, id]);
+};
 
 
 
@@ -142,24 +142,25 @@ const BasicBoardForm = <T,> ({
       {/* 서버에 저장된 기존 파일 목록
           렌더링 시 deleteFileIds에 포함되지 않은 것만 렌더
       */}
-      {mode === 'edit' && getFileId &&  
-        serverFiles
-          .filter(file => !deleteFileIds.includes(getFileId(file)))
-          .map(file => {
-            const fileId = getFileId(file);
-            return (
-              <div key={fileId} className="flex justify-between items-center">
-                <span>{getFileName(file)}</span>
-                <button
-                  type="button"
-                  onClick={() => handleFileDelete(file)}
-                  className="text-red-500 hover:text-red-700"
-                >
-                  ❌
-                </button>
-              </div>
-            );
-          })}
+      {mode === 'edit' && defaultValues?.files &&
+  defaultValues.files.map((file,idx) => (
+    <div key={`${file.id}-${idx}`} className="flex justify-between items-center">
+      <span>{getFileName(file)}</span>
+      <button
+        type="button"
+        onClick={() => {
+          log.debug(file.id);
+          if (file.id !== undefined) {
+            console.log('버튼 클릭됨, 파일 ID:', file.id);
+            handleFileDelete(file.id);
+          }
+        }}
+        className="text-red-500 hover:text-red-700"
+      >
+        ❌
+      </button>
+    </div>
+  ))}
 
       
       {/* 신규 파일 업로드 */}

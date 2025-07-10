@@ -8,7 +8,7 @@ import { Viewer } from '@toast-ui/react-editor'; // ✅ Toast UI Viewer 컴포�
 import '@toast-ui/editor/dist/toastui-editor.css'; //  Editor용 
 import '@toast-ui/editor/dist/toastui-editor-viewer.css'; //  Viewer용 
 
-const BasicBoardView = <T extends { url: string; originalFileName: string }>({
+const BasicBoardView = ({
   title,
   content,
   isMine = false,
@@ -17,7 +17,7 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }>({
   onEdit,
   onDelete,
   onCancel,
-}: BasicBoardViewProps<T>) => {
+}: BasicBoardViewProps) => {
   return (
     <div className="w-[800px] mx-auto mt-8 space-y-6">
       {/* 수정/삭제 버튼 (작성자 본인일 때만 표시) */}
@@ -44,7 +44,7 @@ const BasicBoardView = <T extends { url: string; originalFileName: string }>({
           <ul className="space-y-2 list-none">
             {files.map((file, idx) => (
               <li
-                key={getFileKey ? getFileKey(file, idx) : file.url}
+                key={`${file.id}-${idx}`} // id와 idx를 결합하여 고유한 key 구성
                 className="flex items-center gap-2"
               >
                 <Download size={16} className="text-gray-500" />

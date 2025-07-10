@@ -1,10 +1,11 @@
 import log from '@/lib/logger';
 import AnonBoardService from '@/services/anonBoardService';
-import { AnonBoardDetail, AnonBoardFile } from '@/types/anonBoard';
+import { AnonBoardDetail } from '@/types/anonBoard';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BasicBoardView from '@/components/board/BasicBoardView';
 import BasicBoardForm, { EditBoardFormValues } from '@/components/board/BasicBoardForm';
+import { BoardFile } from '@/types/common/board';
 
 const AnonBoardDetailPage = () => {
   const { id } =  useParams();
@@ -21,7 +22,14 @@ const AnonBoardDetailPage = () => {
         if (!id) return;
         const res = await AnonBoardService.detail(id);
         log.info(res);
-        setData(res);
+        const modifiedFiles = res.files ? res.files.map((file: BoardFile) => ({
+                ...file,
+                id: file.noticeFileId,
+            })) : undefined;
+
+        setData({
+                    ...res,
+                    files: modifiedFiles});
       } catch (err) {
         log.error('useEffect 호출 실패', err);
       }
@@ -61,8 +69,9 @@ const AnonBoardDetailPage = () => {
       formData.append('title', formValues.title ?? '');
       formData.append('content', formValues.content ?? '');
   
-      let files: File[] = [];
   
+      let files: File[] = [];
+
       if (formValues.files) {
         if (formValues.files instanceof FileList) {
           files = Array.from(formValues.files);
@@ -104,10 +113,7 @@ const AnonBoardDetailPage = () => {
           files: data.files, // 새로 추가된 파일만 전달
         }}
         onSubmit={handleUpdate}
-            onCancel={handleCancelEdit}
-            getFileId={(file) => {
-              return (file as AnonBoardFile).anonBoardFileId;
-            }}
+        onCancel={handleCancelEdit}
       />
     ) : (
       <BasicBoardView
@@ -118,7 +124,7 @@ const AnonBoardDetailPage = () => {
         onEdit={handleEdit}
         onDelete={handleDelete}
         onCancel={() => navigate('/anon')}
-        getFileKey={(file) => file.url}
+        getFileKey={(file) => file.id ?? ''}
       />
     )
   ) : (

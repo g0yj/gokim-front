@@ -44,10 +44,10 @@ export interface BasicBoardSearchBoxProps {
 export interface BasicBoardViewProps<T extends BoardFile = BoardFile> { // 왜 상속 받나? files의 T[]를 구체화 하기 위함.
   title?: string | null;
   content?: string | null;
-  files?: T[];
+  files?: BoardFile[];
   // 추후 파일 map 돌릴 때 key값 보장하기 위해서 인 줄 알았는데 아니네.. ?: 로 상위 컴포넌트에서 전달 안해도 에러 메세지 안나옴.
   // files.url을 가지고 key 값으로 사용하려고 했는데 굳이 없애지 않은 이유? 자세한 설명은 하단에 정리
-  getFileKey?: (file: T, index: number) => string | number;  
+  getFileKey?: (file: BoardFile) => string;  
   isMine?: boolean;
   onEdit?: () => void;
   onDelete?: () => void;
@@ -56,10 +56,12 @@ export interface BasicBoardViewProps<T extends BoardFile = BoardFile> { // 왜 �
 
 // 서버에서 파일 정보 내려줄 때 식별키의 변수명을 일치하지 않음. 변수명이 동일한것만 정의해두고 상속 받아서 사용하기 위함
 export interface BoardFile {
+  id?: string ;
   url: string;
   originalFileName: string;
-  noticeFileId?: string;
-  boardFileId?: string;
+  noticeFileId?: string ;
+  boardFileId?: string ;
+  anonBoardFileId?: string; 
 }
 
 
