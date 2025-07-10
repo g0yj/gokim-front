@@ -117,13 +117,7 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <p>{storedLoginId}</p>
           
-          {/** 이미지 클릭 시 모달 열기 */}
-          <img 
-            src={mail} 
-            onClick={handleMailClick}
-            className="w-9 h-9 cursor-pointer"  
-            alt="개발자 문의"
-          />
+          <CustomButton onClick={handleMailClick} variant ='ghost'>문의</CustomButton>
 
             {/** 모달 컴포넌트 */}
             <CustomModal 
@@ -167,7 +161,7 @@ const Header = () => {
                 </form>
             </CustomModal>
           
-          <CustomButton onClick ={handleLogout}> Logout </CustomButton>
+          <CustomButton onClick ={handleLogout}> 로그아웃 </CustomButton>
           
         </div>
       </div>

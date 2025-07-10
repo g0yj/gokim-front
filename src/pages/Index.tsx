@@ -1,13 +1,7 @@
-import ButtonPage from '@/mock/ButtonPage';
 import female from '../assets/female.png'; 
-import { useState } from 'react';
-import CustomModal from '@/components/common/CustomModal';
-import CustomButton from '@/components/common/CustomButton ';
 
 const Index = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+
 
 
   return (
@@ -26,11 +20,7 @@ const Index = () => {
               현재 개발중인 사이트 입니다. 문의사항은 개발자에게 연락해주세요
              </p>
           </div>
-          <div>
-            <h3 className='md:flex-1 '
-            
-            ></h3>
-          </div>
+      
         </div>
 
       </div>
@@ -39,23 +29,6 @@ const Index = () => {
       <div className="max-w-screen-xl mx-auto px-4 py-6">
         <h1 className="text-2xl font-bold mb-4">메인 페이지</h1>
       
-      {/** 모달 테스트 */}
-      <div>
-
-        <CustomButton onClick={openModal}>Open Modal</CustomButton>
-
-        <CustomModal
-          isOpen={isModalOpen} // 반드시 넣어야 하는 prop
-          onRequestClose={closeModal}
-          size='md'
-          variant='basic'
-        >
-          children 확인
-        </CustomModal>
-
-    {/** 버튼 디자인 예시 */}    
-    </div>
-        <ButtonPage/>
       </div>
 
     </div>

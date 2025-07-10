@@ -1,5 +1,4 @@
 import { Tab, Tabs } from '@mui/material';
-import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'; 
 import CustomButton from '@/components/common/CustomButton ';
@@ -17,6 +16,9 @@ const AdminHeader = () => {
   const validPaths = ["/notice", "/board", "/community", "/project"];
   const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
 
+  // localStorage에서 loginId를 가져옵니다.
+  const storedLoginId = localStorage.getItem('loginId');
+  
   const handleLogout = async () => {
     try {
       // 1. 서버에 로그아웃 요청
@@ -80,8 +82,8 @@ const AdminHeader = () => {
 
         {/* ✅ 오른쪽: 알림/프로필 자리 */}
         <div className="flex items-center gap-4">
-          <CustomButton onClick ={handleLogout}> Logout </CustomButton>
-  
+          <p>{storedLoginId}</p>
+          <CustomButton onClick ={handleLogout}> 로그아웃 </CustomButton>
         </div>
       </div>
     </header>
