@@ -91,7 +91,6 @@ export default function SignUp(props: { disableCustomTheme?: boolean }) {
     const name = document.getElementById('name') as HTMLInputElement;
     const id = document.getElementById('id') as HTMLInputElement;
     const phone = document.getElementById('phone') as HTMLInputElement;
-    // const file = document.getElementById('file') as HTMLInputElement;
 
 
     let isValid = true;
