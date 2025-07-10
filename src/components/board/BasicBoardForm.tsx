@@ -27,34 +27,31 @@ export interface EditBoardFormValues extends BasicBoardFormValues {
 type FormValues = BasicBoardFormValues | EditBoardFormValues;
 
 // 공통 게시글 폼 Props 제네릭 정의
-interface BasicBoardFormProps<T> {
+interface BasicBoardFormProps {
   mode: 'create' | 'edit';
   defaultValues?: BasicBoardFormValues & { files?: BoardFile [] };
   onSubmit: (values: FormValues) => void;
   onCancel: () => void;
   isLoading?: boolean;
+  deleteFileId?: (fileId: string | number) => void;
 }
 
 //===============================================================================
-const BasicBoardForm = <T,> ({
+const BasicBoardForm = ({
   mode,
   defaultValues,
   onSubmit,
   onCancel,
   isLoading = false,
-}: BasicBoardFormProps<T>) => {
+  deleteFileId,
+}: BasicBoardFormProps) => {
 
   const editorRef = useRef<ToastEditor>(null);
-  
-  // 삭제할 서버 파일 id 저장용
-  const [deleteFileIds, setDeletedFileIds] = useState<(string | number)[]>([]);
-
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm<FormValues>({
     defaultValues: defaultValues ?? {
       title: '',
@@ -65,14 +62,34 @@ const BasicBoardForm = <T,> ({
     },
   });
 
+  // ✅ 삭제 후 즉시 UI에 반영하기 위한 파일 목록 로컬 상태
+  const [localFiles, setLocalFiles] = useState<BoardFile[]>(defaultValues?.files || []);
+
+  // defaultValues가 변경되면 로컬 파일 상태도 동기화
   useEffect(() => {
-    if (defaultValues) {
-      reset({
-        ...defaultValues,
-        ...(mode === 'edit' ? { deleteFileIds: [] } : {}),
-      });
+    if (defaultValues?.files) {
+      setLocalFiles(defaultValues.files);
     }
-  }, [defaultValues, reset, mode]);
+  }, [defaultValues?.files]);
+
+
+  // --------------------------
+  // ✅ 삭제 버튼 클릭 시 호출되는 함수
+  // - UI에 즉시 반영 + 상위 컴포넌트로 삭제 ID 전달
+  // --------------------------
+  const handleDeleteFile = (fileId: string | number | undefined) => {
+    log.debug('삭제 아이콘 클릭');
+    if (!fileId) return;
+
+    // 1) UI에서 삭제
+    setLocalFiles((prev) => prev.filter((file) => file.id !== fileId));
+
+    // 2) 상위 컴포넌트로 삭제할 ID 전달
+    if (deleteFileId) {
+      log.debug('삭제할 파일 ID:', fileId);
+      deleteFileId(fileId);
+    }
+  };
 
 
   const submitHandler = (values: FormValues) => {
@@ -80,31 +97,9 @@ const BasicBoardForm = <T,> ({
     onSubmit({
       ...values,
       content: htmlContent,
-      deleteFileIds,
     });
   };
   
-  // 전체 파일 중 서버에 저장된 파일만 추림 (File 인스턴스 제외)
-  /*
-  const allFiles = defaultValues?.files ?? [];
-  const serverFiles = allFiles
-  .filter((f): f is T => !(f instanceof File))
-  .filter((file) => {
-    if (!getFileId) return true;
-    const id = getFileId(file);
-    return !deleteFileIds.includes(id); // 삭제 대상은 제외
-  });
-
-  */
-
-  // 삭제 버튼 클릭 시 삭제 ID 배열에 추가
-  const handleFileDelete = (id: string | number) => {
-  log.debug('파일 삭제 호출됨, ID:', id);
-  console.log('파일 삭제 호출됨, ID:', id);
-  setDeletedFileIds(prev => [...prev, id]);
-};
-
-
 
   return (
     <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
@@ -148,13 +143,7 @@ const BasicBoardForm = <T,> ({
       <span>{getFileName(file)}</span>
       <button
         type="button"
-        onClick={() => {
-          log.debug(file.id);
-          if (file.id !== undefined) {
-            console.log('버튼 클릭됨, 파일 ID:', file.id);
-            handleFileDelete(file.id);
-          }
-        }}
+        onClick={() => handleDeleteFile(file.id)}
         className="text-red-500 hover:text-red-700"
       >
         ❌

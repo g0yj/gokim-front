@@ -13,6 +13,7 @@ const AnonBoardDetailPage = () => {
 
   const [data, setData] = useState<AnonBoardDetail | null>(null);
   const [isEditMode, setIsEditMode] = useState(false); // 상세일지 수정일지 판단을 위해 필요
+  const [deleteFileIds, setDeleteFileIds] = useState<(string | number)[]>([]); // 화면에서 파일 제거를 위함
 
 
   // 상세 정보 불러오기
@@ -21,15 +22,20 @@ const AnonBoardDetailPage = () => {
       try {
         if (!id) return;
         const res = await AnonBoardService.detail(id);
-        log.info(res);
-        const modifiedFiles = res.files ? res.files.map((file: BoardFile) => ({
+        
+        // 필드명 매칭을 위한 과정
+        const modifiedFiles = res.files
+          ? res.files.map((file: BoardFile) => ({
                 ...file,
-                id: file.noticeFileId,
-            })) : undefined;
-
+                id: file.anonBoardFileId,
+          }))
+          : undefined;
+        
         setData({
                     ...res,
-                    files: modifiedFiles});
+          files: modifiedFiles
+        });
+        
       } catch (err) {
         log.error('useEffect 호출 실패', err);
       }
@@ -46,8 +52,10 @@ const AnonBoardDetailPage = () => {
   const handleCancelEdit = async () => {
     log.debug('취소 버튼 클릭. 에디터에서 벗어나기');
     setIsEditMode(false);
+    setDeleteFileIds([]);
   }
-  // 삭제
+
+  // 삭제 버튼 -> 삭제 요청 후 리스트 페이지로 이동
   const handleDelete = async () => {
     if (!id) return;
     const confirmDelete  = window.confirm('정말 삭제하시겠습니까?');
@@ -60,6 +68,16 @@ const AnonBoardDetailPage = () => {
     }
   }
 
+    // 파일 삭제  (UI에서 제거 및 삭제 ID 기록)
+    const deleteFiles = (fileId: string | number) => {
+      setDeleteFileIds((prev) => [...prev, fileId]);
+      setData((prev) =>
+        prev ? { ...prev, files: prev.files?.filter((f) => f.id !== fileId) } : null
+      );
+  };
+  
+
+  // 게시글 수정 
   const handleUpdate = async (formValues: EditBoardFormValues) => {
     log.debug('수정버튼 클릭');
     if (!id) return;
@@ -82,16 +100,17 @@ const AnonBoardDetailPage = () => {
   
       files.forEach((file) => formData.append('files', file));
   
-      // ✅ 누락되었던 삭제 대상 파일 id 전송
-      if (formValues.deleteFileIds && formValues.deleteFileIds.length > 0) {
-        formValues.deleteFileIds.forEach((id) => {
+      // 삭제할 파일 담기
+      if (deleteFileIds.length > 0) {
+        deleteFileIds.forEach((id) => {
           formData.append('deleteFileIds', String(id));
         });
-        log.debug('삭제 대상 파일 IDs:', formValues.deleteFileIds);
+        log.debug('삭제 대상 파일 Ids: ', deleteFileIds);
       }
-  
+
       await AnonBoardService.updateAnonBoard(formData, id);
       setIsEditMode(false);
+      setDeleteFileIds([]);
   
       const updated = await AnonBoardService.detail(id);
       setData(updated);
@@ -114,6 +133,7 @@ const AnonBoardDetailPage = () => {
         }}
         onSubmit={handleUpdate}
         onCancel={handleCancelEdit}
+        deleteFileId={deleteFiles}
       />
     ) : (
       <BasicBoardView
