@@ -32,7 +32,7 @@ const AnonBoardDetailPage = () => {
           : undefined;
         
         setData({
-                    ...res,
+          ...res,
           files: modifiedFiles
         });
         

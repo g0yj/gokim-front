@@ -1,3 +1,4 @@
+import { BoardFile } from "./common/board";
 import { CommonListResponse } from "./common/common";
 
 export interface ListCommunityItem {
@@ -25,3 +26,15 @@ export interface ListCommunityBoardItem {
 }
 
 export type CommunityBoardList = CommonListResponse<ListCommunityBoardItem>;
+
+export interface CommunityBoardItem {
+    id?: string| null;
+    title?: string| null;
+    content?: string| null;
+    createdBy?: string| null;
+    createdOn?: string| null;
+    files?: BoardFile[];
+    communityId?: string | null;
+    view?: number| null | string;
+    isMine?: boolean| null | undefined;
+}

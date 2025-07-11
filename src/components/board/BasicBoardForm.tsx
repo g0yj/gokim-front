@@ -52,6 +52,7 @@ const BasicBoardForm = ({
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<FormValues>({
     defaultValues: defaultValues ?? {
       title: '',
@@ -65,12 +66,15 @@ const BasicBoardForm = ({
   // ✅ 삭제 후 즉시 UI에 반영하기 위한 파일 목록 로컬 상태
   const [localFiles, setLocalFiles] = useState<BoardFile[]>(defaultValues?.files || []);
 
-  // defaultValues가 변경되면 로컬 파일 상태도 동기화
+  // defaultValues가 변경되면 로컬 파일 상태도 동기화 및 폼 상태 초기화
   useEffect(() => {
+    // 변경된 defaultValues를 사용하여 폼 및 localFiles를 초기화
+    if(defaultValues) reset(defaultValues);
+    
     if (defaultValues?.files) {
       setLocalFiles(defaultValues.files);
     }
-  }, [defaultValues?.files]);
+  }, [defaultValues, reset]);
 
 
   // --------------------------
