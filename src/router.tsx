@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
         // 커뮤니티 게시판 
         { path: "community", element: <Community /> },
         { path: "community/:id", element: <CommunityBoardPage /> },
-        { path: "community/board/create", element: <CommunityBoardCreatePage /> },
+        { path: "community/:id/board/create", element: <CommunityBoardCreatePage /> },
         { path: "community/board/:boardId", element: <CommunityBoardDetailPage /> },
 
   

@@ -26,7 +26,13 @@ const CommunityApi = {
     putCommunityBoard: async (formData: FormData, boardId: string): Promise<void> => {
         log.debug('커뮤니티 게시판 수정 api 호출. boardId: ', boardId);
         log.logFormData(formData);
-        return await api.put(`/community/board/${boardId}`);
+        return await api.put(`/community/board/${boardId}`, formData);
+    },
+
+    postCommunityBoard: async (formData: FormData, communityId: string): Promise<void> => {
+        log.debug('커뮤니티 게시글 등록 api. communityId: ', communityId);
+        log.logFormData(formData);
+        return await api.post(`/community/board/${communityId}`, formData);
     }
 
 }

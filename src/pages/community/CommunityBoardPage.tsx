@@ -70,7 +70,7 @@ const CommunityBoardPage = () => {
   }
 
   const getDetailLink = (item: ListCommunityBoardItem) => `/community/board/${item.id}`;
-  const createLink = '/community/board/create';
+  const createLink = `/community/${id}/board/create`;
 
   return (
     <div className='w-[800px] mt-8 mx-auto'>
