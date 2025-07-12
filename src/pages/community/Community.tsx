@@ -10,7 +10,6 @@ import { BasicBoardSearchFields } from '@/types/common/board';
 import { CommonListResponse, SelectOption } from '@/types/common/common';
 import { CreateCommunity, ListCommunityItem } from '@/types/community';
 import { getInitialRes } from '@/utils/board';
-import { register } from 'module';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -88,25 +87,37 @@ const Community = () => {
     setIsModalOpen(false); // 모달 닫기
   };
 
-  // ✅ 등록 폼 제출 시 실행되는 함수
+  // 등록 폼 제출 시 실행되는 함수
   const handleCreateCommunity = async (formValues: CreateCommunity) => {
+
     try {
       const formData = new FormData();
       formData.append('title', formValues.title);
       formData.append('description', formValues.description ?? '');
-
       await CommunityService.createCommunity(formData);
+      handleSearch();
     } catch (err) {
       log.error('커뮤니티 생성 api 호출 실패', err);
     }
-    
     reset(); // 초기화
     handleCloseModal();
+  }
+  
+  // 스크랩 변경 시 호출
+  const handleScrapClick = async (item: ListCommunityItem) => {
+
+    try {
+      await CommunityService.toggleScrap(item.id, item.isScrapped);
+      handleSearch();
+    }
+    catch (err) {
+      log.error('스크랩 변경 axios 호출 실패', err);
+    }
   }
 
   useEffect(() => {
     handleSearch ();
-  },[handleCreateCommunity]);
+  },[]);
 
 
   return (
@@ -165,7 +176,13 @@ const Community = () => {
       {/** 커뮤니티 카드 목록 */}
       <div className="flex flex-wrap">
         {data.list.map((item , idx) => (
-          <CommunityCard key={idx} data={item} onClick={()=> handleCardClick(item.id ?? '')}/>
+          <CommunityCard
+            key={idx}
+            data={item}
+            onClick={() => handleCardClick(item.id ?? '')}
+            onScrap={() => handleScrapClick(item)}
+          
+          />
         ))}
       </div>
 

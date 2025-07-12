@@ -33,6 +33,19 @@ const CommunityService = {
     createCommunity: async (formData: FormData): Promise<void> => {
         return await CommunityApi.postCommunity(formData);
 
+    },
+
+    updateCommunity: async (id: string, formData: FormData): Promise<void> => {
+        return await CommunityApi.putCommunity(id, formData);
+    },
+
+    toggleScrap: async (communityId: string, isScrapped: boolean): Promise<void> => {
+        if (isScrapped) {
+            return await CommunityApi.deleteScrap(communityId);
+        } else {
+            return await CommunityApi.postScrap(communityId);
+        }
+      
     }
 
 }

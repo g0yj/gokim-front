@@ -1,10 +1,9 @@
 import BasicBoard from "@/components/board/BasicBoard";
-import { defaultSearchValues } from "@/constants/board";
 import log from "@/lib/logger";
 import CommunityService from "@/services/communityService";
 import { BasicBoardSearchFields } from "@/types/common/board";
 import { CommonListResponse, SelectOption, TableColumn } from "@/types/common/common";
-import { CommunityBoardList, ListCommunityBoardItem } from "@/types/community";
+import { ListCommunityBoardItem } from "@/types/community";
 import { getInitialRes } from "@/utils/board";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

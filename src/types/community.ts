@@ -2,17 +2,30 @@ import { BoardFile } from "./common/board";
 import { CommonListResponse } from "./common/common";
 
 export interface ListCommunityItem {
-    id?: string| null;
+    id: string;
     title?: string| null;
     description?: string| null;
     createdBy?: string| null;
     boardId?: string | null;
     url?: number| null;
     listNumber?: number| null;
-    isScrapped?: boolean| null;
+    isScrapped: boolean;
 }
 
 export type CommunityListRes = CommonListResponse<ListCommunityItem>;
+
+export interface CreateCommunity {
+    title: string;
+    description?: string;
+    file?: File;
+}
+
+export interface UpdateCommunity {
+    title: string;
+    description?: string;
+    file?: File;
+    isScrapped: boolean;
+}
 
 export interface CreateCommunity {
     title: string;

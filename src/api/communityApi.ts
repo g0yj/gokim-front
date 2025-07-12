@@ -39,6 +39,22 @@ const CommunityApi = {
         log.debug('커뮤니티 생성 api');
         log.logFormData(formData);
         return await api.post(`/community`, formData);
+    },
+
+    putCommunity: async (id: string, formData: FormData): Promise<void> => {
+        log.debug(`커뮤니티 수정 api. id`, id);
+        log.logFormData(formData);
+        return api.put(`/community/${id}`, formData);
+    },
+
+    postScrap: async (communityId: string): Promise<void> => {
+        log.debug('API 스크랩 등록');
+        return api.post(`/community/${communityId}/scrap`);
+    },
+
+    deleteScrap: async (communityId: string): Promise<void> => {
+        log.debug('API 스크랩 취소');
+        return api.delete(`/community/${communityId}/scrap`);
     }
 
 }
