@@ -1,58 +1,56 @@
+import CustomPagination from "../common/CustomPagination";
+import BasicBoardSearchBox from "./BasicBoardSearchBox";
 
-import CustomPagination from '../common/CustomPagination';
-import BasicBoardSearchBox from './BasicBoardSearchBox';
-
-import CustomTable from '../common/CustomTable';
-import { BasicBoardProps } from '@/types/common/board';
-
+import CustomTable from "../common/CustomTable";
+import { BasicBoardProps } from "@/types/common/board";
 
 /**
  * limit, search,
- * @returns 
+ * @returns
  */
 const BasicBoard = <Res,>({
-    columns,
-    data,
-    paramQuery,
-    onSearch,
-    limitOptions,
-    searchOptions,
-    onPageChange,
-    getDetailLink,
-    createLink,
+  columns,
+  data,
+  paramQuery,
+  onSearch,
+  limitOptions,
+  searchOptions,
+  onPageChange,
+  getDetailLink,
+  createLink,
 }: BasicBoardProps<Res>) => {
-    
-  
-    return (
-      <div className="space-y-6 ">
-       
-        <div className="flex justify-between items-end w-full mb-4">
+  return (
+    <div className="space-y-6 ">
+      <div className="flex justify-between items-end w-full mb-4">
         <BasicBoardSearchBox
-            paramQuery={paramQuery}
-            limits={limitOptions}
-            searches={searchOptions}
-            onSearch={onSearch!}
-            createLink={createLink}
-          />
-        </div>
-
-        <div>
-          <CustomTable columns={columns} data={data.content} getDetailLink={getDetailLink}  />
-        </div>
-
-        <div className="w-fit mx-auto mb-4">
-         <CustomPagination
-            page={data.page}
-            totalPage={data.totalPage}
-            onChange={onPageChange!}
-          />
-        </div>
-
+          paramQuery={paramQuery}
+          limits={limitOptions}
+          searches={searchOptions}
+          onSearch={onSearch!}
+          createLink={createLink}
+        />
       </div>
-    );
-  };
-  
-  export default BasicBoard;
+
+      <div>
+        <CustomTable
+          columns={columns}
+          data={data.content}
+          getDetailLink={getDetailLink}
+        />
+      </div>
+
+      <div className="w-fit mx-auto mb-4">
+        <CustomPagination
+          page={data.page}
+          totalPage={data.totalPage}
+          onChange={onPageChange!}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default BasicBoard;
 
 /**
  * Req와 Res란???

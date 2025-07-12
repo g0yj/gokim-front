@@ -2,7 +2,11 @@ import BasicBoard from "@/components/board/BasicBoard";
 import log from "@/lib/logger";
 import CommunityService from "@/services/communityService";
 import { BasicBoardSearchFields } from "@/types/common/board";
-import { CommonListResponse, SelectOption, TableColumn } from "@/types/common/common";
+import {
+  CommonListResponse,
+  SelectOption,
+  TableColumn,
+} from "@/types/common/common";
 import { ListCommunityBoardItem } from "@/types/community";
 import { getInitialRes } from "@/utils/board";
 import { useEffect, useState } from "react";
@@ -10,76 +14,79 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 
 const CommunityBoardPage = () => {
-  const {id} = useParams();
-  const[data, setData] = useState<CommonListResponse<ListCommunityBoardItem>> (getInitialRes());
+  const { id } = useParams();
+  const [data, setData] = useState<CommonListResponse<ListCommunityBoardItem>>(
+    getInitialRes()
+  );
 
   const columns: TableColumn<ListCommunityBoardItem>[] = [
-    {key:'title', label: '제목'},
-    {key:'view', label: '조회수'},
-    {key:'createdBy', label: '작성자'},
-    {key:'createdOn', label: '작성일'},
-  ]
+    { key: "title", label: "제목" },
+    { key: "view", label: "조회수" },
+    { key: "createdBy", label: "작성자" },
+    { key: "createdOn", label: "작성일" },
+  ];
 
   const limitOptions: SelectOption[] = [
-    { label: '5건', value: 5 },
-    { label: '10건', value: 10 },
-    { label: '20건', value: 20 },   
-  ]
+    { label: "5건", value: 5 },
+    { label: "10건", value: 10 },
+    { label: "20건", value: 20 },
+  ];
 
   const searchOptions: SelectOption[] = [
-    { label: '전체', value: 'all' },
-    { label: '제목', value: 'title' },
-    { label: '내용', value: 'content' },
-    { label: '작성자', value: 'createdBy'},
-  ]
+    { label: "전체", value: "all" },
+    { label: "제목", value: "title" },
+    { label: "내용", value: "content" },
+    { label: "작성자", value: "createdBy" },
+  ];
 
   const paramQuery = useForm<BasicBoardSearchFields>({
-    defaultValues: { 
+    defaultValues: {
       // Community의 paramQuery와 비교
       page: 1,
       limit: 10,
-      search: 'all',
-      keyword: '',
+      search: "all",
+      keyword: "",
       order: null,
       direction: null,
       pageSize: 10,
-      paramId: id 
-    }
+      paramId: id,
+    },
   });
 
-  const handleSearch = async() => {
-    log.debug('검색 버튼 클릭!!');
+  const handleSearch = async () => {
+    log.debug("검색 버튼 클릭!!");
     try {
       const values = paramQuery.getValues();
       log.debug(values);
       const res = await CommunityService.listBoard(values);
-      log.info('커뮤니티 게시물 목록 데이터 확인', res.list);
+      log.info("커뮤니티 게시물 목록 데이터 확인", res.list);
       setData(res);
     } catch (err) {
-      log.error('커뮤니티 게시판 목록 axios 실패', err)
+      log.error("커뮤니티 게시판 목록 axios 실패", err);
     }
-  }
+  };
 
   useEffect(() => {
     handleSearch();
   }, []);
 
   const handlePageChange = (page: number) => {
-    paramQuery.setValue('page', page);
+    paramQuery.setValue("page", page);
     handleSearch();
-  }
+  };
 
-  const getDetailLink = (item: ListCommunityBoardItem) => `/community/board/${item.id}`;
+  const getDetailLink = (item: ListCommunityBoardItem) =>
+    `/community/board/${item.id}`;
   const createLink = `/community/${id}/board/create`;
 
   return (
-    <div className='w-[800px] mt-8 mx-auto'>
+    <div className="w-[800px] mt-8 mx-auto">
       <BasicBoard
         columns={columns}
         data={{
           content: data?.list,
           page: data.currentPage,
-          totalPage: data.totalPage
+          totalPage: data.totalPage,
         }}
         paramQuery={paramQuery}
         onSearch={handleSearch}
@@ -88,9 +95,7 @@ const CommunityBoardPage = () => {
         onPageChange={handlePageChange}
         getDetailLink={getDetailLink}
         createLink={createLink}
-      >
-      </BasicBoard>
-
+      ></BasicBoard>
     </div>
   );
 };

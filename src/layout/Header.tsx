@@ -1,73 +1,71 @@
-import { Tab, Tabs } from '@mui/material';
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png'; 
-import mail from '../assets/mail.png'; 
-import { useDispatch } from 'react-redux';
-import { logout as logoutAction } from '@/store/authSlice'; // 이름 충돌 방지 위해 rename
+import { Tab, Tabs } from "@mui/material";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
+import mail from "../assets/mail.png";
+import { useDispatch } from "react-redux";
+import { logout as logoutAction } from "@/store/authSlice"; // 이름 충돌 방지 위해 rename
 
-import log from '@/lib/logger';
-import CustomButton from '@/components/common/CustomButton ';
-import CustomModal from '@/components/common/CustomModal';
-import AuthService from '@/services/authService';
-
+import log from "@/lib/logger";
+import CustomButton from "@/components/common/CustomButton ";
+import CustomModal from "@/components/common/CustomModal";
+import AuthService from "@/services/authService";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch  = useDispatch();
+  const dispatch = useDispatch();
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   // 개발자 문의 관련
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [emailSubject, setEmailSubject] = useState('');
-  const [emailContent, setEmailContent] = useState('');
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailContent, setEmailContent] = useState("");
 
   // localStorage에서 loginId를 가져옵니다.
-  const storedLoginId = localStorage.getItem('loginId');
-
+  const storedLoginId = localStorage.getItem("loginId");
 
   const validPaths = ["/notice", "/anon", "/community", "/project"];
-  const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
+  const currentTabValue = validPaths.includes(location.pathname)
+    ? location.pathname
+    : false;
 
   const handleLogout = async () => {
-
     try {
       // 1. 서버에 로그아웃 요청
       await AuthService.logout();
-  
+
       // 2. Redux 상태 초기화
       dispatch(logoutAction()); // 이름 충돌 시 alias로 사용
-  
+
       // 3. 페이지 이동
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
-      log.error('로그아웃 axios 호출 실패', err);
+      log.error("로그아웃 axios 호출 실패", err);
     }
   };
 
   const handleMailClick = () => {
-    log.debug('이미지 클릭');
+    log.debug("이미지 클릭");
     setIsModalOpen(true);
-  }
+  };
 
   const handleSendEmail = (e: React.FormEvent<HTMLFormElement>) => {
-    log.debug('전송버튼 클릭!!')
-    e.preventDefault() // 폼의 기본 동작 방지
-    
+    log.debug("전송버튼 클릭!!");
+    e.preventDefault(); // 폼의 기본 동작 방지
+
     const formData = new FormData(e.currentTarget); // ✅ e.target을 e.currentTarget으로 변경하여 타입 일치
-    
+
     // localStorage에서 loginId 값을 가져와 'userId'로 설정, null 방지
-    const loginId = localStorage.getItem('loginId') || '임시사용자'; // 없으면 기본값 설정
-    formData.append('userId', loginId);
-    formData.append('email', 'jinyjgo@gmail.com');
-    
+    const loginId = localStorage.getItem("loginId") || "임시사용자"; // 없으면 기본값 설정
+    formData.append("userId", loginId);
+    formData.append("email", "jinyjgo@gmail.com");
+
     // 이메일 전송 처리 로직
 
     closeModal();
   };
-
 
   return (
     <header className="bg-wight text-slate-800 py-3 shadow">
@@ -83,26 +81,26 @@ const Header = () => {
           value={currentTabValue}
           onChange={(_, newValue) => navigate(newValue)}
           sx={{
-            position: 'relative',
-            height: '100%',
-            '& .MuiTabs-indicator': {
+            position: "relative",
+            height: "100%",
+            "& .MuiTabs-indicator": {
               bottom: 0,
               height: 3,
-              backgroundColor: '#161C24', // 밑줄 색깔
+              backgroundColor: "#161C24", // 밑줄 색깔
             },
-            '& .MuiTab-root': {
-              color: '#161C24', // 탭 글자 색
-              fontSize: '1rem',
-              textTransform: 'none',
+            "& .MuiTab-root": {
+              color: "#161C24", // 탭 글자 색
+              fontSize: "1rem",
+              textTransform: "none",
               fontWeight: 500,
               px: 2,
               minWidth: 80,
-              '&.Mui-selected': {
+              "&.Mui-selected": {
                 fontWeight: 600,
-                color: '#161C24',
+                color: "#161C24",
               },
-              '&:hover': {
-                backgroundColor: '#FFFFFF', //선택 시 나오는 배경 색
+              "&:hover": {
+                backgroundColor: "#FFFFFF", //선택 시 나오는 배경 색
               },
             },
           }}
@@ -116,53 +114,65 @@ const Header = () => {
         {/* ✅ 오른쪽: 알림/프로필 자리 */}
         <div className="flex items-center gap-4">
           <p>{storedLoginId}</p>
-          
-          <CustomButton onClick={handleMailClick} variant ='ghost'>문의</CustomButton>
 
-            {/** 모달 컴포넌트 */}
-            <CustomModal 
-              isOpen={isModalOpen} 
-              onRequestClose={closeModal} 
-              size="mail" 
-              variant="basic">
-                <form onSubmit={handleSendEmail}>
+          <CustomButton onClick={handleMailClick} variant="ghost">
+            문의
+          </CustomButton>
+
+          {/** 모달 컴포넌트 */}
+          <CustomModal
+            isOpen={isModalOpen}
+            onRequestClose={closeModal}
+            size="mail"
+            variant="basic"
+          >
+            <form onSubmit={handleSendEmail}>
+              <div>
+                <h2 className="text-lg font-bold mb-4">📧 개발자 문의</h2>
+                <div className="space-y-4">
                   <div>
-                    <h2 className="text-lg font-bold mb-4">📧 개발자 문의</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <label htmlFor="emailSubject" className="block text-sm font-medium text-gray-700">제목</label>
-                        <input
-                          id="emailSubject"
-                          name="subject" // 폼 데이터로 전송될 이름 설정
-                          type="text"
-                          value={emailSubject}
-                          onChange={(e) => setEmailSubject(e.target.value)}
-                          className="mt-1 block w-full p-2 border border-gray-300 rounded"
-                          placeholder="제목을 입력하세요"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="emailContent" className="block text-sm font-medium text-gray-700">내용</label>
-                        <textarea
-                          id="emailContent"
-                          name="body" // 폼 데이터로 전송될 이름 설정
-                          value={emailContent}
-                          onChange={(e) => setEmailContent(e.target.value)}
-                          className="mt-1 block w-full p-2 border border-gray-300 rounded h-40"
-                          placeholder="자세하게 적어주시면 빠른 개발에 도움이 됩니다"
-                        />
-                      </div>
-                    </div>
-                    <div className="flex justify-end space-x-2 mt-4">
-                      <CustomButton onClick={closeModal} >취소</CustomButton>
-                      <CustomButton type="submit">전송</CustomButton>
-                    </div>
+                    <label
+                      htmlFor="emailSubject"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      제목
+                    </label>
+                    <input
+                      id="emailSubject"
+                      name="subject" // 폼 데이터로 전송될 이름 설정
+                      type="text"
+                      value={emailSubject}
+                      onChange={(e) => setEmailSubject(e.target.value)}
+                      className="mt-1 block w-full p-2 border border-gray-300 rounded"
+                      placeholder="제목을 입력하세요"
+                    />
                   </div>
-                </form>
-            </CustomModal>
-          
-          <CustomButton onClick ={handleLogout}> 로그아웃 </CustomButton>
-          
+                  <div>
+                    <label
+                      htmlFor="emailContent"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      내용
+                    </label>
+                    <textarea
+                      id="emailContent"
+                      name="body" // 폼 데이터로 전송될 이름 설정
+                      value={emailContent}
+                      onChange={(e) => setEmailContent(e.target.value)}
+                      className="mt-1 block w-full p-2 border border-gray-300 rounded h-40"
+                      placeholder="자세하게 적어주시면 빠른 개발에 도움이 됩니다"
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-end space-x-2 mt-4">
+                  <CustomButton onClick={closeModal}>취소</CustomButton>
+                  <CustomButton type="submit">전송</CustomButton>
+                </div>
+              </div>
+            </form>
+          </CustomModal>
+
+          <CustomButton onClick={handleLogout}> 로그아웃 </CustomButton>
         </div>
       </div>
     </header>

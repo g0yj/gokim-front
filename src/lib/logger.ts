@@ -15,13 +15,13 @@ const log = {
   },
   // formData를 로깅하기 위한 메서드
   logFormData: (formData: FormData) => {
-    if(!isDev) return;
+    if (!isDev) return;
     console.debug("[🔍FormData]");
-    for (let pair of formData.entries()){
-      console.debug(`${pair[0]}: ${pair[1]}`)
+    for (let pair of formData.entries()) {
+      console.debug(`${pair[0]}: ${pair[1]}`);
     }
-    console.debug("[🏁END]", "이 메시지 이후 처리가 완료되었습니다.")
-  }
+    console.debug("[🏁END]", "이 메시지 이후 처리가 완료되었습니다.");
+  },
 };
 
 export default log;

@@ -13,12 +13,12 @@ export interface ListAnonBoardRequest {
 }
 */
 export interface ListAnonBoardItem {
-    id?: string| null;
-    title?: string| null;
-    createDate?: string| null;
-    fileCount?: number | null;
-    view?: number| null;
-    listNumber?: number| null;
+  id?: string | null;
+  title?: string | null;
+  createDate?: string | null;
+  fileCount?: number | null;
+  view?: number | null;
+  listNumber?: number | null;
 }
 
 export type AnonBoardListRes = CommonListResponse<ListAnonBoardItem>; // 페이징 관련 데이터는 공통으로 뺐음.
@@ -30,11 +30,9 @@ export interface AnonBoardFile extends BoardFile {
 }
     */
 export interface AnonBoardDetail {
-    id: string;
-    title: string;
-    content: string;
-    files?: BoardFile[];
-    isMine: boolean;
-  }
-
-
+  id: string;
+  title: string;
+  content: string;
+  files?: BoardFile[];
+  isMine: boolean;
+}

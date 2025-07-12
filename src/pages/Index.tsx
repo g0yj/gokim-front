@@ -1,42 +1,33 @@
-import female from '../assets/female.png'; 
+import female from "../assets/female.png";
 
 const Index = () => {
-
-
-
   return (
     <div className=" min-h-screen">
-
       {/* ✅ 완전히 바깥에서 w-full 처리 */}
       <div
         className="relative left-1/2 w-screen -translate-x-1/2 py-40 text-center text-white"
-        style={{backgroundColor: '#161C24' }}
+        style={{ backgroundColor: "#161C24" }}
       >
         <div className="bg-[#161C24] h-[20px] flex items-center">
           {/* ✅ 왼쪽 캐릭터 박스 */}
           <div className="w-[200px] h-[260px] md:flex-1 flex items-center justify-center">
             <img src={female} alt="캐릭터" className="w-[150px] h-[150px]" />
-             <p className="text-white text-center mt-2 ml-9 text-lg">
+            <p className="text-white text-center mt-2 ml-9 text-lg">
               현재 개발중인 사이트 입니다. 문의사항은 개발자에게 연락해주세요
-             </p>
+            </p>
           </div>
-      
         </div>
-
       </div>
 
       {/* ✅ 중앙정렬된 본문 콘텐츠 */}
       <div className="max-w-screen-xl mx-auto px-4 py-6">
         <h1 className="text-2xl font-bold mb-4">메인 페이지</h1>
-      
       </div>
-
     </div>
   );
 };
 
 export default Index;
-
 
 /**
    w-screen	브라우저 전체 너비 기준

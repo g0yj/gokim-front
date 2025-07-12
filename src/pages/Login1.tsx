@@ -1,198 +1,184 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Divider from '@mui/material/Divider';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import Link1 from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import MuiCard from '@mui/material/Card';
-import { styled } from '@mui/material/styles';
-import ForgotPassword from '../components/ui/ForgotPassword';
-import AppTheme from '../components/ui/AppTheme';
-import { GoogleIcon, KakaoIcon} from '../components/ui/CCustomIcons';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import CssBaseline from "@mui/material/CssBaseline";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Divider from "@mui/material/Divider";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import Link1 from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import MuiCard from "@mui/material/Card";
+import { styled } from "@mui/material/styles";
+import ForgotPassword from "../components/ui/ForgotPassword";
+import AppTheme from "../components/ui/AppTheme";
+import { GoogleIcon, KakaoIcon } from "../components/ui/CCustomIcons";
 
-import useFormHandler from '@/hooks/useFormHandler';
-import log from '@/lib/logger';
-import AuthService from '@/services/authService';
-import { LoginRequest } from '@/types/auth';
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
-import CustomModal from '@/components/common/CustomModal';
-import CustomButton from '@/components/common/CustomButton ';
+import useFormHandler from "@/hooks/useFormHandler";
+import log from "@/lib/logger";
+import AuthService from "@/services/authService";
+import { LoginRequest } from "@/types/auth";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import CustomModal from "@/components/common/CustomModal";
+import CustomButton from "@/components/common/CustomButton ";
 
 const Card = styled(MuiCard)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignSelf: 'center',
-  width: '100%',
+  display: "flex",
+  flexDirection: "column",
+  alignSelf: "center",
+  width: "100%",
   padding: theme.spacing(4),
   gap: theme.spacing(2),
-  margin: 'auto',
-  [theme.breakpoints.up('sm')]: {
-    maxWidth: '450px',
+  margin: "auto",
+  [theme.breakpoints.up("sm")]: {
+    maxWidth: "450px",
   },
   boxShadow:
-    'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-  ...theme.applyStyles('dark', {
+    "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
+  ...theme.applyStyles("dark", {
     boxShadow:
-      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
+      "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
   }),
 }));
 
-
 const SignInContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
-  minHeight: '100%',
+  height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
+  minHeight: "100%",
   padding: theme.spacing(2),
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(4),
   },
-  '&::before': {
+  "&::before": {
     content: '""',
-    display: 'block',
-    position: 'absolute',
+    display: "block",
+    position: "absolute",
     zIndex: -1,
     inset: 0,
     backgroundImage:
-      'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-    backgroundRepeat: 'no-repeat',
-    ...theme.applyStyles('dark', {
+      "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
+    backgroundRepeat: "no-repeat",
+    ...theme.applyStyles("dark", {
       backgroundImage:
-        'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+        "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
     }),
   },
 }));
 
-
 // page 시작
 export default function Login1(props: { disableCustomTheme?: boolean }) {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { form, handleFormChange } = useFormHandler<LoginRequest>({
     id: "",
     password: "",
-    loginType: "NORMAL"
+    loginType: "NORMAL",
   });
-    
+
   const [emailError, setEmailError] = React.useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = React.useState("");
   const [passwordError, setPasswordError] = React.useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = React.useState("");
   const [open, setOpen] = React.useState(false);
 
   // 로그인 시 모달 컴포넌트를 띄우기 위해 사용
   const [isModalOpen, setIsModalOpen] = useState(false);
   const closeModal = () => setIsModalOpen(false);
 
-  React.useEffect (() => {
+  React.useEffect(() => {
     setIsModalOpen(true);
-  }, [])
-
+  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
-
   const handleClose = () => {
     setOpen(false);
   };
 
-
   const handleLogin = async () => {
-    log.debug('로그인 실행');
+    log.debug("로그인 실행");
     try {
       await AuthService.login(dispatch, form);
       setIsModalOpen(true);
       navigate("/");
     } catch (err) {
-      log.debug('로그인 Axios 실패', err);
+      log.debug("로그인 Axios 실패", err);
     }
   };
 
   const closeModalAndNavigate = () => {
     setIsModalOpen(false);
-    navigate('/');
-  }
+    navigate("/");
+  };
 
+  //   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //     if (emailError || passwordError) {
+  //       event.preventDefault();
+  //       return;
+  //     }
+  //     const data = new FormData(event.currentTarget);
+  //     console.log({
+  //       email: data.get('email'),
+  //       password: data.get('password'),
+  //     });
+  //   };
 
-//   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-//     if (emailError || passwordError) {
-//       event.preventDefault();
-//       return;
-//     }
-//     const data = new FormData(event.currentTarget);
-//     console.log({
-//       email: data.get('email'),
-//       password: data.get('password'),
-//     });
-//   };
+  //   const validateInputs = () => {
+  //     const email = document.getElementById('email') as HTMLInputElement;
+  //     const password = document.getElementById('password') as HTMLInputElement;
 
+  //     let isValid = true;
 
-//   const validateInputs = () => {
-//     const email = document.getElementById('email') as HTMLInputElement;
-//     const password = document.getElementById('password') as HTMLInputElement;
+  //     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+  //       setEmailError(true);
+  //       setEmailErrorMessage('Please enter a valid email address.');
+  //       isValid = false;
+  //     } else {
+  //       setEmailError(false);
+  //       setEmailErrorMessage('');
+  //     }
 
+  //     if (!password.value || password.value.length < 6) {
+  //       setPasswordError(true);
+  //       setPasswordErrorMessage('Password must be at least 6 characters long.');
+  //       isValid = false;
+  //     } else {
+  //       setPasswordError(false);
+  //       setPasswordErrorMessage('');
+  //     }
 
-//     let isValid = true;
-
-
-//     if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
-//       setEmailError(true);
-//       setEmailErrorMessage('Please enter a valid email address.');
-//       isValid = false;
-//     } else {
-//       setEmailError(false);
-//       setEmailErrorMessage('');
-//     }
-
-
-//     if (!password.value || password.value.length < 6) {
-//       setPasswordError(true);
-//       setPasswordErrorMessage('Password must be at least 6 characters long.');
-//       isValid = false;
-//     } else {
-//       setPasswordError(false);
-//       setPasswordErrorMessage('');
-//     }
-
-
-//     return isValid;
-//   };
-
+  //     return isValid;
+  //   };
 
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
       <SignInContainer direction="column" justifyContent="space-between">
         <Card variant="outlined">
-          
           <Typography
             component="h1"
             variant="h4"
-            sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+            sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
           >
             Login
           </Typography>
           <Box
             component="form"
-             onSubmit={(e) => {
-            e.preventDefault(); // 기본 동작 방지
-            handleLogin(); // 로그인 핸들러 호출
+            onSubmit={(e) => {
+              e.preventDefault(); // 기본 동작 방지
+              handleLogin(); // 로그인 핸들러 호출
             }}
             noValidate
             sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              width: '100%',
+              display: "flex",
+              flexDirection: "column",
+              width: "100%",
               gap: 2,
             }}
           >
@@ -210,7 +196,7 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
                 required
                 fullWidth
                 variant="outlined"
-                color={emailError ? 'error' : 'primary'}
+                color={emailError ? "error" : "primary"}
                 value={form.id}
                 onChange={(e) => handleFormChange("id", e.target.value)}
               />
@@ -229,7 +215,7 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
                 required
                 fullWidth
                 variant="outlined"
-                color={passwordError ? 'error' : 'primary'}
+                color={passwordError ? "error" : "primary"}
                 value={form.password}
                 onChange={(e) => handleFormChange("password", e.target.value)}
               />
@@ -247,36 +233,34 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
             >
               Sign in
             </Button>
-            <Link to='/signup'
-            >
-              Forgot your password?
-            </Link>
+            <Link to="/signup">Forgot your password?</Link>
           </Box>
           <Divider>or</Divider>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <a href="http://54.180.116.0/api/oauth2/authorization/google">
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => alert('Sign in with Google')}
-              startIcon={<GoogleIcon />}
-            >
-              Sign in with Google
-            </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={() => alert("Sign in with Google")}
+                startIcon={<GoogleIcon />}
+              >
+                Sign in with Google
+              </Button>
             </a>
             <a href="http://54.180.116.0/api/oauth2/authorization/kakao">
-            <Button
-              fullWidth
-              variant="outlined"
-              onClick={() => alert('Sign in with Kakao')}
-              startIcon={<KakaoIcon />}
-            >
-              Sign in with Kakaotalk
-            </Button>
+              <Button
+                fullWidth
+                variant="outlined"
+                onClick={() => alert("Sign in with Kakao")}
+                startIcon={<KakaoIcon />}
+              >
+                Sign in with Kakaotalk
+              </Button>
             </a>
-            <Typography sx={{ textAlign: 'center' }}>
-              Don&apos;t have an account?{' '}
-              <Link to='/signup'
+            <Typography sx={{ textAlign: "center" }}>
+              Don&apos;t have an account?{" "}
+              <Link
+                to="/signup"
                 // variant="body2"
                 // sx={{ alignSelf: 'center' }}
               >
@@ -289,22 +273,24 @@ export default function Login1(props: { disableCustomTheme?: boolean }) {
 
       {/** 모달 컴포넌트 */}
       <CustomModal
-        isOpen ={isModalOpen}
-        onRequestClose = {closeModal}
-        size='alert'
-        variant='basic'
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        size="alert"
+        variant="basic"
       >
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">🎉 환영합니다!</h1>
           <p className="mb-2"> 필요한 기능이 있다면, 개발자에게 문의하세요</p>
           <p className="mb-2">🔍 테스트 아이디를 사용해 기능을 확인하세요!</p>
           <p className="mt-4">
-            <strong>아이디</strong>: <span className="font-mono bg-gray-200 p-1 rounded">SampleMember1</span> / 
-            <strong> 비밀번호</strong>: <span className="font-mono bg-gray-200 p-1 rounded">1234</span>
+            <strong>아이디</strong>:{" "}
+            <span className="font-mono bg-gray-200 p-1 rounded">
+              SampleMember1
+            </span>{" "}
+            /<strong> 비밀번호</strong>:{" "}
+            <span className="font-mono bg-gray-200 p-1 rounded">1234</span>
           </p>
         </div>
-
-
       </CustomModal>
     </AppTheme>
   );

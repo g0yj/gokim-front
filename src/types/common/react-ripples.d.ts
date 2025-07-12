@@ -7,17 +7,16 @@
     JS-only 라이브러리를 TS에서 쓰고 싶을 때
     타입만 따로 추출해서 공유하고 싶을 때 (라이브러리 제작자 입장)
  */
-    declare module 'react-ripples' {
-        import { ComponentType, HTMLAttributes, ReactNode } from 'react';
-      
-        interface RipplesProps extends HTMLAttributes<HTMLDivElement> {
-          during?: number;       // animation duration (ms)
-          color?: string;        // ripple color
-          children?: ReactNode;  // nested elements
-        }
-      
-        const Ripples: ComponentType<RipplesProps>;
-      
-        export default Ripples;
-      }
-    
+declare module "react-ripples" {
+  import { ComponentType, HTMLAttributes, ReactNode } from "react";
+
+  interface RipplesProps extends HTMLAttributes<HTMLDivElement> {
+    during?: number; // animation duration (ms)
+    color?: string; // ripple color
+    children?: ReactNode; // nested elements
+  }
+
+  const Ripples: ComponentType<RipplesProps>;
+
+  export default Ripples;
+}

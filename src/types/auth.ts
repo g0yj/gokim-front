@@ -1,13 +1,13 @@
 export interface LoginRequest {
-    id: string;
-    password: string;
-    loginType: string;
+  id: string;
+  password: string;
+  loginType: string;
 }
-  
+
 export interface LoginResponse {
-    id: string | null;
-    role: string;
-    loginType: string;
-    accessToken: string;
-    refreshToken: string;
-  }
+  id: string | null;
+  role: string;
+  loginType: string;
+  accessToken: string;
+  refreshToken: string;
+}

@@ -3,7 +3,6 @@ import { setLogin } from "@/store/authSlice";
 import { AppDispatch } from "@/store/store";
 import { LoginRequest } from "@/types/auth";
 
-
 const AuthService = {
   login: async (dispatch: AppDispatch, data: LoginRequest) => {
     const res = await AuthApi.postLogin(data);
@@ -12,7 +11,7 @@ const AuthService = {
   },
   logout: async () => {
     return AuthApi.postLogout();
-  }
+  },
 };
 
 export default AuthService;

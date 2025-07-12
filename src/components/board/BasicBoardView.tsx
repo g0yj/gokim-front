@@ -1,12 +1,12 @@
-import { BasicBoardViewProps } from '@/types/common/board';
-import React from 'react';
-import CustomButton from '../common/CustomButton ';
-import { downloadFileFromUrl } from '@/utils/file';
-import { Download } from 'lucide-react'; // npm 설치 필요(디자인적 요소임)
-import { Viewer } from '@toast-ui/react-editor'; // ✅ Toast UI Viewer 컴포넌트 import
+import { BasicBoardViewProps } from "@/types/common/board";
+import React from "react";
+import CustomButton from "../common/CustomButton ";
+import { downloadFileFromUrl } from "@/utils/file";
+import { Download } from "lucide-react"; // npm 설치 필요(디자인적 요소임)
+import { Viewer } from "@toast-ui/react-editor"; // ✅ Toast UI Viewer 컴포넌트 import
 // ✅ Toast UI 스타일 파일 반드시 import (Viewer 스타일 포함)
-import '@toast-ui/editor/dist/toastui-editor.css'; //  Editor용 
-import '@toast-ui/editor/dist/toastui-editor-viewer.css'; //  Viewer용 
+import "@toast-ui/editor/dist/toastui-editor.css"; //  Editor용
+import "@toast-ui/editor/dist/toastui-editor-viewer.css"; //  Viewer용
 
 const BasicBoardView = ({
   title,
@@ -24,9 +24,13 @@ const BasicBoardView = ({
       <div className="flex justify-end gap-2 mt-6">
         {isMine ? (
           <>
-            <CustomButton onClick={onCancel} variant="secondary">목록</CustomButton>
+            <CustomButton onClick={onCancel} variant="secondary">
+              목록
+            </CustomButton>
             <CustomButton onClick={onEdit}>수정</CustomButton>
-            <CustomButton onClick={onDelete} variant="danger">삭제</CustomButton>
+            <CustomButton onClick={onDelete} variant="danger">
+              삭제
+            </CustomButton>
           </>
         ) : (
           <CustomButton onClick={onCancel}>목록</CustomButton>
@@ -51,7 +55,9 @@ const BasicBoardView = ({
                 <button
                   type="button"
                   className="text-blue-600 underline hover:text-blue-800"
-                  onClick={() => downloadFileFromUrl(file.url, file.originalFileName)}
+                  onClick={() =>
+                    downloadFileFromUrl(file.url, file.originalFileName)
+                  }
                 >
                   {file.originalFileName}
                 </button>
@@ -67,7 +73,7 @@ const BasicBoardView = ({
           이거 안 넣으면, 새로고침 시 본문 아예 안나옴!
         */}
         {content ? (
-          <Viewer key={content} initialValue={content ?? ''} /> //key 속성을 활용해서 Viewer를 강제로 리렌더링 (아래설명)
+          <Viewer key={content} initialValue={content ?? ""} /> //key 속성을 활용해서 Viewer를 강제로 리렌더링 (아래설명)
         ) : (
           <p className="text-gray-500">불러오는 중...</p>
         )}
@@ -80,14 +86,14 @@ export default BasicBoardView;
 
 /**
  * BasicBoardView 컴포넌트는 files를 T[]로 받는다고 했음
- * 그런데 files.map()에서 file.url, file.originalFileName을 직접 접근하니까 
+ * 그런데 files.map()에서 file.url, file.originalFileName을 직접 접근하니까
  * 컴파일러는 **“T 타입이 이런 필드를 가진다고 보장할 수 없어”**라고 경고.
  *그래서 아래와 같이 T는 최소한 { url: string; originalFileName: string }는 갖고 있어야 한다고
  * 명시적으로 보장해줄 수 있음.
  * 즉, 공통 컴포넌트로 쓸 때도 BoardFile 또는 상속 구조를 따르기만 하면 문제 없이 사용 가능하다는 뜻
  */
 
- /**
+/**
   * 수정 후 새로고침하지 않으면 content가 반영되지 않는 이유??
   * Toast UI Viewer가 업데이트된 content를 반영하지 않음
     BasicBoardView 컴포넌트 내부의 <Viewer initialValue={content ?? ''} />는 initialValue만 초기 렌더에 사용되고 이후에는 변화해도 갱신되지 않아.

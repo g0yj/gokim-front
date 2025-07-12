@@ -1,20 +1,21 @@
-import log from '@/lib/logger';
-import AnonBoardService from '@/services/anonBoardService';
-import { AnonBoardDetail } from '@/types/anonBoard';
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import BasicBoardView from '@/components/board/BasicBoardView';
-import BasicBoardForm, { EditBoardFormValues } from '@/components/board/BasicBoardForm';
-import { BoardFile } from '@/types/common/board';
+import log from "@/lib/logger";
+import AnonBoardService from "@/services/anonBoardService";
+import { AnonBoardDetail } from "@/types/anonBoard";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import BasicBoardView from "@/components/board/BasicBoardView";
+import BasicBoardForm, {
+  EditBoardFormValues,
+} from "@/components/board/BasicBoardForm";
+import { BoardFile } from "@/types/common/board";
 
 const AnonBoardDetailPage = () => {
-  const { id } =  useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [data, setData] = useState<AnonBoardDetail | null>(null);
   const [isEditMode, setIsEditMode] = useState(false); // 상세일지 수정일지 판단을 위해 필요
   const [deleteFileIds, setDeleteFileIds] = useState<(string | number)[]>([]); // 화면에서 파일 제거를 위함
-
 
   // 상세 정보 불러오기
   useEffect(() => {
@@ -22,135 +23,136 @@ const AnonBoardDetailPage = () => {
       try {
         if (!id) return;
         const res = await AnonBoardService.detail(id);
-        
+
         // 필드명 매칭을 위한 과정
         const modifiedFiles = res.files
           ? res.files.map((file: BoardFile) => ({
-                ...file,
-                id: file.anonBoardFileId,
-          }))
+              ...file,
+              id: file.anonBoardFileId,
+            }))
           : undefined;
-        
+
         setData({
           ...res,
-          files: modifiedFiles
+          files: modifiedFiles,
         });
-        
       } catch (err) {
-        log.error('useEffect 호출 실패', err);
+        log.error("useEffect 호출 실패", err);
       }
-    }
+    };
     fetchData();
-  },[id])
+  }, [id]);
 
   // 수정 버튼 -> 폼으로 전환
   const handleEdit = () => {
-    log.debug('에디터 모드 전환!'); 
+    log.debug("에디터 모드 전환!");
     setIsEditMode(true);
-  }
+  };
   // 취소 버튼 -> 다시 보기 모드
   const handleCancelEdit = async () => {
-    log.debug('취소 버튼 클릭. 에디터에서 벗어나기');
+    log.debug("취소 버튼 클릭. 에디터에서 벗어나기");
     setIsEditMode(false);
     setDeleteFileIds([]);
-  }
+  };
 
   // 삭제 버튼 -> 삭제 요청 후 리스트 페이지로 이동
   const handleDelete = async () => {
     if (!id) return;
-    const confirmDelete  = window.confirm('정말 삭제하시겠습니까?');
-    if (!confirmDelete ) return;
+    const confirmDelete = window.confirm("정말 삭제하시겠습니까?");
+    if (!confirmDelete) return;
     try {
       await AnonBoardService.deleteAnonBoard(id);
-      navigate('/anon');
+      navigate("/anon");
     } catch (err) {
-      log.error('axios 호출 실패', err);
+      log.error("axios 호출 실패", err);
     }
-  }
-
-    // 파일 삭제  (UI에서 제거 및 삭제 ID 기록)
-    const deleteFiles = (fileId: string | number) => {
-      setDeleteFileIds((prev) => [...prev, fileId]);
-      setData((prev) =>
-        prev ? { ...prev, files: prev.files?.filter((f) => f.id !== fileId) } : null
-      );
   };
-  
 
-  // 게시글 수정 
+  // 파일 삭제  (UI에서 제거 및 삭제 ID 기록)
+  const deleteFiles = (fileId: string | number) => {
+    setDeleteFileIds((prev) => [...prev, fileId]);
+    setData((prev) =>
+      prev
+        ? { ...prev, files: prev.files?.filter((f) => f.id !== fileId) }
+        : null
+    );
+  };
+
+  // 게시글 수정
   const handleUpdate = async (formValues: EditBoardFormValues) => {
-    log.debug('수정버튼 클릭');
+    log.debug("수정버튼 클릭");
     if (!id) return;
-  
+
     try {
       const formData = new FormData();
-      formData.append('title', formValues.title ?? '');
-      formData.append('content', formValues.content ?? '');
-  
-  
+      formData.append("title", formValues.title ?? "");
+      formData.append("content", formValues.content ?? "");
+
       let files: File[] = [];
 
       if (formValues.files) {
         if (formValues.files instanceof FileList) {
           files = Array.from(formValues.files);
         } else if (Array.isArray(formValues.files)) {
-          files = formValues.files.filter((file): file is File => file instanceof File);
+          files = formValues.files.filter(
+            (file): file is File => file instanceof File
+          );
         }
       }
-  
-      files.forEach((file) => formData.append('files', file));
-  
+
+      files.forEach((file) => formData.append("files", file));
+
       // 삭제할 파일 담기
       if (deleteFileIds.length > 0) {
         deleteFileIds.forEach((id) => {
-          formData.append('deleteFileIds', String(id));
+          formData.append("deleteFileIds", String(id));
         });
-        log.debug('삭제 대상 파일 Ids: ', deleteFileIds);
+        log.debug("삭제 대상 파일 Ids: ", deleteFileIds);
       }
 
       await AnonBoardService.updateAnonBoard(formData, id);
       setIsEditMode(false);
       setDeleteFileIds([]);
-  
+
       const updated = await AnonBoardService.detail(id);
       setData(updated);
     } catch (err) {
-      log.error('익명 게시판 수정 axios 실패', err);
+      log.error("익명 게시판 수정 axios 실패", err);
     }
   };
 
   return (
     <div className="w-[800px] mt-8 mx-auto">
-  {/* 데이터 로딩 완료 후 렌더링 */}
-  {data ? (
-    isEditMode ? (
-      <BasicBoardForm
-        mode="edit"
-        defaultValues={{
-          title: data.title,
-          content: data.content,
-          files: data.files, // 새로 추가된 파일만 전달
-        }}
-        onSubmit={handleUpdate}
-        onCancel={handleCancelEdit}
-        deleteFileId={deleteFiles}
-      />
-    ) : (
-      <BasicBoardView
-        title={data.title}
-        content={data.content}
-        files={data.files}
-        isMine={data.isMine}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onCancel={() => navigate('/anon')}
-        getFileKey={(file) => file.id ?? ''}
-      />
-    )
-  ) : (
-    <p className="text-center text-gray-500">로딩 중...</p>
-  )}
-</div>
+      {/* 데이터 로딩 완료 후 렌더링 */}
+      {data ? (
+        isEditMode ? (
+          <BasicBoardForm
+            mode="edit"
+            defaultValues={{
+              title: data.title,
+              content: data.content,
+              files: data.files, // 새로 추가된 파일만 전달
+            }}
+            onSubmit={handleUpdate}
+            onCancel={handleCancelEdit}
+            deleteFileId={deleteFiles}
+          />
+        ) : (
+          <BasicBoardView
+            title={data.title}
+            content={data.content}
+            files={data.files}
+            isMine={data.isMine}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onCancel={() => navigate("/anon")}
+            getFileKey={(file) => file.id ?? ""}
+          />
+        )
+      ) : (
+        <p className="text-center text-gray-500">로딩 중...</p>
+      )}
+    </div>
   );
 };
 

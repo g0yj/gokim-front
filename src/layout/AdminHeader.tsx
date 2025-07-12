@@ -1,40 +1,39 @@
-import { Tab, Tabs } from '@mui/material';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../assets/logo.png'; 
-import CustomButton from '@/components/common/CustomButton ';
-import log from '@/lib/logger';
-import AuthService from '@/services/authService';
-import { useDispatch } from 'react-redux';
-import { logout as logoutAction } from '@/store/authSlice'; 
-
+import { Tab, Tabs } from "@mui/material";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import logo from "../assets/logo.png";
+import CustomButton from "@/components/common/CustomButton ";
+import log from "@/lib/logger";
+import AuthService from "@/services/authService";
+import { useDispatch } from "react-redux";
+import { logout as logoutAction } from "@/store/authSlice";
 
 const AdminHeader = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const dispatch  = useDispatch();
+  const dispatch = useDispatch();
 
   const validPaths = ["/notice", "/board", "/community", "/project"];
-  const currentTabValue = validPaths.includes(location.pathname) ? location.pathname : false;
+  const currentTabValue = validPaths.includes(location.pathname)
+    ? location.pathname
+    : false;
 
   // localStorage에서 loginId를 가져옵니다.
-  const storedLoginId = localStorage.getItem('loginId');
-  
+  const storedLoginId = localStorage.getItem("loginId");
+
   const handleLogout = async () => {
     try {
       // 1. 서버에 로그아웃 요청
       await AuthService.logout();
-  
+
       // 2. Redux 상태 초기화
       dispatch(logoutAction()); // 이름 충돌 시 alias로 사용
-  
+
       // 3. 페이지 이동
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
-      log.error('로그아웃 axios 호출 실패', err);
+      log.error("로그아웃 axios 호출 실패", err);
     }
   };
-
-
 
   return (
     <header className="bg-wight text-slate-800 py-3 shadow">
@@ -50,26 +49,26 @@ const AdminHeader = () => {
           value={currentTabValue}
           onChange={(_, newValue) => navigate(newValue)}
           sx={{
-            position: 'relative',
-            height: '100%',
-            '& .MuiTabs-indicator': {
+            position: "relative",
+            height: "100%",
+            "& .MuiTabs-indicator": {
               bottom: 0,
               height: 3,
-              backgroundColor: '#161C24', // 밑줄 색깔
+              backgroundColor: "#161C24", // 밑줄 색깔
             },
-            '& .MuiTab-root': {
-              color: '#161C24', // 탭 글자 색
-              fontSize: '1rem',
-              textTransform: 'none',
+            "& .MuiTab-root": {
+              color: "#161C24", // 탭 글자 색
+              fontSize: "1rem",
+              textTransform: "none",
               fontWeight: 500,
               px: 2,
               minWidth: 80,
-              '&.Mui-selected': {
+              "&.Mui-selected": {
                 fontWeight: 600,
-                color: '#161C24',
+                color: "#161C24",
               },
-              '&:hover': {
-                backgroundColor: '#FFFFFF', //선택 시 나오는 배경 색
+              "&:hover": {
+                backgroundColor: "#FFFFFF", //선택 시 나오는 배경 색
               },
             },
           }}
@@ -83,7 +82,7 @@ const AdminHeader = () => {
         {/* ✅ 오른쪽: 알림/프로필 자리 */}
         <div className="flex items-center gap-4">
           <p>{storedLoginId}</p>
-          <CustomButton onClick ={handleLogout}> 로그아웃 </CustomButton>
+          <CustomButton onClick={handleLogout}> 로그아웃 </CustomButton>
         </div>
       </div>
     </header>

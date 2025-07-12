@@ -20,46 +20,51 @@ import NoticeDetailPage from "./pages/notice/NoticeDetailPage";
 
 // 모든 라우트 정의
 export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout />,
-      children: [
-        { index: true, element: <Index /> },
-  
-        // 공지사항
-        { path: "notice", element: <Notice /> },
-        { path: "notice/:id", element: <NoticeDetailPage /> },
-        { path: "admin/notice", element: <AdminNotice /> },
-  
-        // 익명 게시판
-        { path: "anon", element: <AnonBoard /> },
-        { path: "anon/create", element: <AnonBoardCreatePage /> },
-        { path: "anon/:id", element: <AnonBoardDetailPage /> },
-  
-        // 커뮤니티 게시판 
-        { path: "community", element: <Community /> },
-        { path: "community/:id", element: <CommunityBoardPage /> },
-        { path: "community/:id/board/create", element: <CommunityBoardCreatePage /> },
-        { path: "community/board/:boardId", element: <CommunityBoardDetailPage /> },
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      { index: true, element: <Index /> },
 
-  
-        // 프로젝트 (중첩 쓰는 경우는 Outlet 사용시에 가능)
-        { path: "project", element: <Project /> },
-        {
-          path: "project/:projectId",
-          element: <ProjectLayout />,
-          children: [
-            {
-              path: "feature/:featureType",
-              element: <FeatureRenderer />,
-            },
-          ],
-        },
-      ],
-    },
-  
-    // 레이아웃 제외한 경로
-    { path: "/login", element: <Login1 /> },
-    { path: "/signup", element: <SignUp /> },
-    { path: "*", element: <NotFoundPage /> },
-  ]);
+      // 공지사항
+      { path: "notice", element: <Notice /> },
+      { path: "notice/:id", element: <NoticeDetailPage /> },
+      { path: "admin/notice", element: <AdminNotice /> },
+
+      // 익명 게시판
+      { path: "anon", element: <AnonBoard /> },
+      { path: "anon/create", element: <AnonBoardCreatePage /> },
+      { path: "anon/:id", element: <AnonBoardDetailPage /> },
+
+      // 커뮤니티 게시판
+      { path: "community", element: <Community /> },
+      { path: "community/:id", element: <CommunityBoardPage /> },
+      {
+        path: "community/:id/board/create",
+        element: <CommunityBoardCreatePage />,
+      },
+      {
+        path: "community/board/:boardId",
+        element: <CommunityBoardDetailPage />,
+      },
+
+      // 프로젝트 (중첩 쓰는 경우는 Outlet 사용시에 가능)
+      { path: "project", element: <Project /> },
+      {
+        path: "project/:projectId",
+        element: <ProjectLayout />,
+        children: [
+          {
+            path: "feature/:featureType",
+            element: <FeatureRenderer />,
+          },
+        ],
+      },
+    ],
+  },
+
+  // 레이아웃 제외한 경로
+  { path: "/login", element: <Login1 /> },
+  { path: "/signup", element: <SignUp /> },
+  { path: "*", element: <NotFoundPage /> },
+]);

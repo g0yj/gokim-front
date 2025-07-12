@@ -1,33 +1,27 @@
-import communityImg from '@/assets/communityImg.png'
-import { ListCommunityItem } from '@/types/community';
-import scrappedIcon from "@/assets/trueScrapped.png"
+import communityImg from "@/assets/communityImg.png";
+import { ListCommunityItem } from "@/types/community";
+import scrappedIcon from "@/assets/trueScrapped.png";
 import notScrappedIcon from "@/assets/falseScrapped.png";
-import log from '@/lib/logger';
-import React from 'react';
+import log from "@/lib/logger";
+import React from "react";
 
 type CommunityCardProps = {
   data: ListCommunityItem;
-  onClick?: () => void; // 상세조회 Link로 접근 
+  onClick?: () => void; // 상세조회 Link로 접근
   onScrap?: () => void; // 수정메서드
-}
+};
 
-const CommunityCard = (
-  {
-    data,
-    onClick,
-    onScrap,
-  }: CommunityCardProps) => {
-  
+const CommunityCard = ({ data, onClick, onScrap }: CommunityCardProps) => {
   const handleScrapClick = (e: React.MouseEvent<HTMLImageElement>) => {
-    log.debug('Card컴포넌트에서 click 메서드 실행');
+    log.debug("Card컴포넌트에서 click 메서드 실행");
     e.stopPropagation(); // 부모(card) 클릭 방지
     // onScrap : 함수 그 자체를 참조 (=존재 여부를 체크)
     if (onScrap) {
       onScrap();
     } else {
-      log.warn('onScrap 존재하지 않음');
+      log.warn("onScrap 존재하지 않음");
     }
-  }
+  };
 
   return (
     <div
@@ -35,15 +29,16 @@ const CommunityCard = (
       onClick={
         onClick
           ? onClick
-          : () => { log.warn('props에 onclick 없음') }} // 안전한 기본값 설정
+          : () => {
+              log.warn("props에 onclick 없음");
+            }
+      } // 안전한 기본값 설정
     >
       <div>
         <img src={communityImg} className="w-20 h-20" alt="Community" />
       </div>
       <div className="w-full flex flex-row justify-between items-center mb-2">
-        <div className="text-left">
-          {data.title}
-        </div>
+        <div className="text-left">{data.title}</div>
       </div>
       <div className="w-full flex flex-row justify-end items-center">
         <img

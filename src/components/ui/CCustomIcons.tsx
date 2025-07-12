@@ -1,9 +1,9 @@
-import * as React from 'react';
-import SvgIcon from '@mui/material/SvgIcon';
+import * as React from "react";
+import SvgIcon from "@mui/material/SvgIcon";
 
 export function KakaoIcon() {
   return (
-<SvgIcon>
+    <SvgIcon>
       <svg
         width="32" // 크기 수정
         height="32"
@@ -30,8 +30,7 @@ export function KakaoIcon() {
     </SvgIcon>
   );
 }
- 
- 
+
 // export function FacebookIcon() {
 //   return (
 //   <SvgIcon>
@@ -48,7 +47,7 @@ export function KakaoIcon() {
 //     </SvgIcon>
 //   );
 // }
- 
+
 export function GoogleIcon() {
   return (
     <SvgIcon>

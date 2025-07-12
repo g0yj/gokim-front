@@ -1,6 +1,11 @@
 import log from "@/lib/logger";
 import { useState } from "react";
-import { DragDropContext, Draggable, Droppable, DropResult } from "react-beautiful-dnd";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
 
 interface SidebarProps<T> {
   initialItems: T[];
@@ -10,18 +15,18 @@ interface SidebarProps<T> {
   onSortEnd: (items: T[]) => void;
 }
 
-const CustomSideBar = <T,> ({
-    initialItems,
-    renderItem,
-    bgColor,
-    idKey,
-    onSortEnd
+const CustomSideBar = <T,>({
+  initialItems,
+  renderItem,
+  bgColor,
+  idKey,
+  onSortEnd,
 }: SidebarProps<T>) => {
-    log.debug('사이드바 컴포넌트 실행');
+  log.debug("사이드바 컴포넌트 실행");
 
-    const [items, setItems] = useState<T[]>(initialItems);
+  const [items, setItems] = useState<T[]>(initialItems);
 
-    const handleOnDragEnd = (result: DropResult) => {
+  const handleOnDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
     const reorderedItems = Array.from(items);
@@ -34,9 +39,8 @@ const CustomSideBar = <T,> ({
     onSortEnd(reorderedItems);
   };
 
-
-    return (
-        <aside className={`w-64 h-full ${bgColor}`}>
+  return (
+    <aside className={`w-64 h-full ${bgColor}`}>
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="sidebar-item-list">
           {(provided) => (
@@ -63,8 +67,7 @@ const CustomSideBar = <T,> ({
         </Droppable>
       </DragDropContext>
     </aside>
-    );
-  }
-
+  );
+};
 
 export default CustomSideBar;
