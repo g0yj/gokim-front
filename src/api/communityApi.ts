@@ -33,6 +33,12 @@ const CommunityApi = {
         log.debug('커뮤니티 게시글 등록 api. communityId: ', communityId);
         log.logFormData(formData);
         return await api.post(`/community/board/${communityId}`, formData);
+    },
+
+    postCommunity: async (formData: FormData): Promise<void> => {
+        log.debug('커뮤니티 생성 api');
+        log.logFormData(formData);
+        return await api.post(`/community`, formData);
     }
 
 }

@@ -14,6 +14,12 @@ export interface ListCommunityItem {
 
 export type CommunityListRes = CommonListResponse<ListCommunityItem>;
 
+export interface CreateCommunity {
+    title: string;
+    description?: string;
+    file?: File;
+}
+
 export interface ListCommunityBoardItem {
     id: string;
     title?: string| null;

@@ -21,7 +21,7 @@ const Community = () => {
   
   // 검색 조건용 useForm (form 태그 없음) > form이 없는데 useForm 사용하는 이유
   const paramQuery = useForm<BasicBoardSearchFields>({
-    defaultValues: defaultSearchValues,
+    defaultValues: defaultSearchValues, // CommunityBoardPage 에서 paramQuery와 비교
   });
   
   // 등록용 모달 form
@@ -89,15 +89,24 @@ const Community = () => {
   };
 
   // ✅ 등록 폼 제출 시 실행되는 함수
-  const handleCreateCommunity  = (formData: CreateCommunity) => {
-    log.debug('생성 버튼 클릭 handleCreateSubmit 실행됨');
+  const handleCreateCommunity = async (formValues: CreateCommunity) => {
+    try {
+      const formData = new FormData();
+      formData.append('title', formValues.title);
+      formData.append('description', formValues.description ?? '');
+
+      await CommunityService.createCommunity(formData);
+    } catch (err) {
+      log.error('커뮤니티 생성 api 호출 실패', err);
+    }
+    
     reset(); // 초기화
     handleCloseModal();
   }
 
   useEffect(() => {
     handleSearch ();
-  },[]);
+  },[handleCreateCommunity]);
 
 
   return (

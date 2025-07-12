@@ -8,21 +8,21 @@ const CommunityBoardCreatePage = () => {
   const {id} = useParams(); // 커뮤니티 식별키
   const navigate = useNavigate();
 
-  const handleCreate = async (formvValues: BasicBoardFormValues) => {
+  const handleCreate = async (formValues: BasicBoardFormValues) => {
     try {
       // 전달 데이터 만들기
       const formData = new FormData();
-      formData.append('title', formvValues.title ?? '');
-      formData.append('content', formvValues.content ?? '');
+      formData.append('title', formValues.title ?? '');
+      formData.append('content', formValues.content ?? '');
 
       let files: File[] = [];
       // files이 존재할 때만 처리
-      if(formvValues.files){
-        if(formvValues.files instanceof FileList) {
-          files = Array.from(formvValues.files);
+      if(formValues.files){
+        if(formValues.files instanceof FileList) {
+          files = Array.from(formValues.files);
         }
-        else if (Array.isArray(formvValues.files)){
-          files = formvValues.files.filter((file): file is File => file instanceof File);
+        else if (Array.isArray(formValues.files)){
+          files = formValues.files.filter((file): file is File => file instanceof File);
         }
       }
 

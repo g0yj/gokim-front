@@ -28,6 +28,11 @@ const CommunityService = {
 
     createCommunityBoard: async (formData: FormData, communityId: string) : Promise<void> => {
         return await CommunityApi.postCommunityBoard(formData, communityId);
+    },
+
+    createCommunity: async (formData: FormData): Promise<void> => {
+        return await CommunityApi.postCommunity(formData);
+
     }
 
 }

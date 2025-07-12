@@ -36,6 +36,7 @@ const CommunityBoardPage = () => {
 
   const paramQuery = useForm<BasicBoardSearchFields>({
     defaultValues: { 
+      // Community의 paramQuery와 비교
       page: 1,
       limit: 10,
       search: 'all',
