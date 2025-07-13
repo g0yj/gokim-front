@@ -12,7 +12,7 @@ export interface CreateProject {
 }
 
 export type CreateProjectFunction = {
-  projectFunctionType?: ProjectFunctionType ;
+  projectFunctionType: ProjectFunctionType | null ;
   projectFunctionName: string;
   functionSort: number;
   projectExists: boolean;

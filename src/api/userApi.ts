@@ -16,6 +16,12 @@ const UserApi = {
       throw error; // 필요 시, 에러 처리 추가
     }
   },
+
+  getSearch: async (id: string): Promise<string> => {
+    log.debug("api 회원 찾기 userId", id);
+    const res = await api.get(`/user/search`, { params: { id } });
+    return res.data;
+  }
 };
 
 export default UserApi;

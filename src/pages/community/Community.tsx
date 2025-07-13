@@ -3,7 +3,7 @@ import CustomButton from "@/components/common/CustomButton ";
 import CustomModal from "@/components/common/CustomModal";
 import CustomPagination from "@/components/common/CustomPagination";
 import CommunityCard from "@/components/community/CommunityCard";
-import { defaultSearchValues } from "@/constants/board";
+import { defaultSearchValues } from "@/constants/initialData";
 import log from "@/lib/logger";
 import CommunityService from "@/services/communityService";
 import { BasicBoardSearchFields } from "@/types/common/board";

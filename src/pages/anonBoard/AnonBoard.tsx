@@ -1,5 +1,5 @@
 import BasicBoard from "@/components/board/BasicBoard";
-import { defaultSearchValues } from "@/constants/board";
+import { defaultSearchValues } from "@/constants/initialData";
 import log from "@/lib/logger";
 import AnonBoardService from "@/services/anonBoardService";
 import { ListAnonBoardItem } from "@/types/anonBoard";
