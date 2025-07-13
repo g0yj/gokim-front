@@ -1,12 +1,7 @@
 import AnonBoardApi from "@/api/anonBoardApi";
-import log from "@/lib/logger";
-import AnonBoard from "@/pages/anonBoard/AnonBoard";
 import { AnonBoardDetail, AnonBoardListRes } from "@/types/anonBoard";
 import { BasicBoardSearchFields } from "@/types/common/board";
-import { Dispatch } from "@reduxjs/toolkit";
-import { UseFormReturn } from "react-hook-form";
 
-const TAG = "service-anonBoardService";
 
 const AnonBoardService = {
   listAnonBoard: async (

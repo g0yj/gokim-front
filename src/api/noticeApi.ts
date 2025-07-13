@@ -1,6 +1,5 @@
 import api from "@/lib/axios";
 import log from "@/lib/logger";
-import NoticeDetailPage from "@/pages/notice/NoticeDetailPage";
 import { BasicBoardSearchFields } from "@/types/common/board";
 import { NoticeDetailItem } from "@/types/notice";
 

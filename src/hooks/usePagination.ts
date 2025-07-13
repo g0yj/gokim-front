@@ -1,4 +1,3 @@
-// usePagination.js (혹은 .ts)
 import { useState } from "react";
 
 const usePagination = (initialPage = 1) => {

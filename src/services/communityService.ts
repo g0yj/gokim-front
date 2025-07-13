@@ -1,5 +1,4 @@
 import CommunityApi from "@/api/communityApi";
-import log from "@/lib/logger";
 import { BasicBoardSearchFields } from "@/types/common/board";
 import {
   CommunityBoardItem,

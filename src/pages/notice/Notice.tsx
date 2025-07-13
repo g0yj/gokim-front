@@ -8,7 +8,7 @@ import {
   SelectOption,
   TableColumn,
 } from "@/types/common/common";
-import { ListNoticeItem, ListNoticeRes } from "@/types/notice";
+import { ListNoticeItem } from "@/types/notice";
 import { getInitialRes } from "@/utils/board";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

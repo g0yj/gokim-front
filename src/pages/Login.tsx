@@ -11,8 +11,6 @@ import useFormHandler from "@/hooks/useFormHandler";
 import log from "@/lib/logger";
 import AuthService from "@/services/authService";
 import { LoginRequest } from "@/types/auth";
-
-import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 

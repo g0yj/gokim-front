@@ -2,7 +2,6 @@ import { Tab, Tabs } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-import mail from "../assets/mail.png";
 import { useDispatch } from "react-redux";
 import { logout as logoutAction } from "@/store/authSlice"; // 이름 충돌 방지 위해 rename
 
@@ -15,7 +14,6 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   // 개발자 문의 관련

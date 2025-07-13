@@ -25,7 +25,6 @@ api.interceptors.response.use(
   // 실패한 응답
   (error) => {
     const status = error.response?.status;
-    const code = error.response?.data?.code;
     const message = error.response?.data?.message;
 
     switch (status) {
