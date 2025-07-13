@@ -43,7 +43,7 @@ const ProjectForm = ({ onCancel }: ProjectFormProps) => {
     reset,
     register,
     handleSubmit: onValidSubmit,
-    formState: { error },
+    formState: { errors },
   } = useForm<CreateProject>({
     defaultValues: {
       projectName: "",
