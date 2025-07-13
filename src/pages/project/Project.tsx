@@ -1,11 +1,13 @@
-import ProjectForm from "@/components/project/ProjectForm";
+import ProjectForm from "@/components/project/ProjectCreateForm";
+import log from "@/lib/logger";
 
 const Project = () => {
-  console.log(`프로젝트 페이지 실행`);
-
+  const handleCancel = () => {
+    log.debug("취소버튼 클릭");
+  };
   return (
     <div>
-      <ProjectForm/>
+      <ProjectForm onCancel={handleCancel} />
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { ButtonProps } from "@mui/material";
 import classNames from "classnames";
 import React from "react";
 import Ripples from "react-ripples";
@@ -19,10 +18,11 @@ const sizeMap = {
 
 const variantMap = {
   primary: "bg-[#161C24] text-white hover:bg-[#0F141B]",
-  secondary: "bg-[#F4F6F8] text-[#161C24] hover:bg-[#DFE3E8]",
+  secondary:
+    "bg-[#F4F6F8] text-[#161C24] hover:bg-[#DFE3E8]  border border-gray-300",
   danger: "bg-red-600 text-white hover:bg-red-700",
   ghost:
-    "bg-transparent text-[#161C24] border border-[#161C24]/50 hover:bg-[#F9FAFB]",
+    "bg-transparent text-[#161C24] border border-gray-300 hover:bg-[#F9FAFB]",
 };
 
 const CustomButton = React.forwardRef<HTMLButtonElement, CustomButtonProps>(
