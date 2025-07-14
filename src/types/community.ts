@@ -57,3 +57,15 @@ export interface CommunityBoardItem {
   view?: number | null | string;
   isMine?: boolean | null | undefined;
 }
+
+export interface CommunityBoardCommentItem {
+  id: string;
+  comment: string;
+  modifiedOn: string;
+  modifiedBy: string;
+  deleted: boolean;
+  commentMine: boolean;
+  isSecret: boolean;
+}
+
+export type ListCommunityBoardComment = CommunityBoardCommentItem[];
