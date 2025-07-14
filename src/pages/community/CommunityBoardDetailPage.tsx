@@ -2,6 +2,7 @@ import BasicBoardForm, {
   EditBoardFormValues,
 } from "@/components/board/BasicBoardForm";
 import BasicBoardView from "@/components/board/BasicBoardView";
+import CommunityBoardComment from "@/components/community/CommunityBoardComment";
 import log from "@/lib/logger";
 import CommunityService from "@/services/communityService";
 import { BoardFile } from "@/types/common/board";
@@ -139,15 +140,19 @@ const CommunityBoardDetailPage = () => {
             deleteFileId={deleteFiles}
           />
         ) : (
-          <BasicBoardView
-            title={data.title}
-            content={data.content}
-            files={data.files}
-            isMine={data.isMine ?? false}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-            onCancel={() => navigate(`/community/${communityId}`)}
-          />
+          <div>
+            <BasicBoardView
+              title={data.title}
+              content={data.content}
+              files={data.files}
+              isMine={data.isMine ?? false}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+              onCancel={() => navigate(`/community/${communityId}`)}
+            />
+            {!isEditMode && <CommunityBoardComment boardId = {boardId ?? ''} />}
+          
+          </div>
         )
       ) : (
         <p className="text-center text-gray-500">로딩 중...</p>

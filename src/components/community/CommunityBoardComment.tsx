@@ -82,9 +82,9 @@ const CommunityBoardComment = ({ boardId }: CommunityBoardCommentProps) => {
       />
       {/* 댓글 목록 */}
       <div className="space-y-2">
-        {data.map((commentItem, index) => (
-          <div key={index} className="border p-2 w-full">
-            임시댓글
+        {data.map((commentItem) => (
+          <div key={commentItem.id} className="border p-2 w-full">
+            {commentItem.comment}
           </div>
         ))}
       </div>
