@@ -1,7 +1,7 @@
 import api from "@/lib/axios";
 import log from "@/lib/logger";
 import { BasicBoardSearchFields } from "@/types/common/board";
-import { CommunityBoardItem, ListCommunityBoardComment } from "@/types/community";
+import { CommunityBoardItem, CreateCommunityBoardComment, ListCommunityBoardComment } from "@/types/community";
 
 const CommunityApi = {
   getList: (params: BasicBoardSearchFields) => {
@@ -67,6 +67,11 @@ const CommunityApi = {
     log.debug("API 호출 확인 boardId: ", boardId);
     const res = await api.get(`/community/comment/${boardId}`);
     return res.data;
+  },
+
+  postComment: async (boardId: string, data: CreateCommunityBoardComment): Promise<void> => {
+    log.debug(`API 댓글 등록 호출 데이터 확인. boardId: ${boardId}, data: ${data}`);
+    return await api.post(`/community/comment/${boardId}`, data);
   }
 };
 

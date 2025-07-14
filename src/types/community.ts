@@ -69,3 +69,8 @@ export interface CommunityBoardCommentItem {
 }
 
 export type ListCommunityBoardComment = CommunityBoardCommentItem[];
+
+export interface CreateCommunityBoardComment {
+  comment:string;
+  isSecret: boolean
+}

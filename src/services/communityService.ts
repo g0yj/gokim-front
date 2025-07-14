@@ -4,6 +4,7 @@ import {
   CommunityBoardItem,
   CommunityBoardList,
   CommunityListRes,
+  CreateCommunityBoardComment,
   ListCommunityBoardComment,
 } from "@/types/community";
 
@@ -65,6 +66,11 @@ const CommunityService = {
 
   listComment: async (boardId: string): Promise<ListCommunityBoardComment> => {
     return await CommunityApi.getListComment(boardId);
+  },
+
+  createComment: async (boardId: string, data: CreateCommunityBoardComment) : Promise<void> => {
+    return await CommunityApi.postComment(boardId, data);
+    
   }
 };
 
