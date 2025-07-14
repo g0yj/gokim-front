@@ -64,6 +64,27 @@ export interface BoardFile {
   anonBoardFileId?: string;
 }
 
+export type BasicCommentProps = {
+  createdBy: string;
+  createdOn?: string;
+  modifiedOn?: string;
+  content: string;
+  imgUrl?: string;
+  onModify?: () => void; // 수정버튼에 사용
+  onDelete?: () => void; // 삭제버튼에 사용
+  isMine: boolean; // 수정,삭제 버튼 출력 시 사용
+  isSecret?: boolean; // 비밀 여부
+  replyTo?: string; // 대댓글 여부를 확인하는 식별 키
+}
+
+export type BasicCommentCreateProps = {
+  comment: string;
+  isSecret: boolean;
+  onCommentChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onToggleSecret: () => void;
+  onSubmit: () => void;
+}
+
 /**
 url이 유일하다고 보장되더라도, 실제로는 url이 없거나 중복되는 잘못된 상황이 발생할 수도 있음
 그럴 경우 getFileKey로 보완해줄 수 있음
