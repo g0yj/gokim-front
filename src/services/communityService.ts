@@ -1,6 +1,8 @@
 import CommunityApi from "@/api/communityApi";
 import { BasicBoardSearchFields } from "@/types/common/board";
+import { CommentItem } from "@/types/common/comment";
 import {
+  CommunityBoardCommentItem,
   CommunityBoardItem,
   CommunityBoardList,
   CommunityListRes,
@@ -64,8 +66,9 @@ const CommunityService = {
     }
   },
 
-  listComment: async (boardId: string): Promise<ListCommunityBoardComment> => {
-    return await CommunityApi.getListComment(boardId);
+  listComment: async (boardId: string): Promise<CommentItem[]> => {
+    const res = await CommunityApi.getListComment(boardId);
+    return transformComments(res); // 변환 함수 호출
   },
 
   createComment: async (boardId: string, data: CreateCommunityBoardComment) : Promise<void> => {
@@ -75,3 +78,37 @@ const CommunityService = {
 };
 
 export default CommunityService;
+
+// 데이터 변환을 수행하는 함수
+const transformComments = (serverData: CommunityBoardCommentItem[]): CommentItem[] => {
+  return serverData.map(comment => {
+    const transformedReplies: CommentItem[] = comment.replies.map(reply => ({
+      id: reply.replyId,
+      parentId: comment.id,
+      content: reply.reply || '',  // null 처리
+      modifiedBy: reply.modifiedBy,
+      modifiedOn: reply.modifiedOn,
+      isMine: reply.replyMine,
+      isReply: true,
+      status: reply.isSecret ? 'secret' : 'active',
+      customFields: {},
+      replies: [] // 대댓글은 현재 없음
+    }));
+
+    return {
+      id: comment.id,
+      parentId: null,
+      content: comment.comment,
+      modifiedBy: comment.modifiedBy,
+      modifiedOn: comment.modifiedOn,
+      isMine: comment.commentMine,
+      isReply: false,
+      status: comment.deleted ? 'deleted' : (comment.isSecret ? 'secret' : 'active'),
+      customFields: {},
+      replies: transformedReplies,
+    };
+  });
+};
+
+
+

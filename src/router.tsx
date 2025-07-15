@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
         element: <ProjectLayout />,
         children: [
           {
-            path: "feature/:featureType",
+            path: "feature/:projectFunctionId",
             element: <FeatureRenderer />,
           },
         ],

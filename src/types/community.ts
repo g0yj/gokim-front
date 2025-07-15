@@ -58,19 +58,30 @@ export interface CommunityBoardItem {
   isMine?: boolean | null | undefined;
 }
 
+export interface CreateCommunityBoardComment {
+  comment:string;
+  isSecret: boolean
+}
+
 export interface CommunityBoardCommentItem {
-  id: string;
+  boardId: string;
+  id: number;
   comment: string;
   modifiedOn: string;
   modifiedBy: string;
   deleted: boolean;
   commentMine: boolean;
   isSecret: boolean;
+  replies: ListCommentReplyItem[];
 }
 
 export type ListCommunityBoardComment = CommunityBoardCommentItem[];
 
-export interface CreateCommunityBoardComment {
-  comment:string;
-  isSecret: boolean
+export type ListCommentReplyItem = {
+  replyId: number;
+  reply: string | null;
+  modifiedOn: string | null;
+  modifiedBy: string | null
+  replyMine: boolean;
+  isSecret: boolean;
 }

@@ -22,11 +22,9 @@ const CommunityBoardComment = ({ boardId }: CommunityBoardCommentProps) => {
 
     /**  댓글 목록 조회 */
     const handleListComment = async(board: string) => {
-        log.debug('조회 메서드 실행');
-
         try {
             const res = await CommunityService.listComment(boardId);
-            log.info(res);
+            log.info( "댓글 목록 데이터 " , res);
             setData(res);
         } catch (err) {
             log.error('댓글 목록조회 axios 실패' , err);
@@ -64,6 +62,18 @@ const CommunityBoardComment = ({ boardId }: CommunityBoardCommentProps) => {
         }
     }
 
+    /** 댓글 수정 */
+    const handleModifyComment = (commentId: number) => {
+      log.debug('댓글 수정');
+
+    }
+
+        /** 댓글 삭제 */
+    const handleDeleteComment = (commentId: number) => {
+      log.debug('댓글 삭제');
+
+    }
+
 
     useEffect(() => {
         log.debug('커뮤니티 게시판 댓글 useEffect 실행');
@@ -81,14 +91,46 @@ const CommunityBoardComment = ({ boardId }: CommunityBoardCommentProps) => {
       
       />
       {/* 댓글 목록 */}
-      <div className="space-y-2">
-        {data.map((commentItem) => (
-          <div key={commentItem.id} className="border p-2 w-full">
-            {commentItem.comment}
-          </div>
-        ))}
+        <div className="space-y-2">
+          {data.map((commentItem) => (
+            <div key={commentItem.id} className="border p-2 w-full">
+              {/* 상단 정보 및 액션 버튼 */}
+              <div className="flex justify-between mb-4">
+                <div>
+                <span className="text-sm " >{commentItem.modifiedBy}</span>
+                <span className="ml-2">
+                  {commentItem.commentMine && (
+                    <>
+                      <button
+                        className="text-xs"
+                        onClick={() => handleModifyComment(commentItem.id)} // 'handlemidifyComment' -> 'handleModifyComment'로 수정
+                        >
+                        수정
+                      </button>
+                      <span> | </span>
+                      <button
+                        className="text-xs"
+                        onClick={() => handleDeleteComment(commentItem.id)}
+                        >
+                        삭제
+                      </button>
+                    </>
+                  )}
+
+                </span>
+                </div>
+                <div>
+                                  <span className="text-sm ml-2 mx-2">{commentItem.modifiedOn}</span>
+                </div>
+              </div>
+              {/* 댓글 내용 */}
+              <div>
+                <p className="text-xs">{commentItem.comment}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
     )
 }
 
