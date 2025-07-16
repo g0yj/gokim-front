@@ -31,6 +31,7 @@ export type FunctionTypeOption = {
   projectFunctionType: ProjectFunctionType;
 };
 
+
 export interface ListProjectItem {
   id:string;
   projectName?:string | null ;
@@ -61,3 +62,16 @@ export type ListProjectMember = {
   projectRole: ProjectRole ;
   file?: string | null; // 멤버 이미지
 }
+
+export interface ListProjectFunction {
+  projectId:string;
+  functions: ProjectFunctionItem[];
+}
+
+export type ProjectFunctionItem = {
+  projectFunctionId: string | number;
+  projectFunctionName: string ;
+  projectFunctionSort:  number;
+  projectFunctionType: ProjectFunctionType; 
+}
+

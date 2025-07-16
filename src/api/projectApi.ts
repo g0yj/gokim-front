@@ -1,6 +1,8 @@
 import api from "@/lib/axios";
 import log from "@/lib/logger";
-import { CreateProject, FunctionTypeOption, ListProject } from "@/types/project";
+
+import { CreateProject, FunctionTypeOption, ProjectFunctionItem, ListProject } from "@/types/project";
+
 
 const ProjectApi = {
   getListFunction: async (): Promise<FunctionTypeOption[]> => {
@@ -18,6 +20,13 @@ const ProjectApi = {
     log.debug("api 프로젝트 목록 조회");
     const res = await api.get(`/project`);
     log.debug('api 전달 받은 data', res.data);
+    return res.data;
+  }, 
+
+  getProjectFunctions: async (projectId: string): Promise<ProjectFunctionItem[]> => {
+    log.debug("API 프로젝트 기능 목록 조회 ");
+    const res = await api.get(`/project/${projectId}/function`);
+    log.info("프로젝트 기능 목록 데이터 ", res.data);
     return res.data;
   }
 };

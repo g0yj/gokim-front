@@ -1,4 +1,9 @@
+import CustomAvatar from "@/components/common/CustomAvatar";
 import female from "../assets/female.png";
+import { Avatar } from "@mui/material";
+import MyAvatar from "@/components/common/MyAvatar";
+import img from "@/assets/logo.png"
+import ProjectSideBar from "@/components/project/ProjectSideBar";
 
 const Index = () => {
   return (
@@ -22,6 +27,9 @@ const Index = () => {
       {/* ✅ 중앙정렬된 본문 콘텐츠 */}
       <div className="max-w-screen-xl mx-auto px-4 py-6">
         <h1 className="text-2xl font-bold mb-4">메인 페이지</h1>
+        <MyAvatar imgSrc={img} name = "고연진" />
+
+        <ProjectSideBar projectId="P1234"/>
       </div>
     </div>
   );

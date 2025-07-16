@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Project = () => {
-  const navigate = useNavigate();
-  const [listProject, setListProject] = useState<ProjectsWithTotalMember[]>([]);
 
+    const navigate = useNavigate();
+  const [listProject, setListProject] = useState<ProjectsWithTotalMember[]>([]);
   const handleCancel = () => {
     log.debug("취소버튼 클릭");
   };
