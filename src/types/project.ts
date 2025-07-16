@@ -26,3 +26,15 @@ export type FunctionTypeOption = {
   functionName: string;
   projectFunctionType: ProjectFunctionType;
 };
+
+export interface ListProjectFunction {
+  projectId:string;
+  functions: ProjectFunctionItem[];
+}
+
+export type ProjectFunctionItem = {
+  projectFunctionId: string | number;
+  projectFunctionName: string ;
+  projectFunctionSort:  number;
+  projectFunctionType: ProjectFunctionType; 
+}
